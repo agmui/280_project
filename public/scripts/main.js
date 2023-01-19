@@ -1,34 +1,35 @@
 
 var rhit = rhit || {};
 
-function addItem(itemName) {
-	
-}
-function deleteItem(itemName) {
-	
-}
-function queryItem(itemSubString){
-
-}
-function checkoutItem(itemName, userName) {
-
-}
-function returnItem(itemName, userName) {
-
-}
-function getUser(userName) {
-
-}
 
 rhit.Controller = class {
-	constructor () {
+	constructor() {
+		this.Inventory = {}
+		this.Users = {}
+	}
+	addItem(itemName) {
+		this.Inventory[itemName] = new rhit.Item(itemName)
+	}
+	deleteItem(itemName) {
+		delete this.Inventory[itemName]
+	}
+	queryItem(itemSubString) {
+
+	}
+	checkoutItem(itemName, userName) {
+
+	}
+	returnItem(itemName, userName) {
+
+	}
+	getUser(userName) {
 
 	}
 }
 
 rhit.Item = class {
-	constructor() {
-		this.itemName = ""
+	constructor(itemName) {
+		this.itemName = itemName
 		this.date = "01/01/2023"
 		this.checkedOutTo = ""
 	}
@@ -62,13 +63,14 @@ rhit.User = class {
 		this.userName = username
 	}
 
-	editUser () {
+	editUser() {
 
 	}
 }
 
 rhit.main = function () {
 	console.log("Ready");
+	rhit.Controller = new Controller();
 };
 
 rhit.main();
