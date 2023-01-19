@@ -19,8 +19,8 @@ rhit.Controller = class {
 	checkoutItem(itemName, userName) {
 
 	}
-	returnItem(itemName, userName) {
-
+	returnItem(itemName) {
+		// Set firebase checkedOutTo to empty string 
 	}
 	getUser(userName) {
 
