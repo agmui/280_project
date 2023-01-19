@@ -13,19 +13,22 @@ rhit.Controller = class {
 	}
 	queryItem(itemSubString) {
 
+		// TODO: function on firebase to help with this
 	}
 	checkoutItem(itemName, userName) {
 		// TODO: add firebaase
 
 	}
 	returnItem(itemName) {
-
+		// TODO: add firebase that sets checkedOutTo to empty string	
 	}
-	getItem(){
+	getItem(itemName){
 
+		// TODO: add firebase to return item	
 	}
 	getUser(userName) {
 
+		// TODO: add firebase to return user
 	}
 }
 
