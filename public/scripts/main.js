@@ -4,22 +4,24 @@ var rhit = rhit || {};
 
 rhit.Controller = class {
 	constructor() {
-		this.Inventory = {}
-		this.Users = {}
 	}
 	addItem(itemName) {
-		this.Inventory[itemName] = new rhit.Item(itemName)
+		// TODO: add firebaase
 	}
 	deleteItem(itemName) {
-		delete this.Inventory[itemName]
+		// TODO: add firebaase
 	}
 	queryItem(itemSubString) {
 
 	}
 	checkoutItem(itemName, userName) {
+		// TODO: add firebaase
 
 	}
-	returnItem(itemName, userName) {
+	returnItem(itemName) {
+
+	}
+	getItem(){
 
 	}
 	getUser(userName) {
