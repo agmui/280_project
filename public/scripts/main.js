@@ -33,26 +33,35 @@ rhit.InventoryController = class {
 		})
 	}
 	deleteItem(itemId) {
-		// TODO: add firebaase
+		return this._ref.doc(itemId).delete()
 	}
 	queryItem(itemSubString) {
 
 		// TODO: function on firebase to help with this
 	}
-	checkoutItem(itemName, userName) {
-		// TODO: add firebaase
+	checkoutItem(itemId, userName) {
+		const item = this._ref.doc(itemId)
 
+		item.update({
+			[rhit.FB_USER_CHECKED_OUT_TO]: username,
+			[rhit.FB_CHECKOUT_DATE]: firebase.firestore.Timestamp.now(),
+		}).then(() => {
+			console.log("Document updated with ID: ", docRef.id)
+		})
+		.catch(function (error) {
+			console.error("Error adding document: ", error)
+		})
 	}
-	returnItem(itemName) {
-		// TODO: add firebase that sets checkedOutTo to empty string	
-	}
-	getItem(itemName){
-
-		// TODO: add firebase to return item	
-	}
-	getUser(userName) {
-
-		// TODO: add firebase to return user
+	returnItem(itemId) {
+		const item = this._ref.doc(itemId)
+		item.update({
+			[rhit.FB_USER_CHECKED_OUT_TO]: "",
+		}).then(() => {
+			console.log("Document updated with ID: ", docRef.id)
+		})
+		.catch(function (error) {
+			console.error("Error adding document: ", error)
+		})	
 	}
 }
 
