@@ -175,6 +175,11 @@ rhit.SigninController = class {
 	}
 
 }
+rhit.SignupController = class {
+	constructor() {
+		
+	}
+}
 rhit.UserController = class {
 
 }
@@ -224,7 +229,7 @@ rhit.main = function () {
 			new rhit.LoginController()
 			break;
 		case "/signup.html":
-			new rhit.()
+			new rhit.SignupController()
 			break;
 		case "/user.html":
 			new rhit.UserController()
@@ -233,6 +238,7 @@ rhit.main = function () {
 
 		default:
 			console.error("idk wut page")
+	}
 };
 
 rhit.main();
