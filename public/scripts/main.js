@@ -135,6 +135,12 @@ rhit.IndexController = class {
 		document.querySelector("#signupBtn").onclick = (event) => {
 			window.location.href = "/signup.html"
 		}
+		document.querySelector("#loginBtn").onclick = (event) => {
+			window.location.href = "/login.html"
+		}
+		document.querySelector("#editAccBtn").onclick = (event) => {
+			window.location.href = "/" //TODO
+		}
 	}
 
 }
@@ -152,6 +158,11 @@ rhit.DonateController = class {
 }
 rhit.LoginController = class {
 	constructor() {
+	}
+
+}
+rhit.SigninController = class {
+	constructor() {
 		document.querySelector("#signupBtn").onclick = (event) => {
 			window.location.href = "/signup.html"
 			firebase.auth().signInWithEmailAndPassword(email, password).catch((error) => {
@@ -159,10 +170,26 @@ rhit.LoginController = class {
 				let errorMsg = error.message
 			})
 		}
+		// FirebaseUI config.
+		var uiConfig = {
+			signInSuccessUrl: '/',
+			signInOptions: [
+				// Leave the lines as is for the providers you want to offer your users.
+				firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+				firebase.auth.EmailAuthProvider.PROVIDER_ID,
+				firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+				firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID
+			],
+		};
+
+		// Initialize the FirebaseUI Widget using Firebase.
+		const ui = new firebaseui.auth.AuthUI(firebase.auth());
+		// The start method will wait until the DOM is loaded.
+		ui.start('#firebaseui-auth-container', uiConfig);		
 	}
 
 }
-rhit.SigninController = class {
+rhit.SignupController = class {
 	constructor() {
 		document.querySelector("#submit").onclick = (event) => {
 			console.log(inputEmail.value, inputPass.value);
@@ -171,13 +198,6 @@ rhit.SigninController = class {
 				let errorMsg = error.message
 			})
 		}
-
-	}
-
-}
-rhit.SignupController = class {
-	constructor() {
-		
 	}
 }
 rhit.UserController = class {
@@ -186,15 +206,14 @@ rhit.UserController = class {
 
 rhit.main = function () {
 	console.log("Ready");
-	rhit.InventoryController = new rhit.InventoryController();
 
 	firebase.auth().onAuthStateChanged((user) => {
 		if (user) {
 			let displayName = user.displayName
 
-			document.querySelector("#signoutBtn").onclick = (event) => {
-				console.log("signout");
-			}
+			// document.querySelector("#signoutBtn").onclick = (event) => {
+			// 	console.log("signout");
+			// }
 		} else {
 
 		}
@@ -216,14 +235,12 @@ rhit.main = function () {
 		case "/donate.html":
 			new rhit.DonateController()
 			break;
+		case "/":
 		case "/index.html":
 			new rhit.IndexController()
 			break;
 		case "/inventorySys.html":
 			new rhit.InventoryController()
-			break;
-		case "/login.html":
-			new rhit.LoginController()
 			break;
 		case "/login.html":
 			new rhit.LoginController()
@@ -234,8 +251,6 @@ rhit.main = function () {
 		case "/user.html":
 			new rhit.UserController()
 			break;
-
-
 		default:
 			console.error("idk wut page")
 	}
