@@ -18,6 +18,21 @@ rhit.FB_USERNAME = "username"
 rhit.InventoryController = class {
 	constructor() {
 		this._ref = firebase.firestore().collection(rhit.FB_INVENTORY)
+		document.querySelector("addItem").onclick = () => {
+			
+		}
+		document.querySelector("delItem").onclick = () => {
+			
+		}
+		document.querySelector("editItem").onclick = () => {
+			
+		}
+		document.querySelector("checkOut").onclick = () => {
+			
+		}
+		document.querySelector("return").onclick = () => {
+			
+		}
 	}
 	addItem(itemName) {
 		this._ref.add({
@@ -136,9 +151,28 @@ rhit.DonateController = class {
 
 }
 rhit.LoginController = class {
+	constructor() {
+		document.querySelector("#signupBtn").onclick = (event) => {
+			window.location.href = "/signup.html"
+			firebase.auth().signInWithEmailAndPassword(email, password).catch((error) => {
+				let errorCode = error.errorCode
+				let errorMsg = error.message
+			})
+		}
+	}
 
 }
 rhit.SigninController = class {
+	constructor() {
+		document.querySelector("#submit").onclick = (event) => {
+			console.log(inputEmail.value, inputPass.value);
+			firebase.auth().createUserWithEmailAndPassword(email, password).catch((error) => {
+				let errorCode = error.errorCode
+				let errorMsg = error.message
+			})
+		}
+
+	}
 
 }
 rhit.UserController = class {
@@ -163,34 +197,42 @@ rhit.main = function () {
 
 	const inputEmail = document.querySelector("#inputEmail")
 	const inputPass = document.querySelector("#inputPass")
-	const location = window.location.pathname
 
-	switch (location) {
+	switch (window.location.pathname) {
+		case "/aboutUs.html":
+			new rhit.AboutUsController()
+			break;
+		case "/competition.html":
+			new rhit.CompController()
+			break;
+		case "/contact.html":
+			new rhit.ContactController()
+			break;
+		case "/donate.html":
+			new rhit.DonateController()
+			break;
 		case "/index.html":
 			new rhit.IndexController()
 			break;
-		case "/signup.html":
-			document.querySelector("#submit").onclick = (event) => {
-				console.log(inputEmail.value, inputPass.value);
-				firebase.auth().createUserWithEmailAndPassword(email, password).catch((error) => {
-					let errorCode = error.errorCode
-					let errorMsg = error.message
-				})
-			}
+		case "/inventorySys.html":
+			new rhit.InventoryController()
 			break;
 		case "/login.html":
-			document.querySelector("#signupBtn").onclick = (event) => {
-				window.location.href = "/signup.html"
-				firebase.auth().signInWithEmailAndPassword(email, password).catch((error) => {
-					let errorCode = error.errorCode
-					let errorMsg = error.message
-				})
-			}
+			new rhit.LoginController()
+			break;
+		case "/login.html":
+			new rhit.LoginController()
+			break;
+		case "/signup.html":
+			new rhit.()
+			break;
+		case "/user.html":
+			new rhit.UserController()
 			break;
 
+
 		default:
-			break;
-	}
+			console.error("idk wut page")
 };
 
 rhit.main();
