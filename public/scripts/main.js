@@ -1,14 +1,38 @@
 
 var rhit = rhit || {};
 
+// Collections
+rhit.FB_INVENTORY = "Inventory"
+rhit.FB_USERS = "Users"
 
-rhit.Controller = class {
+// Inventory Fields
+rhit.FB_CHECKOUT_DATE = "checkoutDate"
+rhit.FB_ITEM_NAME = "name"
+rhit.FB_USER_CHECKED_OUT_TO = "userCheckedoutTo"
+
+// User Fields
+rhit.FB_ABOUT_US_BOOL = "aboutUs"
+rhit.FB_USERNAME = "username"
+
+
+rhit.InventoryController = class {
 	constructor() {
+		this._ref = firebase.firestore().collection(rhit.FB_INVENTORY)
 	}
 	addItem(itemName) {
-		// TODO: add firebaase
+		this._ref.add({
+			[rhit.FB_ITEM_NAME]: itemName,
+			[rhit.FB_USER_CHECKED_OUT_TO]: "",
+			[rhit.FB_CHECKOUT_DATE]: firebase.firestore.Timestamp.now(),
+		})
+		.then(function(docRef) {
+			console.log("Document written with ID: ", docRef.id)
+		})
+		.catch(function(error) {
+			console.error("Error adding document: ", error)
+		})
 	}
-	deleteItem(itemName) {
+	deleteItem(itemId) {
 		// TODO: add firebaase
 	}
 	queryItem(itemSubString) {
