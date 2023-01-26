@@ -18,19 +18,19 @@ rhit.FB_USERNAME = "username"
 rhit.InventoryController = class {
 	constructor() {
 		this._ref = firebase.firestore().collection(rhit.FB_INVENTORY)
-		document.querySelector("addItem").onclick = () => {
+		document.querySelector("#addItem").onclick = () => {
+			this.addItem("Ultimate Gamer PC")
+		}
+		document.querySelector("#delItem").onclick = () => {
 			
 		}
-		document.querySelector("delItem").onclick = () => {
+		document.querySelector("#editItem").onclick = () => {
 			
 		}
-		document.querySelector("editItem").onclick = () => {
-			
+		document.querySelector("#checkOut").onclick = () => {
+			this.checkoutItem("lI0WUOuyVDCnbB9ya4aP", "Mui San")
 		}
-		document.querySelector("checkOut").onclick = () => {
-			
-		}
-		document.querySelector("return").onclick = () => {
+		document.querySelector("#return").onclick = () => {
 			
 		}
 	}
@@ -54,7 +54,7 @@ rhit.InventoryController = class {
 
 		// TODO: function on firebase to help with this
 	}
-	checkoutItem(itemId, userName) {
+	checkoutItem(itemId, username) {
 		const item = this._ref.doc(itemId)
 
 		item.update({
