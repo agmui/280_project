@@ -1,6 +1,19 @@
 
 var rhit = rhit || {};
 
+// Collections
+rhit.FB_INVENTORY = "Inventory"
+rhit.FB_USERS = "Users"
+
+// Inventory Fields
+rhit.FB_CHECKOUT_DATE = "checkoutDate"
+rhit.FB_ITEM_NAME = "name"
+rhit.FB_USER_CHECKED_OUT_TO = "userCheckedoutTo"
+
+// User Fields
+rhit.FB_ABOUT_US_BOOL = "aboutUs"
+rhit.FB_USERNAME = "username"
+
 
 rhit.Controller = class {
 	constructor() {
