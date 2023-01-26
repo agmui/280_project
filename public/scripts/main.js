@@ -22,7 +22,7 @@ rhit.Controller = class {
 	returnItem(itemName) {
 		// TODO: add firebase that sets checkedOutTo to empty string	
 	}
-	getItem(itemName){
+	getItem(itemName) {
 
 		// TODO: add firebase to return item	
 	}
@@ -75,7 +75,22 @@ rhit.User = class {
 
 rhit.main = function () {
 	console.log("Ready");
-	rhit.Controller = new Controller();
+	rhit.Controller = new rhit.Controller();
+
+	const inputEmail = document.querySelector("#inputEmail")
+	const inputPass = document.querySelector("#inputPass")
+
+	if (window.location.href == "/") {
+		document.querySelector("#signupBtn").onclick = (event) => {
+			window.location.href = "/signup.html"
+			console.log("hi");
+		}
+	}
+
+	document.querySelector("#submit").onclick = (event) => {
+		console.log(inputEmail, inputPass);
+		console.log("hi");
+	}
 };
 
 rhit.main();
