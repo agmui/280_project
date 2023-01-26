@@ -48,9 +48,9 @@ rhit.InventoryController = class {
 		}).then(() => {
 			console.log("Document updated with ID: ", docRef.id)
 		})
-		.catch(function (error) {
-			console.error("Error adding document: ", error)
-		})
+			.catch(function (error) {
+				console.error("Error adding document: ", error)
+			})
 	}
 	returnItem(itemId) {
 		const item = this._ref.doc(itemId)
@@ -59,9 +59,9 @@ rhit.InventoryController = class {
 		}).then(() => {
 			console.log("Document updated with ID: ", docRef.id)
 		})
-		.catch(function (error) {
-			console.error("Error adding document: ", error)
-		})	
+			.catch(function (error) {
+				console.error("Error adding document: ", error)
+			})
 	}
 }
 
@@ -115,28 +115,33 @@ rhit.User = class {
 	}
 }
 
-rhit.IndexController = class{
+rhit.IndexController = class {
+	constructor() {
+		document.querySelector("#signupBtn").onclick = (event) => {
+			window.location.href = "/signup.html"
+		}
+	}
 
 }
-rhit.AboutUsController = class{
+rhit.AboutUsController = class {
 
 }
-rhit.CompController = class{
+rhit.CompController = class {
 
 }
-rhit.ContactController = class{
+rhit.ContactController = class {
 
 }
-rhit.DonateController = class{
+rhit.DonateController = class {
 
 }
-rhit.LoginController = class{
+rhit.LoginController = class {
 
 }
-rhit.SigninController = class{
+rhit.SigninController = class {
 
 }
-rhit.UserController = class{
+rhit.UserController = class {
 
 }
 
@@ -145,7 +150,7 @@ rhit.main = function () {
 	rhit.InventoryController = new rhit.InventoryController();
 
 	firebase.auth().onAuthStateChanged((user) => {
-		if(user){
+		if (user) {
 			let displayName = user.displayName
 
 			document.querySelector("#signoutBtn").onclick = (event) => {
@@ -154,7 +159,7 @@ rhit.main = function () {
 		} else {
 
 		}
-	})	
+	})
 
 	const inputEmail = document.querySelector("#inputEmail")
 	const inputPass = document.querySelector("#inputPass")
@@ -162,9 +167,7 @@ rhit.main = function () {
 
 	switch (location) {
 		case "/index.html":
-			document.querySelector("#signupBtn").onclick = (event) => {
-				window.location.href = "/signup.html"
-			}
+			new rhit.IndexController()
 			break;
 		case "/signup.html":
 			document.querySelector("#submit").onclick = (event) => {
