@@ -25,12 +25,12 @@ rhit.InventoryController = class {
 			[rhit.FB_USER_CHECKED_OUT_TO]: "",
 			[rhit.FB_CHECKOUT_DATE]: firebase.firestore.Timestamp.now(),
 		})
-		.then(function(docRef) {
-			console.log("Document written with ID: ", docRef.id)
-		})
-		.catch(function(error) {
-			console.error("Error adding document: ", error)
-		})
+			.then(function (docRef) {
+				console.log("Document written with ID: ", docRef.id)
+			})
+			.catch(function (error) {
+				console.error("Error adding document: ", error)
+			})
 	}
 	deleteItem(itemId) {
 		// TODO: add firebaase
@@ -99,21 +99,57 @@ rhit.User = class {
 
 rhit.main = function () {
 	console.log("Ready");
-	rhit.Controller = new rhit.Controller();
+	rhit.InventoryController = new rhit.InventoryController();
+
+	firebase.auth().onAuthStateChanged((user) => {
+		if(user){
+			let displayName = user.displayName
+			document.querySelector("#signupBtn").hide()
+			document.querySelector("#loginBtn").hide()
+			document.querySelector("#signoutBtn").show()
+
+			document.querySelector("#signoutBtn").onclick = (event) => {
+				console.log("signout");
+			}
+		} else {
+			document.querySelector("#signupBtn").show()
+			document.querySelector("#loginBtn").show()
+			document.querySelector("#signoutBtn").hide()
+
+		}
+	})	
 
 	const inputEmail = document.querySelector("#inputEmail")
 	const inputPass = document.querySelector("#inputPass")
+	const location = window.location.pathname
 
-	if (window.location.href == "/") {
-		document.querySelector("#signupBtn").onclick = (event) => {
-			window.location.href = "/signup.html"
-			console.log("hi");
-		}
-	}
+	switch (location) {
+		case "/index.html":
+			document.querySelector("#signupBtn").onclick = (event) => {
+				window.location.href = "/signup.html"
+			}
+			break;
+		case "/signup.html":
+			document.querySelector("#submit").onclick = (event) => {
+				console.log(inputEmail.value, inputPass.value);
+				firebase.auth().createUserWithEmailAndPassword(email, password).catch((error) => {
+					let errorCode = error.errorCode
+					let errorMsg = error.message
+				})
+			}
+			break;
+		case "/login.html":
+			document.querySelector("#signupBtn").onclick = (event) => {
+				window.location.href = "/signup.html"
+				firebase.auth().signInWithEmailAndPassword(email, password).catch((error) => {
+					let errorCode = error.errorCode
+					let errorMsg = error.message
+				})
+			}
+			break;
 
-	document.querySelector("#submit").onclick = (event) => {
-		console.log(inputEmail, inputPass);
-		console.log("hi");
+		default:
+			break;
 	}
 };
 
