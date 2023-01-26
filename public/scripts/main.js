@@ -70,6 +70,7 @@ rhit.Item = class {
 		this.itemName = itemName
 		this.date = "01/01/2023"
 		this.checkedOutTo = ""
+		this.id = ""
 	}
 
 	setName(newName) {
@@ -84,16 +85,24 @@ rhit.Item = class {
 		this.checkedOutTo = newCheckedOut
 	}
 
-	getName() {
+	setId(newId) {
+		this.id = newId
+	}
+
+	get Name() {
 		return this.itemName
 	}
 
-	getDate() {
+	get Date() {
 		return this.date
 	}
 
-	getCheckedOutTo() {
+	get checkedoutTo() {
 		return this.checkedOutTo
+	}
+
+	get id() {
+		return this.id
 	}
 }
 rhit.User = class {
@@ -106,9 +115,9 @@ rhit.User = class {
 	}
 }
 
-rhit.main = function () {
+rhit.main = () => {
 	console.log("Ready");
-	rhit.Controller = new Controller();
-};
+	rhit.Controller = new InventoryController();
+}
 
 rhit.main();
