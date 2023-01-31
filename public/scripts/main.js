@@ -14,6 +14,7 @@ rhit.FB_USER_CHECKED_OUT_TO = "userCheckedoutTo"
 rhit.FB_ABOUT_US_BOOL = "aboutUs"
 rhit.FB_USERNAME = "username"
 
+// f628f4ae-8716-4f00-b72f-eccc3daa297e
 
 rhit.InventoryController = class {
 	constructor() {

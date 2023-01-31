@@ -1,0 +1,15 @@
+[debug] [2023-01-31T18:25:08.563Z] ----------------------------------------------------------------------
+[debug] [2023-01-31T18:25:08.568Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\vorheeks\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2023-01-31T18:25:08.570Z] CLI Version:   11.20.0
+[debug] [2023-01-31T18:25:08.571Z] Platform:      win32
+[debug] [2023-01-31T18:25:08.571Z] Node Version:  v18.12.1
+[debug] [2023-01-31T18:25:08.574Z] Time:          Tue Jan 31 2023 13:25:08 GMT-0500 (Eastern Standard Time)
+[debug] [2023-01-31T18:25:08.575Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-01-31T18:25:08.586Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2023-01-31T18:25:08.784Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-01-31T18:25:08.785Z] > authorizing via signed-in user (keegansv@gmail.com)
+[debug] [2023-01-31T18:25:08.785Z] [iam] checking project robomasters-website for permissions ["firebase.projects.get"]
+[debug] [2023-01-31T18:25:08.786Z] > refreshing access token with scopes: []
+[debug] [2023-01-31T18:25:08.787Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2023-01-31T18:25:08.788Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
