@@ -355,6 +355,10 @@ rhit.UserController = class {
 	}
 }
 
+rhit.UserController = class {
+
+}
+
 rhit.main = function () {
 	console.log("Ready");
 
