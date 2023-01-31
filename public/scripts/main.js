@@ -159,27 +159,22 @@ rhit.DonateController = class {
 }
 rhit.LoginController = class {
 	constructor() {
-	}
-
-}
-rhit.SigninController = class {
-	constructor() {
 		document.querySelector("#signupBtn").onclick = (event) => {
 			window.location.href = "/signup.html"
+		}
+		document.querySelector("#submit").onclick = (event) => {
 			firebase.auth().signInWithEmailAndPassword(email, password).catch((error) => {
 				let errorCode = error.errorCode
 				let errorMsg = error.message
 			})
 		}
-		// FirebaseUI config.
+		// FirebaseUI config.==================================== 
 		var uiConfig = {
 			signInSuccessUrl: '/',
 			signInOptions: [
 				// Leave the lines as is for the providers you want to offer your users.
 				firebase.auth.GoogleAuthProvider.PROVIDER_ID,
 				firebase.auth.EmailAuthProvider.PROVIDER_ID,
-				firebase.auth.PhoneAuthProvider.PROVIDER_ID,
-				firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID
 			],
 		};
 
@@ -187,6 +182,7 @@ rhit.SigninController = class {
 		const ui = new firebaseui.auth.AuthUI(firebase.auth());
 		// The start method will wait until the DOM is loaded.
 		ui.start('#firebaseui-auth-container', uiConfig);		
+		// FirebaseUI config.==================================== 
 	}
 
 }
