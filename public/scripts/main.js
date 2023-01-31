@@ -210,79 +210,9 @@ rhit.AuthManager = class {
 		return !!this._user;
 	}
 }
-rhit.IndexController = class {
-	constructor() {
-		document.querySelector("#signupBtn").onclick = (event) => {
-			window.location.href = "/signup.html"
-		}
-		document.querySelector("#loginBtn").onclick = (event) => {
-			window.location.href = "/login.html"
-		}
-		document.querySelector("#editAccBtn").onclick = (event) => {
-			window.location.href = "/" //TODO
-		}
-	}
 
-}
-rhit.AboutUsController = class {
 
-}
-rhit.CompController = class {
-
-}
-rhit.ContactController = class {
-
-}
-rhit.DonateController = class {
-
-}
-rhit.LoginController = class {
-	constructor() {
-		document.querySelector("#signupBtn").onclick = (event) => {
-			window.location.href = "/signup.html"
-		}
-		document.querySelector("#submit").onclick = (event) => {
-			firebase.auth().signInWithEmailAndPassword(email, password).catch((error) => {
-				let errorCode = error.errorCode
-				let errorMsg = error.message
-			})
-		}
-		document.querySelector("#roseFireBtn").onclick = (event) => {
-			//TODO
-			// rhit.AuthManager.signin()
-		}
-		// f628f4ae-8716-4f00-b72f-eccc3daa297e
-		// FirebaseUI config.==================================== 
-		var uiConfig = {
-			signInSuccessUrl: '/',
-			signInOptions: [
-				// Leave the lines as is for the providers you want to offer your users.
-				firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-				firebase.auth.EmailAuthProvider.PROVIDER_ID,
-			],
-		};
-
-		// Initialize the FirebaseUI Widget using Firebase.
-		const ui = new firebaseui.auth.AuthUI(firebase.auth());
-		// The start method will wait until the DOM is loaded.
-		ui.start('#firebaseui-auth-container', uiConfig);		
-		// FirebaseUI config.==================================== 
-	}
-
-}
-rhit.SignupController = class {
-	constructor() {
-		document.querySelector("#submit").onclick = (event) => {
-			console.log(inputEmail.value, inputPass.value);
-			firebase.auth().createUserWithEmailAndPassword(email, password).catch((error) => {
-				let errorCode = error.errorCode
-				let errorMsg = error.message
-			})
-		}
-	}
-}
-
-rhit.UserController = class {
+rhit.UserManager = class {
 	constructor() {
 		this._ref = firebase.firestore().collection(rhit.FB_USERS)
 		
@@ -352,6 +282,79 @@ rhit.UserController = class {
 		}).catch(function (error) {
 			console.error("Error adding document: ", error)
 		})
+	}
+}
+
+
+rhit.IndexController = class {
+	constructor() {
+		document.querySelector("#signupBtn").onclick = (event) => {
+			window.location.href = "/signup.html"
+		}
+		document.querySelector("#loginBtn").onclick = (event) => {
+			window.location.href = "/login.html"
+		}
+		document.querySelector("#editAccBtn").onclick = (event) => {
+			window.location.href = "/" //TODO
+		}
+	}
+
+}
+rhit.AboutUsController = class {
+
+}
+rhit.CompController = class {
+
+}
+rhit.ContactController = class {
+
+}
+rhit.DonateController = class {
+
+}
+rhit.LoginController = class {
+	constructor() {
+		document.querySelector("#signupBtn").onclick = (event) => {
+			window.location.href = "/signup.html"
+		}
+		document.querySelector("#submit").onclick = (event) => {
+			firebase.auth().signInWithEmailAndPassword(email, password).catch((error) => {
+				let errorCode = error.errorCode
+				let errorMsg = error.message
+			})
+		}
+		document.querySelector("#roseFireBtn").onclick = (event) => {
+			//TODO
+			// rhit.AuthManager.signin()
+		}
+		// f628f4ae-8716-4f00-b72f-eccc3daa297e
+		// FirebaseUI config.==================================== 
+		var uiConfig = {
+			signInSuccessUrl: '/',
+			signInOptions: [
+				// Leave the lines as is for the providers you want to offer your users.
+				firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+				firebase.auth.EmailAuthProvider.PROVIDER_ID,
+			],
+		};
+
+		// Initialize the FirebaseUI Widget using Firebase.
+		const ui = new firebaseui.auth.AuthUI(firebase.auth());
+		// The start method will wait until the DOM is loaded.
+		ui.start('#firebaseui-auth-container', uiConfig);		
+		// FirebaseUI config.==================================== 
+	}
+
+}
+rhit.SignupController = class {
+	constructor() {
+		document.querySelector("#submit").onclick = (event) => {
+			console.log(inputEmail.value, inputPass.value);
+			firebase.auth().createUserWithEmailAndPassword(email, password).catch((error) => {
+				let errorCode = error.errorCode
+				let errorMsg = error.message
+			})
+		}
 	}
 }
 
