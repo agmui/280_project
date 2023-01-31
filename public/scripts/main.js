@@ -13,6 +13,9 @@ rhit.FB_USER_CHECKED_OUT_TO = "userCheckedoutTo"
 // User Fields
 rhit.FB_ABOUT_US_BOOL = "aboutUs"
 rhit.FB_USERNAME = "username"
+rhit.FB_BIO = "bio"
+rhit.FB_FULL_NAME = "fullName"
+rhit.FB_IMAGE_URL = "imgUrl"
 
 // f628f4ae-8716-4f00-b72f-eccc3daa297e
 
@@ -52,7 +55,7 @@ rhit.InventoryController = class {
 		return this._ref.doc(itemId).delete()
 	}
 	queryItem(itemSubString) {
-
+		// TODO: figure out how to do this well
 		// TODO: function on firebase to help with this
 	}
 	checkoutItem(itemId, username) {
@@ -122,12 +125,57 @@ rhit.Item = class {
 	}
 }
 rhit.User = class {
-	constructor(username) {
-		this.userName = username
+	constructor(uid, username, aboutUs, bio, fullName, imgUrl) {
+		this.username = username
+		this.uid = uid
+		this.aboutUs = aboutUs
+		this.bio = bio
+		this.fullName = fullName
+		this.imgUrl = imgUrl
 	}
 
-	editUser() {
+	get uid() {
+		return this.uid
+	}
 
+	get username() {
+		return this.userName
+	}
+
+	get fullName() {
+		return this.fullName
+	}
+
+	get aboutUs() {
+		return this.aboutUs
+	}
+
+	get imgUrl() {
+		return this.imgUrl
+	}
+
+	setUid(id) {
+		this.uid = id
+	}
+
+	setUsername(newUser) {
+		this.username = newUser
+	}
+
+	setAboutUs(newAbout) {
+		this.aboutUs = newAbout
+	}
+
+	setBio(newBio) {
+		this.bio = newBio
+	}
+
+	setFullname(newName) {
+		this.fullName = newName
+	}
+
+	setImgUrl(url) {
+		this.imgUrl = url
 	}
 }
 
@@ -235,7 +283,76 @@ rhit.SignupController = class {
 }
 
 rhit.UserController = class {
+	constructor() {
+		this._ref = firebase.firestore().collection(rhit.FB_USERS)
+		
+	}
+	addUser(userBio, fullName, imageUrl, username) {
+		this._ref.add({
+			[rhit.FB_ABOUT_US_BOOL]: false,
+			[rhit.FB_BIO]: userBio,
+			[rhit.FB_FULL_NAME]: fullName,
+			[rhit.FB_IMAGE_URL]: imageUrl,
+			[rhit.FB_USERNAME]: username
+		})
+			.then(function (docRef) {
+				console.log("Document written with ID: ", docRef.id)
+			})
+			.catch(function (error) {
+				console.error("Error adding document: ", error)
+			})
+	}
+	deleteUser(uid) {
+		return this._ref.doc(uid).delete()
+	}
 
+	updateFullname(uid, newname) {
+		const item = this._ref.doc(uid)
+
+		item.update({
+			[rhit.FB_FULL_NAME]: newname,
+		}).then(() => {
+			console.log("Document updated with ID: ", uid)
+		})
+			.catch(function (error) {
+				console.error("Error adding document: ", error)
+			})
+	}
+
+	updateBio(uid, newBio) {
+		const item = this._ref.doc(uid)
+		item.update({
+			[rhit.FB_BIO]: newBio,
+		}).then(() => {
+			console.log("Document updated with ID: ", uid)
+		})
+			.catch(function (error) {
+				console.error("Error adding document: ", error)
+			})
+	}
+
+	updateImageUrl(uid, newUrl) {
+		const item = this._ref.doc(uid)
+		item.update({
+			[rhit.FB_IMAGE_URL]: newUrl,
+		}).then(() => {
+			console.log("Document updated with ID: ", uid)
+		})
+			.catch(function (error) {
+				console.error("Error adding document: ", error)
+			})
+	}
+
+	updateAboutUs(uid, aboutUsBool) {
+		const item = this._ref.doc(uid)
+		item.update({
+			[rhit.FB_ABOUT_US_BOOL]: aboutUsBool,
+		}).then(() => {
+			console.log("Document updated with ID: ", uid)
+		}).catch(function (error) {
+			console.error("Error adding document: ", error)
+		})
+	}
 }
 
 rhit.main = function () {
