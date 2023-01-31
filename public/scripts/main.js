@@ -131,6 +131,37 @@ rhit.User = class {
 	}
 }
 
+rhit.AuthManager = class {
+	constructor() {
+		this._user = null;
+	}
+	signInWithRoseFire() {
+		Rosefire.signIn("f628f4ae-8716-4f00-b72f-eccc3daa297e", (err, rfUser) => {
+			if (err) {
+				console.log("Rosefire error!", err);
+				return;
+			}
+			console.log("Rosefire success!", rfUser);
+
+			firebase.auth().signInWithCustomToken(rfUser.token).catch((error) => {
+				if (error.code === 'auth/invalid-custom-token') {
+					alert("The token you provided is not valid.");
+				} else {
+					console.log("signInWithCustomToken error", error.code, error.message);
+				}
+			});
+
+		});
+	}
+	signOut() {
+		firebase.auth().signOut().catch((error) => {
+			console.log("Sign out error");
+		});
+	}
+	get isSignedIn() {
+		return !!this._user;
+	}
+}
 rhit.IndexController = class {
 	constructor() {
 		document.querySelector("#signupBtn").onclick = (event) => {
@@ -168,6 +199,11 @@ rhit.LoginController = class {
 				let errorMsg = error.message
 			})
 		}
+		document.querySelector("#roseFireBtn").onclick = (event) => {
+			//TODO
+			// rhit.AuthManager.signin()
+		}
+		// f628f4ae-8716-4f00-b72f-eccc3daa297e
 		// FirebaseUI config.==================================== 
 		var uiConfig = {
 			signInSuccessUrl: '/',
@@ -197,6 +233,7 @@ rhit.SignupController = class {
 		}
 	}
 }
+
 rhit.UserController = class {
 
 }
