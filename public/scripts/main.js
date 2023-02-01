@@ -17,7 +17,7 @@ rhit.FB_BIO = "bio"
 rhit.FB_FULL_NAME = "fullName"
 rhit.FB_IMAGE_URL = "imgUrl"
 
-// f628f4ae-8716-4f00-b72f-eccc3daa297e
+rhit.authManager = null
 
 rhit.InventoryController = class {
 	constructor() {
@@ -182,6 +182,8 @@ rhit.User = class {
 rhit.AuthManager = class {
 	constructor() {
 		this._user = null;
+		this._name = ""
+		this._photoUrl = ""
 	}
 	signInWithRoseFire() {
 		Rosefire.signIn("f628f4ae-8716-4f00-b72f-eccc3daa297e", (err, rfUser) => {
@@ -190,7 +192,7 @@ rhit.AuthManager = class {
 				return;
 			}
 			console.log("Rosefire success!", rfUser);
-
+			this._name = rfUser.name
 			firebase.auth().signInWithCustomToken(rfUser.token).catch((error) => {
 				if (error.code === 'auth/invalid-custom-token') {
 					alert("The token you provided is not valid.");
@@ -201,11 +203,38 @@ rhit.AuthManager = class {
 
 		});
 	}
+	signupWithEmail(){
+		firebase.auth().signInWithEmailAndPassword(email, password).catch((error) => {
+			let errorCode = error.errorCode
+			let errorMsg = error.message
+			console.log(error);
+		})
+	}
 	signOut() {
 		firebase.auth().signOut().catch((error) => {
 			console.log("Sign out error");
 		});
 	}
+
+	startFirebaseUI() {
+		// FirebaseUI config.
+		var uiConfig = {
+			signInSuccessUrl: '/',
+			signInOptions: [
+				// Leave the lines as is for the providers you want to offer your users.
+				firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+				// firebase.auth.EmailAuthProvider.PROVIDER_ID,
+				// firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+				// firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID
+			],
+		};
+
+		// Initialize the FirebaseUI Widget using Firebase.
+		const ui = new firebaseui.auth.AuthUI(firebase.auth());
+		// The start method will wait until the DOM is loaded.
+		ui.start('#firebaseui-auth-container', uiConfig);
+	}
+
 	get isSignedIn() {
 		return !!this._user;
 	}
@@ -318,31 +347,11 @@ rhit.LoginController = class {
 			window.location.href = "/signup.html"
 		}
 		document.querySelector("#submit").onclick = (event) => {
-			firebase.auth().signInWithEmailAndPassword(email, password).catch((error) => {
-				let errorCode = error.errorCode
-				let errorMsg = error.message
-			})
 		}
 		document.querySelector("#roseFireBtn").onclick = (event) => {
-			//TODO
-			// rhit.AuthManager.signin()
+			rhit.authManager.signInWithRoseFire()
 		}
-		// f628f4ae-8716-4f00-b72f-eccc3daa297e
-		// FirebaseUI config.==================================== 
-		var uiConfig = {
-			signInSuccessUrl: '/',
-			signInOptions: [
-				// Leave the lines as is for the providers you want to offer your users.
-				firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-				firebase.auth.EmailAuthProvider.PROVIDER_ID,
-			],
-		};
-
-		// Initialize the FirebaseUI Widget using Firebase.
-		const ui = new firebaseui.auth.AuthUI(firebase.auth());
-		// The start method will wait until the DOM is loaded.
-		ui.start('#firebaseui-auth-container', uiConfig);		
-		// FirebaseUI config.==================================== 
+		rhit.authManager.startFirebaseUI()
 	}
 
 }
@@ -350,11 +359,12 @@ rhit.SignupController = class {
 	constructor() {
 		document.querySelector("#submit").onclick = (event) => {
 			console.log(inputEmail.value, inputPass.value);
-			firebase.auth().createUserWithEmailAndPassword(email, password).catch((error) => {
-				let errorCode = error.errorCode
-				let errorMsg = error.message
-			})
+			rhit.authManager.signupWithEmail()
 		}
+		document.querySelector("#roseFireBtn").onclick = (event) => {
+			rhit.authManager.signInWithRoseFire()
+		}
+		rhit.authManager.startFirebaseUI()
 	}
 }
 
@@ -368,7 +378,6 @@ rhit.main = function () {
 	firebase.auth().onAuthStateChanged((user) => {
 		if (user) {
 			let displayName = user.displayName
-
 			// document.querySelector("#signoutBtn").onclick = (event) => {
 			// 	console.log("signout");
 			// }
@@ -379,8 +388,17 @@ rhit.main = function () {
 
 	const inputEmail = document.querySelector("#inputEmail")
 	const inputPass = document.querySelector("#inputPass")
+	rhit.authManager = new this.AuthManager()
 
-	switch (window.location.pathname) {
+	const pname = window.location.pathname
+	// check for redirects
+	console.log("in login.html",pname=="/login.html", "signed in:",rhit.authManager.isSignedIn);
+	if ((pname == "/login.html" || pname == "/signup.html") && rhit.authManager.isSignedIn) {
+		window.location.href = "/index.html"
+	}
+	
+	// init pages
+	switch (pname) {
 		case "/aboutUs.html":
 			new rhit.AboutUsController()
 			break;
