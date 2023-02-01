@@ -24,6 +24,14 @@ rhit.FB_IMAGE_URL = "imgUrl"
 rhit.authManager = null
 rhit.userManager = null
 
+
+function htmlToElement(html) {
+	var template = document.createElement('template')
+	html = html.trim()
+	template.innerHTML = html
+	return template.content.firstChild
+}
+
 rhit.InventoryController = class {
 	constructor() {
 
@@ -39,13 +47,14 @@ rhit.InventoryController = class {
 
 		}
 		document.querySelector("#checkOut").onclick = () => {
-			this.checkoutItem("lI0WUOuyVDCnbB9ya4aP", "Mui San")
+			// this.checkoutItem("lI0WUOuyVDCnbB9ya4aP", "Mui San")
+			this.checkOutButtonClick()
 		}
 		document.querySelector("#return").onclick = () => {
 
 		}
 
-		
+
 	}
 	addItem(itemName) {
 		this._ref.add({
@@ -64,23 +73,59 @@ rhit.InventoryController = class {
 		return this._ref.doc(itemId).delete()
 	}
 	queryItem(itemSubString) {
-		return this._ref.where(rhit.FB_ITEM_NAME, "==", "MCB") //.limit(50)
-		.get()
-		.then((querySnapshot) => {
-			console.log("This query is of length", querySnapshot.size);
-			return querySnapshot
+		return this._ref.where(rhit.FB_ITEM_NAME, "==", itemSubString) //.limit(50)
+			.get()
+			.then((querySnapshot) => {
+				console.log("This query is of length", querySnapshot.size);
+				return querySnapshot
 
-			
-			// querySnapshot.forEach((doc) => {
 
-			// 	// doc.data() is never undefined for query doc snapshots
-			// 	console.log(doc.id, " => ", doc.data());
-			// });
-		})
-		.catch((error) => {
-			console.log("Error getting documents: ", error);
-		});
+				// querySnapshot.forEach((doc) => {
+
+				// 	// doc.data() is never undefined for query doc snapshots
+				// 	console.log(doc.id, " => ", doc.data());
+				// });
+			})
+			.catch((error) => {
+				console.log("Error getting documents: ", error);
+			});
 	}
+
+	// connect to button click later
+	checkOutButtonClick() {
+
+		// TODO: get data from fields on html
+		const searchName = document.querySelector("#searchTerm").value;
+
+		this.queryItem(searchName).then((querySnapshot) => {
+
+
+
+			//make new checkout container
+			const newList = htmlToElement('<div id="checkoutContainer"></div>')
+
+			//fill container with items in a loop
+			querySnapshot.forEach((doc) => {
+				newList.appendChild(htmlToElement(	`<div>
+														<div>
+															<h5>${doc.data().name}</h5>
+															<h6>${doc.data().userCheckedoutTo}</h6>
+															<h6">${doc.data().checkoutDate}</h6> 
+														</div>
+													</div>`))
+				// doc.data() is never undefined for query doc snapshots
+				console.log(doc.id, " => ", doc.data());
+			});
+
+			//remove old quotelistcontainer
+			const oldList = document.querySelector("#checkoutContainer")
+			oldList.removeAttribute("id");
+			oldList.hidden = true
+			//put in the new quotelistcontainer
+			oldList.parentElement.appendChild(newList)
+		})
+	}
+
 	checkoutItem(itemId, username) {
 		const item = this._ref.doc(itemId)
 
@@ -233,7 +278,7 @@ rhit.AuthManager = class {
 
 		});
 	}
-	signupWithEmail()  {
+	signupWithEmail() {
 		firebase.auth().signInWithEmailAndPassword(email, password).catch((error) => {
 			let errorCode = error.errorCode
 			let errorMsg = error.message
