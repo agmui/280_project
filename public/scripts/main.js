@@ -207,6 +207,7 @@ rhit.AuthManager = class {
 		this._user = null;
 		this._name = ""
 		this._photoUrl = ""
+		this.fbUI = false
 	}
 	beginListening(changeListener) {
 		firebase.auth().onAuthStateChanged((user) => {
@@ -247,6 +248,7 @@ rhit.AuthManager = class {
 	}
 
 	startFirebaseUI() {
+		this.fbUI = true
 		// FirebaseUI config.
 		var uiConfig = {
 			signInSuccessUrl: '/',
@@ -303,9 +305,9 @@ rhit.UserManager = class {
 		}).then(() => {
 			console.log("Document updated with ID: ", uid)
 		})
-			.catch(function (error) {
-				console.error("Error adding document: ", error)
-			})
+		.catch(function (error) {
+			console.error("Error adding document: ", error)
+		})
 	}
 
 	updateBio(uid, newBio) {
@@ -347,6 +349,17 @@ rhit.UserManager = class {
 
 rhit.IndexController = class {
 	constructor() {
+		if (rhit.authManager.isSignedIn){
+			document.querySelector("#signupBtn").style.display = "none"
+			document.querySelector("#loginBtn").style.display = "none"
+			document.querySelector("#editAccBtn").style.display = "block"
+			document.querySelector("#signoutBtn").style.display = "block"
+		} else if(!rhit.authManager.isSignedIn){
+			document.querySelector("#signupBtn").style.display = "block"
+			document.querySelector("#loginBtn").style.display = "block"
+			document.querySelector("#editAccBtn").style.display = "none"
+			document.querySelector("#signoutBtn").style.display = "none"
+		}
 		document.querySelector("#signupBtn").onclick = (event) => {
 			window.location.href = "/signup.html"
 		}
@@ -354,7 +367,11 @@ rhit.IndexController = class {
 			window.location.href = "/login.html"
 		}
 		document.querySelector("#editAccBtn").onclick = (event) => {
-			window.location.href = "/" //TODO
+			window.location.href = "/user.html"
+		}
+		document.querySelector("#signoutBtn").onclick = (event) => {
+			rhit.authManager.signOut()
+			// window.location.href = "/index.html"
 		}
 	}
 
@@ -381,7 +398,8 @@ rhit.LoginController = class {
 		document.querySelector("#roseFireBtn").onclick = (event) => {
 			rhit.authManager.signInWithRoseFire()
 		}
-		rhit.authManager.startFirebaseUI()
+		if(!rhit.authManager.fbUI)
+			rhit.authManager.startFirebaseUI()
 	}
 
 }
@@ -394,7 +412,8 @@ rhit.SignupController = class {
 		document.querySelector("#roseFireBtn").onclick = (event) => {
 			rhit.authManager.signInWithRoseFire()
 		}
-		rhit.authManager.startFirebaseUI()
+		if(!rhit.authManager.fbUI)
+			rhit.authManager.startFirebaseUI()
 	}
 }
 
@@ -580,7 +599,6 @@ rhit.main = function () {
 			}
 		})
 
-		// Check for redirects
 	})
 
 
