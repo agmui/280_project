@@ -1,6 +1,7 @@
 
 var rhit = rhit || {};
 
+
 // Collections
 rhit.FB_INVENTORY = "Inventory"
 rhit.FB_USERS = "Users"
@@ -17,26 +18,33 @@ rhit.FB_BIO = "bio"
 rhit.FB_FULL_NAME = "fullName"
 rhit.FB_IMAGE_URL = "imgUrl"
 
+
+
+
 rhit.authManager = null
 
 rhit.InventoryController = class {
 	constructor() {
+
+
 		this._ref = firebase.firestore().collection(rhit.FB_INVENTORY)
 		document.querySelector("#addItem").onclick = () => {
 			this.addItem("Ultimate Gamer PC")
 		}
 		document.querySelector("#delItem").onclick = () => {
-			
+
 		}
 		document.querySelector("#editItem").onclick = () => {
-			
+
 		}
 		document.querySelector("#checkOut").onclick = () => {
 			this.checkoutItem("lI0WUOuyVDCnbB9ya4aP", "Mui San")
 		}
 		document.querySelector("#return").onclick = () => {
-			
+
 		}
+
+		
 	}
 	addItem(itemName) {
 		this._ref.add({
@@ -55,8 +63,22 @@ rhit.InventoryController = class {
 		return this._ref.doc(itemId).delete()
 	}
 	queryItem(itemSubString) {
-		// TODO: figure out how to do this well
-		// TODO: function on firebase to help with this
+		return this._ref.where(rhit.FB_ITEM_NAME, "==", "MCB") //.limit(50)
+		.get()
+		.then((querySnapshot) => {
+			console.log("This query is of length", querySnapshot.size);
+			return querySnapshot
+
+			
+			// querySnapshot.forEach((doc) => {
+
+			// 	// doc.data() is never undefined for query doc snapshots
+			// 	console.log(doc.id, " => ", doc.data());
+			// });
+		})
+		.catch((error) => {
+			console.log("Error getting documents: ", error);
+		});
 	}
 	checkoutItem(itemId, username) {
 		const item = this._ref.doc(itemId)
@@ -203,7 +225,7 @@ rhit.AuthManager = class {
 
 		});
 	}
-	signupWithEmail(){
+	signupWithEmail() {
 		firebase.auth().signInWithEmailAndPassword(email, password).catch((error) => {
 			let errorCode = error.errorCode
 			let errorMsg = error.message
@@ -244,7 +266,7 @@ rhit.AuthManager = class {
 rhit.UserManager = class {
 	constructor() {
 		this._ref = firebase.firestore().collection(rhit.FB_USERS)
-		
+
 	}
 	addUser(userBio, fullName, imageUrl, username) {
 		this._ref.add({
@@ -392,11 +414,11 @@ rhit.main = function () {
 
 	const pname = window.location.pathname
 	// check for redirects
-	console.log("in login.html",pname=="/login.html", "signed in:",rhit.authManager.isSignedIn);
+	console.log("in login.html", pname == "/login.html", "signed in:", rhit.authManager.isSignedIn);
 	if ((pname == "/login.html" || pname == "/signup.html") && rhit.authManager.isSignedIn) {
 		window.location.href = "/index.html"
 	}
-	
+
 	// init pages
 	switch (pname) {
 		case "/aboutUs.html":
@@ -416,6 +438,7 @@ rhit.main = function () {
 			new rhit.IndexController()
 			break;
 		case "/inventorySys.html":
+			console.log("Inventory page found");
 			new rhit.InventoryController()
 			break;
 		case "/login.html":
