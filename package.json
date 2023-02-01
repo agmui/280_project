@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "rosefire": "git+https://ada.csse.rose-hulman.edu/rosefire/javascript-sdk.git#2.1.1"
+  }
+}
