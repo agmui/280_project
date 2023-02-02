@@ -559,7 +559,7 @@ rhit.UserController = class {
 		document.querySelector("#changName").onclick = (event) => {
 			const inputName = document.querySelector("#input").value
 			rhit.userManager.updateName(inputName).then(() => {
-				// TODO put like a indicator you updated the name or something
+				// TODO: put like a indicator you updated the name or something
 			})
 		}
 		document.querySelector("#uploadPic").onclick = (event) => {
@@ -587,7 +587,7 @@ rhit.UserController = class {
 rhit.main = function () {
 	console.log("Ready");
 
-	// TODO
+	// TODO:
 	firebase.auth().onAuthStateChanged((user) => {
 		if (user) {
 			let displayName = user.displayName
