@@ -487,9 +487,8 @@ rhit.AboutUsController = class {
 	displayMembers() {
 
 		// TODO: get data from fields on html
-		const searchName = document.querySelector("#searchTerm").value;
 
-		this.queryItem(searchName).then((querySnapshot) => {
+		this.queryMembers().then((querySnapshot) => {
 
 			//make new checkout container
 			const newList = htmlToElement('<div id="memberContainer"></div>')
