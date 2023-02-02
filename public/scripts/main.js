@@ -91,7 +91,7 @@ rhit.InventoryController = class {
 			});
 	}
 
-	// connect to button click later
+	// connect to button click
 	checkOutButtonClick() {
 
 		// TODO: get data from fields on html
@@ -405,6 +405,63 @@ rhit.IndexController = class {
 
 }
 rhit.AboutUsController = class {
+
+	constructor() {
+		this._ref = firebase.firestore().collection(rhit.FB_USERS)
+		console.log("Starting about us");
+		this.displayMembers()
+	}
+
+	queryMembers() {
+		return this._ref.where(rhit.FB_ABOUT_US_BOOL, "==", true) //.limit(50)
+			.get()
+			.then((querySnapshot) => {
+				console.log("This query is of length", querySnapshot.size);
+				return querySnapshot
+
+
+				// querySnapshot.forEach((doc) => {
+
+				// 	// doc.data() is never undefined for query doc snapshots
+				// 	console.log(doc.id, " => ", doc.data());
+				// });
+			})
+			.catch((error) => {
+				console.log("Error getting documents: ", error);
+			});
+	}
+
+	displayMembers() {
+
+		// TODO: get data from fields on html
+		const searchName = document.querySelector("#searchTerm").value;
+
+		this.queryItem(searchName).then((querySnapshot) => {
+
+			//make new checkout container
+			const newList = htmlToElement('<div id="memberContainer"></div>')
+
+			//fill container with items in a loop
+			querySnapshot.forEach((doc) => {
+				newList.appendChild(htmlToElement(	`<div>
+														<div>
+															<h5>${doc.data().fullName}</h5>
+															<h6>${doc.data().bio}</h6>
+															<h6">${doc.data().imgUrl}</h6> 
+														</div>
+													</div>`))
+				// doc.data() is never undefined for query doc snapshots
+				console.log(doc.id, " => ", doc.data());
+			});
+
+			//remove old quotelistcontainer
+			const oldList = document.querySelector("#memberContainer")
+			oldList.removeAttribute("id");
+			oldList.hidden = true
+			//put in the new quotelistcontainer
+			oldList.parentElement.appendChild(newList)
+		})
+	}
 
 }
 rhit.CompController = class {
