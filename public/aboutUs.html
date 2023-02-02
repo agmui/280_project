@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>about_us</title>
 </head>
+
 <body>
     <a href="index.html">RHIT Robomaster</a>
     <a href="/competition.html">comp</a>
@@ -15,9 +17,27 @@
     <a href="/inventorySys.html">inventory</a>
 
     <br>
+    
+    <label for="addUser">Add User:</label>
+    <input type="text" id="addUser" name="addUser"><br><br>
+    <label for="removeUser">Remove User:</label>
+    <input type="text" id="removeUser" name="removeUser"><br><br>
 
-    
+    <br>
+
+
     <div id="memberContainer"></div>
-    
+
+    <script src="scripts/jquery.min.js"></script>
+    <script src="scripts/popper.js"></script>
+    <script src="scripts/bootstrap-material-design.js"></script>
+    <script>$("body").bootstrapMaterialDesign();</script>
+    <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-analytics.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-firestore.js"></script>
+    <script src="/__/firebase/init.js"></script>
+    <script src="scripts/main.js"></script>
 </body>
+
 </html>

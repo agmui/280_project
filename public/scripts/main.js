@@ -468,9 +468,13 @@ rhit.AboutUsController = class {
 
 	constructor() {
 		this._ref = firebase.firestore().collection(rhit.FB_USERS)
-		console.log("Starting about us");
+
 		this.displayMembers()
 	}
+
+	// removeAboutUs(memberUsername) {
+
+	// }
 
 	queryMembers() {
 		return this._ref.where(rhit.FB_ABOUT_US_BOOL, "==", true) //.limit(50)
@@ -494,9 +498,8 @@ rhit.AboutUsController = class {
 	displayMembers() {
 
 		// TODO: get data from fields on html
-		const searchName = document.querySelector("#searchTerm").value;
 
-		this.queryItem(searchName).then((querySnapshot) => {
+		this.queryMembers().then((querySnapshot) => {
 
 			//make new checkout container
 			const newList = htmlToElement('<div id="memberContainer"></div>')
@@ -507,7 +510,7 @@ rhit.AboutUsController = class {
 														<div>
 															<h5>${doc.data().fullName}</h5>
 															<h6>${doc.data().bio}</h6>
-															<h6">${doc.data().imgUrl}</h6> 
+															<img src=${doc.data().imgUrl} alt=${doc.data().fullName}>
 														</div>
 													</div>`))
 				// doc.data() is never undefined for query doc snapshots
