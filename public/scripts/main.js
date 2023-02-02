@@ -18,6 +18,8 @@ rhit.FB_BIO = "bio"
 rhit.FB_FULL_NAME = "fullName"
 rhit.FB_IMAGE_URL = "imgUrl"
 
+rhit.FB_KEY_NAME = "username";
+rhit.FB_KEY_PHOTO_URL = "imgUrl";
 
 
 
@@ -312,6 +314,10 @@ rhit.AuthManager = class {
 		ui.start('#firebaseui-auth-container', uiConfig);
 	}
 
+	get uid() {
+		return this._user.uid
+	}
+
 	get isSignedIn() {
 		return !!this._user;
 	}
@@ -411,7 +417,8 @@ rhit.UserManager = class {
 	}
 
 	updateName(name) {
-		const userRef = this._collectionRef.doc(rhit.fbAuthManager.uid)
+		const userRef = this._collectionRef.doc(rhit.authManager.uid)
+		// FIXME:
 		return userRef.update({
 			[rhit.FB_KEY_NAME]: name,
 		})
@@ -557,11 +564,11 @@ rhit.SignupController = class {
 
 rhit.UserController = class {
 	constructor() {
-		document.querySelector("#changName").onclick = (event) => {
+		document.querySelector("#changeName").onclick = (event) => {
 			const inputName = document.querySelector("#input").value
-			rhit.userManager.updateName(inputName).then(() => {
+			rhit.userManager.updateName(inputName)//.then(() => {
 				// TODO: put like a indicator you updated the name or something
-			})
+			// })
 		}
 		document.querySelector("#uploadPic").onclick = (event) => {
 			console.log("you presse upload photo");
@@ -571,11 +578,11 @@ rhit.UserController = class {
 			console.log("you selected a file");
 			const file = event.target.files[0]
 			console.log(`Recived file named ${file.name}`);
-			const storageRef = firebase.storage().ref().child(rhit.fbAuthManager.uid)
+			const storageRef = firebase.storage().ref().child(rhit.authManager.uid)
 			storageRef.put(file).then((uploadTaskSnapshot) => {
 				console.log("the file has been uploaded!");
 				storageRef.getDownloadURL().then((downloadURL) => {
-					rhit.fbUserManager.updatePhotoUrl(downloadURL);
+					rhit.userManager.updatePhotoUrl(downloadURL);
 				})
 			})
 			console.log("uploading the file");
