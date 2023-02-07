@@ -48,8 +48,9 @@
             </div>
             <!-- {/* Burger icon standard */} -->
             <button
+                id = 'burgerIconButton'
                 class="md:hidden rounded-md active:outline-none focus:outline-none focus:ring-2 focus:ring-inset focus:ring-yellow-500"
-                onClick="()=> setIsOpen(!isOpen)">
+                onclick="updateMenu()">
                 <svg xmlns="http://www.w3.org/2000/svg"
                     class="h-8 w-8 rounded-md text-gray-300 bg-gradient-to-br from-transparent to-transparent hover:text-white hover:from-pink-500 hover:to-yellow-500"
                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -60,7 +61,7 @@
 
         <!-- {/* :MOBILE MENU */}
         { isOpen && -->
-        <div class="w-full flex flex-col py-4 px-3 md:hidden bg-gray-900 text-base uppercase text-center font-semibold">
+        <div id="mobileMenu" class="w-full flex flex-col py-4 px-3 md:hidden bg-gray-900 text-base uppercase text-center font-semibold">
             <a href="index.html" class="block px-3 py-2 rounded-md text-gray-300 hover:text-white hover:bg-gray-700">RHIT Robomaster</a>
             <a href="/competition.html" class="block px-3 py-2 rounded-md text-gray-300 hover:text-white hover:bg-gray-700">comp</a>
             <a href="/aboutUs.html" class="block px-3 py-2 rounded-md text-gray-300 hover:text-white hover:bg-gray-700">aboutUs</a>
@@ -91,8 +92,7 @@
 
     <script src="scripts/jquery.min.js"></script>
     <script src="scripts/popper.js"></script>
-    <script src="scripts/bootstrap-material-design.js"></script>
-    <script>$("body").bootstrapMaterialDesign();</script>
+    <script src="scripts/frontend.js"></script>
     <script src="/__/firebase/7.18.0/firebase-app.js"></script>
     <script src="/__/firebase/7.18.0/firebase-analytics.js"></script>
     <script src="/__/firebase/7.18.0/firebase-auth.js"></script>

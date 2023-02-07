@@ -1,4 +1,4 @@
-function update() {
+function updateScroller() {
     var scrollerElements = document.querySelectorAll(".scroller");
     scrollerElements.forEach(element => {
         var elementTop = element.getBoundingClientRect().top;
@@ -12,7 +12,6 @@ function update() {
 
 
 function updateDownArrow() {
-
     var scrollerElements = document.querySelectorAll(".down-arrow");
     scrollerElements.forEach(element => {
         element.classList.add("active");
@@ -28,9 +27,23 @@ function setupDownArrow() {
     });
 }
 
+
+let isOpen = true;
+function updateMenu() {
+    isOpen = !isOpen
+    var mobileMenu = document.querySelector("#mobileMenu");
+    if (isOpen) {
+        mobileMenu.style.display = "block";
+    } else {
+        mobileMenu.style.display = "none";
+    }
+}
+
 window.addEventListener("scroll", function () {
-    update()
+    updateScroller()
     updateDownArrow()
 });
+
+updateMenu()
 setupDownArrow()
-update()
+updateScroller()
