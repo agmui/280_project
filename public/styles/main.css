@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
 body {
     background: #DDDDDD;
 }
@@ -40,10 +46,23 @@ body {
     opacity: 0;
     transform: translateY(100%);
     transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-  }
-  
-  .scroller.active {
+}
+
+.scroller.active {
     opacity: 1;
     transform: translateY(0);
-  }
-  
+}
+
+.down-arrow {
+    opacity: 1;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: opacity 0.5s ease-in-out;
+}
+
+.down-arrow.active {
+    animation: fadeOut 0.5s; 
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    /* transition: opacity 0.5s ease-in-out; */
+}

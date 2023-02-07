@@ -9,7 +9,18 @@ function update() {
     });
 }
 
+
+
+function updateDownArrow() {
+
+    var scrollerElements = document.querySelectorAll(".down-arrow");
+    scrollerElements.forEach(element => {
+        element.classList.add("active");
+    });
+}
+
 window.addEventListener("scroll", function () {
     update()
+    updateDownArrow()
 });
 update()
