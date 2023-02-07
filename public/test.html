@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css" />
+    <style>
+        .fixed {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+            background-color: white;
+            box-shadow: 0 -1px 20px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-300">
+    <div class="fixed bottom-0 right-0 mb-10 mr-10 z-50" x-data="{show: true}">
+        <button class="bg-white text-black rounded-full p-3 hover:bg-gray-300"
+          x-bind:class="{'hidden': !show}" 
+          x-on:click="window.scroll({top: 0, left: 0, behavior: 'smooth'})" 
+          x-show="show"
+        >
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10.707 7.05L10 6.343 4.343 12 10 17.657l.707-.707L5.657 12z"/>
+          </svg>
+        </button>
+        <script>
+          window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const show = scrollY < 100;
+            this.set({show});
+          });
+        </script>
+      </div>
+    <div>
+        <div class="container mx-auto px-6 py-10">
+            <div class="flex flex-wrap -mx-2">
+                <div class="w-1/3 px-2">
+                    <div class="bg-white p-6 rounded-lg shadow-xl">
+                        <h2 class="text-lg font-medium text-gray-900">
+                            Section 1
+                        </h2>
+                        <p class="mt-4 text-gray-600">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                            velit justo, faucibus vel risus vel, consectetur congue neque.
+                        </p>
+                    </div>
+                </div>
+                <div class="w-1/3 px-2">
+                    <div class="bg-white p-6 rounded-lg shadow-xl">
+                        <h2 class="text-lg font-medium text-gray-900">
+                            Section 2
+                        </h2>
+                        <p class="mt-4 text-gray-600">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                            velit justo, faucibus vel risus vel, consectetur congue neque.
+                        </p>
+                    </div>
+                </div>
+                <div class="w-1/3 px-2">
+                    <div class="bg-white p-6 rounded-lg shadow-xl">
+                        <h2 class="text-lg font-medium text-gray-900">
+                            Section 3
+                        </h2>
+                        <p class="mt-4 text-gray-600">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                            velit justo, faucibus vel risus vel, consectetur congue neque.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="container mx-auto px-6 py-10">
+            <div class="flex flex-wrap -mx-2">
+                <div class="w-1/3 px-2">
+                    <div class="bg-white p-6 rounded-lg shadow-xl">
+                        <h2 class="text-lg font-medium text-gray-900">
+                            Section 1
+                        </h2>
+                        <p class="mt-4 text-gray-600">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                            velit justo, faucibus vel risus vel, consectetur congue neque.
+                        </p>
+                    </div>
+                </div>
+                <div class="w-1/3 px-2">
+                    <div class="bg-white p-6 rounded-lg shadow-xl">
+                        <h2 class="text-lg font-medium text-gray-900">
+                            Section 2
+                        </h2>
+                        <p class="mt-4 text-gray-600">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                            velit justo, faucibus vel risus vel, consectetur congue neque.
+                        </p>
+                    </div>
+                </div>
+                <div class="w-1/3 px-2">
+                    <div class="bg-white p-6 rounded-lg shadow-xl">
+                        <h2 class="text-lg font-medium text-gray-900">
+                            Section 3
+                        </h2>
+                        <p class="mt-4 text-gray-600">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                            velit justo, faucibus vel risus vel, consectetur congue neque.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="container mx-auto px-6 py-10">
+            <div class="flex flex-wrap -mx-2">
+                <div class="w-1/3 px-2">
+                    <div class="bg-white p-6 rounded-lg shadow-xl">
+                        <h2 class="text-lg font-medium text-gray-900">
+                            Section 1
+                        </h2>
+                        <p class="mt-4 text-gray-600">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                            velit justo, faucibus vel risus vel, consectetur congue neque.
+                        </p>
+                    </div>
+                </div>
+                <div class="w-1/3 px-2">
+                    <div class="bg-white p-6 rounded-lg shadow-xl">
+                        <h2 class="text-lg font-medium text-gray-900">
+                            Section 2
+                        </h2>
+                        <p class="mt-4 text-gray-600">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                            velit justo, faucibus vel risus vel, consectetur congue neque.
+                        </p>
+                    </div>
+                </div>
+                <div class="w-1/3 px-2">
+                    <div class="bg-white p-6 rounded-lg shadow-xl">
+                        <h2 class="text-lg font-medium text-gray-900">
+                            Section 3
+                        </h2>
+                        <p class="mt-4 text-gray-600">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                            velit justo, faucibus vel risus vel, consectetur congue neque.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="container mx-auto px-6 py-10">
+            <div class="flex flex-wrap -mx-2">
+                <div class="w-1/3 px-2">
+                    <div class="bg-white p-6 rounded-lg shadow-xl">
+                        <h2 class="text-lg font-medium text-gray-900">
+                            Section 1
+                        </h2>
+                        <p class="mt-4 text-gray-600">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                            velit justo, faucibus vel risus vel, consectetur congue neque.
+                        </p>
+                    </div>
+                </div>
+                <div class="w-1/3 px-2">
+                    <div class="bg-white p-6 rounded-lg shadow-xl">
+                        <h2 class="text-lg font-medium text-gray-900">
+                            Section 2
+                        </h2>
+                        <p class="mt-4 text-gray-600">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                            velit justo, faucibus vel risus vel, consectetur congue neque.
+                        </p>
+                    </div>
+                </div>
+                <div class="w-1/3 px-2">
+                    <div class="bg-white p-6 rounded-lg shadow-xl">
+                        <h2 class="text-lg font-medium text-gray-900">
+                            Section 3
+                        </h2>
+                        <p class="mt-4 text-gray-600">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                            velit justo, faucibus vel risus vel, consectetur congue neque.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="container mx-auto px-6 py-10">
+            <div class="flex flex-wrap -mx-2">
+                <div class="w-1/3 px-2">
+                    <div class="bg-white p-6 rounded-lg shadow-xl">
+                        <h2 class="text-lg font-medium text-gray-900">
+                            Section 1
+                        </h2>
+                        <p class="mt-4 text-gray-600">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                            velit justo, faucibus vel risus vel, consectetur congue neque.
+                        </p>
+                    </div>
+                </div>
+                <div class="w-1/3 px-2">
+                    <div class="bg-white p-6 rounded-lg shadow-xl">
+                        <h2 class="text-lg font-medium text-gray-900">
+                            Section 2
+                        </h2>
+                        <p class="mt-4 text-gray-600">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                            velit justo, faucibus vel risus vel, consectetur congue neque.
+                        </p>
+                    </div>
+                </div>
+                <div class="w-1/3 px-2">
+                    <div class="bg-white p-6 rounded-lg shadow-xl">
+                        <h2 class="text-lg font-medium text-gray-900">
+                            Section 3
+                        </h2>
+                        <p class="mt-4 text-gray-600">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                            velit justo, faucibus vel risus vel, consectetur congue neque.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="container mx-auto px-6 py-10">
+            <div class="flex flex-wrap -mx-2">
+                <div class="w-1/3 px-2">
+                    <div class="bg-white p-6 rounded-lg shadow-xl">
+                        <h2 class="text-lg font-medium text-gray-900">
+                            Section 1
+                        </h2>
+                        <p class="mt-4 text-gray-600">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                            velit justo, faucibus vel risus vel, consectetur congue neque.
+                        </p>
+                    </div>
+                </div>
+                <div class="w-1/3 px-2">
+                    <div class="bg-white p-6 rounded-lg shadow-xl">
+                        <h2 class="text-lg font-medium text-gray-900">
+                            Section 2
+                        </h2>
+                        <p class="mt-4 text-gray-600">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                            velit justo, faucibus vel risus vel, consectetur congue neque.
+                        </p>
+                    </div>
+                </div>
+                <div class="w-1/3 px-2">
+                    <div class="bg-white p-6 rounded-lg shadow-xl">
+                        <h2 class="text-lg font-medium text-gray-900">
+                            Section 3
+                        </h2>
+                        <p class="mt-4 text-gray-600">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                            velit justo, faucibus vel risus vel, consectetur congue neque.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="container mx-auto px-6 py-10">
+            <div class="flex flex-wrap -mx-2">
+                <div class="w-1/3 px-2">
+                    <div class="bg-white p-6 rounded-lg shadow-xl">
+                        <h2 class="text-lg font-medium text-gray-900">
+                            Section 1
+                        </h2>
+                        <p class="mt-4 text-gray-600">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                            velit justo, faucibus vel risus vel, consectetur congue neque.
+                        </p>
+                    </div>
+                </div>
+                <div class="w-1/3 px-2">
+                    <div class="bg-white p-6 rounded-lg shadow-xl">
+                        <h2 class="text-lg font-medium text-gray-900">
+                            Section 2
+                        </h2>
+                        <p class="mt-4 text-gray-600">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                            velit justo, faucibus vel risus vel, consectetur congue neque.
+                        </p>
+                    </div>
+                </div>
+                <div class="w-1/3 px-2">
+                    <div class="bg-white p-6 rounded-lg shadow-xl">
+                        <h2 class="text-lg font-medium text-gray-900">
+                            Section 3
+                        </h2>
+                        <p class="mt-4 text-gray-600">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                            velit justo, faucibus vel risus vel, consectetur congue neque.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        window.addEventListener("scroll", function () {
+            let hiddenElements = document.querySelectorAll(".hidden");
+            for (let i = 0; i < hiddenElements.length; i++) {
+                if (window.scrollY > 0) {
+                    hiddenElements[i].style.display = "block";
+                }
+            }
+            let fixedElements = document.querySelectorAll(".fixed");
+            for (let i = 0; i < fixedElements.length; i++) {
+                if (window.scrollY > 0) {
+                    fixedElements[i].style.display = "none";
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
