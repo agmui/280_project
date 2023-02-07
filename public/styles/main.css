@@ -14,3 +14,36 @@ body {
 .page-container {
     margin-top: 75px;
 }
+
+
+.competition-bg-image {
+    height: 350px;
+    background: linear-gradient(rgba(4, 15, 40, .7), rgba(4, 15, 40, .7)), url(../images/theCompetition.png) center center no-repeat;
+}
+
+.centered-element-parent {
+    display: flex;
+    align-items: center;
+}
+
+.bg-top-bar-color {
+    --tw-bg-opacity: 1;
+    background-color: rgb(5 13 33 / var(--tw-bg-opacity));
+}
+
+.bg-body-color {
+    --tw-bg-opacity: 1;
+    background-color: rgb(24 26 27 / var(--tw-bg-opacity));
+}
+
+.scroller {
+    opacity: 0;
+    transform: translateY(100%);
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  }
+  
+  .scroller.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
