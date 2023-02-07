@@ -23,43 +23,85 @@
 
         </div>
     </div>
-
+  
     <!-- Header -->
-    <nav class="bg-top-bar-color shadow-md">
-        <div class="container mx-auto">
-            <header class="bg-top-bar-color shadow-md p-6 flex items-center justify-between">
-                <a class="text-2xl font-bold text-white hover:text-red-500" href="#">RHIT Thornbots</a>
-                <ul class="flex justify-end">
-                    <li class="mr-6">
-                        <a class="text-white hover:text-red-500" href="index.html">HOME</a>
-                    </li>
-                    <li class="mr-6">
-                        <a class="text-white hover:text-red-500" href="/competition.html">COMPETITION</a>
-                    </li>
-                    <li class="mr-6">
-                        <a class="text-white hover:text-red-500" href="/aboutUs.html">ABOUT US</a>
-                    </li>
-                    <li class="mr-6">
-                        <a class="text-white hover:text-red-500" href="/donate.html">SUPPORT US</a>
-                    </li>
-                    <li class="mr-6">
-                        <a class="text-white hover:text-red-500" href="/contact.html">CONTACT</a>
-                    </li>
-                    <li class="mr-6">
-                        <a class="text-white hover:text-red-500" href="/inventorySys.html">INVENTORY</a>
-                    </li>
-                    <li>
-                        <a class="text-red-500 hover:text-red-200" href="login.html">LOG IN</a>
-                    </li>
-                </ul>
-            </header>
+    <header class="w-full bg-top-bar-color text-gray-100 body-font shadow-sm">
+
+        <!-- {/* :DESKTOP MENU */} -->
+        <div class="container mx-auto flex justify-between items-center py-7 px-5">
+            <!-- {/* Site logo and Name */} -->
+            <a href="#link" class="flex flex-shrink-0 title-font font-medium items-center text-gray-900 md:mb-0">
+                <!-- <svg xmlns="http://www.w3.org/2000/svg"
+                    class="w-10 h-10 text-white p-2 bg-gradient-to-br from-pink-500 to-yellow-500 rounded-full"
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                        d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                </svg> -->
+
+                <div class="w-12 h-12 text-white p-2 bg-body-color ring-2 custom-dark-red-ring rounded-full"
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <img src="./images/06_Alt3.png" alt=""
+                        class="bg-center pt-0.5 text-white"
+                        fill="none" stroke="currentColor">
+                    
+
+                </div><span class="ml-3 text-xl text-white hover:text-red-500 font-semibold antialiased">RHIT
+                    Thornbots</span>
+
+
+                <!-- <img src="./images/06_Alt3.png" alt=""
+                    class="w-12 h-12 text-white p-2 bg-gradient-to-br from-gray-800 to-gray-300 rounded-full"
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <span class="ml-3 text-xl text-white hover:text-red-500 font-semibold antialiased" >RHIT Thornbots</span> -->
+            </a>
+            <!-- {/* Navbar */} -->
+            <nav class="hidden md:ml-auto md:flex flex-wrap items-center justify-center text-base tracking-wide">
+                <a href="index.html"" class=" mr-8 text-white hover:text-red-500">HOME</a>
+                <a href="/competition.html" class="mr-8 text-white hover:text-red-500">COMPETITION</a>
+                <a href="/aboutUs.html" class="mr-8 text-white hover:text-red-500">ABOUT US</a>
+                <a href="/donate.html" class="mr-8 text-white hover:text-red-500">SUPPORT US</a>
+                <a href="/contact.html" class="mr-8 text-white hover:text-red-500">CONTACT</a>
+                <a href="/inventorySys.html" class="mr-8 text-white hover:text-red-500">INVENTORY</a>
+            </nav>
+            <!-- {/* Avatar */} -->
+            <div class="hidden sm:inline-flex ml-auto md:ml-0 mr-4 md:mr-0 cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                        d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+            <!-- {/* Burger icon standard */} -->
+            <button id='burgerIconButton'
+                class="md:hidden rounded-md active:outline-none focus:outline-none focus:ring-4 focus:ring-inset"
+                onclick="updateMenu()">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    class="h-8 w-8 rounded-md text-gray-300 bg-body-color"
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
         </div>
-    </nav>
+
+        <!-- {/* :MOBILE MENU */}
+        { isOpen && -->
+        <div id="mobileMenu"
+            class="w-full flex flex-col py-4 px-3 md:hidden bg-body-color text-base uppercase text-center font-semibold">
+            <a href="index.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">HOME</a>
+            <a href="/competition.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">COMPETITION</a>
+            <a href="/aboutUs.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">ABOUT US</a>
+            <a href="/donate.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">SUPPORT US</a>
+            <a href="/contact.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">CONTACT</a>
+            <a href="/inventorySys.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">INVENTORY</a>
+        </div>
+        <!-- } -->
+
+    </header>
 
     <!-- Image -->
     <section class="competition-bg-image bg-center centered-element-parent bg-cover">
         <div class="container mx-auto p-12 items-center centered-element ">
-            <h1 class="text-6xl text-center font-bold text-white mb-6 mx-auto">The Competition</h1>
+            <h1 class="text-5xl text-center font-bold text-white mb-6 mx-auto">The Competition</h1>
         </div>
     </section>
 
