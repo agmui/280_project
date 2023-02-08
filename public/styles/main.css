@@ -4,9 +4,14 @@
 
 
 @keyframes fadeOut {
-    0% { opacity: 1; }
-    100% { opacity: 0; }
-  }
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
 
 body {
     background: #DDDDDD;
@@ -61,7 +66,7 @@ body {
 }
 
 .down-arrow.active {
-    animation: fadeOut 0.5s; 
+    animation: fadeOut 0.5s;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
     /* transition: opacity 0.5s ease-in-out; */
@@ -70,4 +75,9 @@ body {
 .custom-dark-red-ring {
     --tw-ring-opacity: 1;
     --tw-ring-color: rgb(129 0 0 / var(--tw-ring-opacity));
+}
+
+.custom-dark-red-bg {
+    --tw-bg-opacity: 1;
+    background-color: rgb(129 0 0 / var(--tw-bg-opacity));
 }
