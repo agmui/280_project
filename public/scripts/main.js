@@ -37,27 +37,57 @@ function htmlToElement(html) {
 rhit.InventoryController = class {
 	constructor() {
 
+		this.shown = false;
 
 		this._ref = firebase.firestore().collection(rhit.FB_INVENTORY)
 		document.querySelector("#addItem").onclick = () => {
-			this.addItem("Ultimate Gamer PC")
+			const input = document.querySelector("#itemNameTextField").value
+			this.addItem(input)
+			this.closeModal()
 		}
-		document.querySelector("#delItem").onclick = () => {
+		document.querySelector("#openModalButton").onclick = () => {
+			this.openModal()
+		}
+		document.querySelector("#xButton").onclick = () => {
+			this.closeModal()
+		}
+		// document.querySelector("#delItem").onclick = () => {
 
-		}
-		document.querySelector("#editItem").onclick = () => {
+		// }
+		// document.querySelector("#editItem").onclick = () => {
 
-		}
-		document.querySelector("#checkOut").onclick = () => {
-			// this.checkoutItem("lI0WUOuyVDCnbB9ya4aP", "Mui San")
-			this.checkOutButtonClick()
-		}
-		document.querySelector("#return").onclick = () => {
+		// }
+		// document.querySelector("#checkOut").onclick = () => {
+		// 	// this.checkoutItem("lI0WUOuyVDCnbB9ya4aP", "Mui San")
+		// 	this.checkOutButtonClick()
+		// }
+		// document.querySelector("#return").onclick = () => {
 
-		}
-
+		// }
+      
 
 	}
+	toggleModal() {
+		this.shown = !this.shown;
+		if (this.shown) {
+			this.openModal()
+		} else {
+			this.closeModal()
+		}
+	}
+
+	closeModal() {
+		this.shown = false;
+		document.querySelector("#addItemModal").style.display = "none";
+		document.querySelector("#itemNameTextField").value = ""
+	}
+
+	openModal() {
+		this.shown = true;
+		document.querySelector("#addItemModal").style.display = "block";
+	}
+
+	
 	addItem(itemName) {
 		this._ref.add({
 			[rhit.FB_ITEM_NAME]: itemName,
