@@ -3,7 +3,8 @@ function updateScroller() {
     scrollerElements.forEach(element => {
         var elementTop = element.getBoundingClientRect().top;
         var windowHeight = window.innerHeight;
-        if (elementTop <= windowHeight) {
+        // console.log(`The element top: ${elementTop} The window height: ${windowHeight}`);
+        if ((elementTop-windowHeight) <= windowHeight - 350) {
             element.classList.add("active");
         }
     });
