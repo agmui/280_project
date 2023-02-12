@@ -77,6 +77,16 @@ body {
     --tw-ring-color: rgb(129 0 0 / var(--tw-ring-opacity));
 }
 
+.custom-red-bg {
+    --tw-bg-opacity: 1;
+    background-color: rgb(129 0 0 / var(--tw-bg-opacity));
+}
+
+.hover\:custom-dark-red-bg:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgb(90 0 0 / var(--tw-bg-opacity));
+}
+
 .custom-dark-red-bg {
     --tw-bg-opacity: 1;
     background-color: rgb(129 0 0 / var(--tw-bg-opacity));
