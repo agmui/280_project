@@ -91,3 +91,7 @@ body {
     --tw-bg-opacity: 1;
     background-color: rgb(129 0 0 / var(--tw-bg-opacity));
 }
+
+.img-white-filter {
+    filter: brightness(0) invert(1);
+  }
