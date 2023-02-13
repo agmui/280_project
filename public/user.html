@@ -2,39 +2,99 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>user</title>
-    <link rel="stylesheet" href="build/output.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css" />
+    <title>RHIT Robomasters</title>
 </head>
 
-<body>
-    <h1>user</h1>
-    <input type="text" id="input">
-    <button id="changeName">change username</button>
-    <p>change pf pic:</p>
-
-    <p>[insert name]</p>
-    <p>[insert username]</p>
-    <button id="uploadPic">upload pic</button>
-    <br>
-    <input id="inputFile" type="file" hidden>
-    <img class="p-10 bg-black border rounded max-w-sm"
-        src="https://149367133.v2.pressablecdn.com/wp-content/uploads/2021/02/rick-astley-never-gonna-give-you-up-4k.jpg"
-        alt="https://149367133.v2.pressablecdn.com/wp-content/uploads/2021/02/rick-astley-never-gonna-give-you-up-4k.jpg">
+<body class="bg-body-color">
 
 
-    <script src="scripts/jquery.min.js"></script>
-    <script src="scripts/popper.js"></script>
-    <!-- <script src="scripts/bootstrap-material-design.js"></script> -->
-    <!-- <script>$("body").bootstrapMaterialDesign();</script> -->
-    <script src="/__/firebase/7.18.0/firebase-app.js"></script>
-    <script src="/__/firebase/7.18.0/firebase-analytics.js"></script>
-    <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
-    <script src="/__/firebase/7.18.0/firebase-firestore.js"></script>
-    <script src="/__/firebase/init.js"></script>
+
+    <!-- Header -->
+    <header class="w-full bg-top-bar-color text-gray-100 body-font shadow-sm">
+
+        <!-- {/* :DESKTOP MENU */} -->
+        <div class="container mx-auto flex justify-between items-center py-5 px-5">
+            <!-- {/* Site logo and Name */} -->
+            <a href="index.html" class="flex flex-shrink-0 title-font font-medium items-center text-gray-900 md:mb-0">
+
+
+                <img src="./images/06_Alt3.png" alt="" class="w-12 h-12 text-white p-2" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                <span class="ml-3 text-xl text-white hover:text-red-500 font-semibold antialiased">RHIT
+                    Thornbots</span>
+            </a>
+            <!-- {/* Navbar */} -->
+            <nav class="hidden md:ml-auto md:flex flex-wrap items-center justify-center text-base tracking-wide">
+                <a href="index.html" class=" mr-8 text-white hover:text-red-500">HOME</a>
+                <a href="competition.html" class="mr-8 text-white hover:text-red-500">COMPETITION</a>
+                <a href="aboutUs.html" class="mr-8 text-white hover:text-red-500">ABOUT US</a>
+                <a href="donate.html" class="mr-8 text-white hover:text-red-500">SUPPORT US</a>
+                <a href="contact.html" class="mr-8 text-white hover:text-red-500">CONTACT</a>
+                <a href="inventorySys.html" class="mr-8 text-white hover:text-red-500">INVENTORY</a>
+                <a href="login.html" class="mr-8 text-red-500 hover:text-white">LOGIN</a>
+            </nav>
+            <!-- {/* Burger icon standard */} -->
+            <button id='burgerIconButton'
+                class="md:hidden rounded-md active:outline-none focus:outline-none focus:ring-4 focus:ring-inset"
+                onclick="updateMenu()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 rounded-md text-gray-300" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- {/* :MOBILE MENU */}
+        { isOpen && -->
+        <div id="mobileMenu"
+            class="w-full flex flex-col py-4 px-3 md:hidden bg-body-color text-base uppercase text-center font-semibold">
+            <a href="index.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">HOME</a>
+            <a href="competition.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">COMPETITION</a>
+            <a href="aboutUs.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">ABOUT US</a>
+            <a href="donate.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">SUPPORT US</a>
+            <a href="contact.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">CONTACT</a>
+            <a href="inventorySys.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">INVENTORY</a>
+            <a href="login.html" class="block px-3 py-2 rounded-md text-red-500 hover:text-white">LOGIN</a>
+        </div>
+        <!-- } -->
+
+    </header>
+
+    <!-- Image -->
+    <section class="competition-bg-image bg-center centered-element-parent bg-cover">
+        <div class="container mx-auto p-12 items-center centered-element ">
+            <h1 class="text-5xl text-center font-bold text-white mb-6 mx-auto">User Account</h1>
+        </div>
+    </section>
+
+
+    <!-- Body -->
+    <section class="container mx-auto p-8 mt-10">
+        <input type="text" id="input">
+        <button id="changeName">change username</button>
+        <p>change pf pic:</p>
+
+        <p>[insert name]</p>
+        <p>[insert username]</p>
+        <button id="uploadPic">upload pic</button>
+        <br>
+        <input id="inputFile" type="file" hidden>
+        <img class="p-10 bg-black border rounded max-w-sm"
+            src="https://149367133.v2.pressablecdn.com/wp-content/uploads/2021/02/rick-astley-never-gonna-give-you-up-4k.jpg"
+            alt="https://149367133.v2.pressablecdn.com/wp-content/uploads/2021/02/rick-astley-never-gonna-give-you-up-4k.jpg">
+
+
+
+    </section>
+
+
+
+    <script src="scripts/frontend.js"></script>
     <script src="scripts/main.js"></script>
 </body>
 
