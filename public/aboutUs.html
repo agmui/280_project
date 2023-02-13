@@ -12,47 +12,36 @@
 
 <body>
 
-    <header class="w-full bg-gray-800 text-gray-100 body-font mb-4 shadow-sm">
+    <!-- Header -->
+    <header class="w-full bg-top-bar-color text-gray-100 body-font shadow-sm">
 
         <!-- {/* :DESKTOP MENU */} -->
-        <div class="container mx-auto flex justify-between items-center py-7 px-5">
+        <div class="container mx-auto flex justify-between items-center py-5 px-5">
             <!-- {/* Site logo and Name */} -->
-            <a href="#link" class="flex flex-shrink-0 title-font font-medium items-center text-gray-900 md:mb-0">
-                <!-- <svg xmlns="http://www.w3.org/2000/svg"
-                    class="w-10 h-10 text-white p-2 bg-gradient-to-br from-pink-500 to-yellow-500 rounded-full"
-                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                        d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                </svg> -->
-                <img src="./images/06_Alt3.png" alt=""
-                    class="w-12 h-12 text-white p-2 bg-gradient-to-br from-pink-500 to-yellow-500 rounded-full"
-                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <span class="ml-3 text-xl text-gray-100 font-semibold antialiased">RHIT Thornbots</span>
+            <a href="index.html" class="flex flex-shrink-0 title-font font-medium items-center text-gray-900 md:mb-0">
+
+
+                <img src="./images/06_Alt3.png" alt="" class="w-12 h-12 text-white p-2" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                <span class="ml-3 text-xl text-white hover:text-red-500 font-semibold antialiased">RHIT
+                    Thornbots</span>
             </a>
             <!-- {/* Navbar */} -->
             <nav class="hidden md:ml-auto md:flex flex-wrap items-center justify-center text-base tracking-wide">
-                <a href="index.html"" class=" mr-8 hover:text-gray-300">RHIT Robomaster</a>
-                <a href="/competition.html" class="mr-8 hover:text-gray-300">comp</a>
-                <a href="/aboutUs.html" class="mr-8 hover:text-gray-300">aboutUs</a>
-                <a href="/donate.html" class="mr-8 hover:text-gray-300">contact</a>
-                <a href="/contact.html" class="mr-8 hover:text-gray-300">donate</a>
-                <a href="/inventorySys.html" class="mr-8 hover:text-gray-300">inventory</a>
+                <a href="index.html" class=" mr-8 text-white hover:text-red-500">HOME</a>
+                <a href="competition.html" class="mr-8 text-white hover:text-red-500">COMPETITION</a>
+                <a href="aboutUs.html" class="mr-8 text-white hover:text-red-500">ABOUT US</a>
+                <a href="donate.html" class="mr-8 text-white hover:text-red-500">SUPPORT US</a>
+                <a href="contact.html" class="mr-8 text-white hover:text-red-500">CONTACT</a>
+                <a href="inventorySys.html" class="mr-8 text-white hover:text-red-500">INVENTORY</a>
+                <a href="login.html" class="mr-8 text-red-500 hover:text-white">LOGIN</a>
             </nav>
-            <!-- {/* Avatar */} -->
-            <div class="hidden sm:inline-flex ml-auto md:ml-0 mr-4 md:mr-0 cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                        d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-            </div>
             <!-- {/* Burger icon standard */} -->
             <button id='burgerIconButton'
-                class="md:hidden rounded-md active:outline-none focus:outline-none focus:ring-2 focus:ring-inset focus:ring-yellow-500"
+                class="md:hidden rounded-md active:outline-none focus:outline-none focus:ring-4 focus:ring-inset"
                 onclick="updateMenu()">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                    class="h-8 w-8 rounded-md text-gray-300 bg-gradient-to-br from-transparent to-transparent hover:text-white hover:from-pink-500 hover:to-yellow-500"
-                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 rounded-md text-gray-300" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
             </button>
@@ -61,19 +50,14 @@
         <!-- {/* :MOBILE MENU */}
         { isOpen && -->
         <div id="mobileMenu"
-            class="w-full flex flex-col py-4 px-3 md:hidden bg-gray-900 text-base uppercase text-center font-semibold">
-            <a href="index.html"
-                class="block px-3 py-2 rounded-md text-gray-300 hover:text-white hover:bg-gray-700">RHIT Robomaster</a>
-            <a href="/competition.html"
-                class="block px-3 py-2 rounded-md text-gray-300 hover:text-white hover:bg-gray-700">comp</a>
-            <a href="/aboutUs.html"
-                class="block px-3 py-2 rounded-md text-gray-300 hover:text-white hover:bg-gray-700">aboutUs</a>
-            <a href="/donate.html"
-                class="block px-3 py-2 rounded-md text-gray-300 hover:text-white hover:bg-gray-700">donate</a>
-            <a href="/contact.html"
-                class="block px-3 py-2 rounded-md text-gray-300 hover:text-white hover:bg-gray-700">contact</a>
-            <a href="/inventorySys.html"
-                class="block px-3 py-2 rounded-md text-gray-300 hover:text-white hover:bg-gray-700">inventory</a>
+            class="w-full flex flex-col py-4 px-3 md:hidden bg-body-color text-base uppercase text-center font-semibold">
+            <a href="index.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">HOME</a>
+            <a href="competition.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">COMPETITION</a>
+            <a href="aboutUs.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">ABOUT US</a>
+            <a href="donate.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">SUPPORT US</a>
+            <a href="contact.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">CONTACT</a>
+            <a href="inventorySys.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">INVENTORY</a>
+            <a href="login.html" class="block px-3 py-2 rounded-md text-red-500 hover:text-white">LOGIN</a>
         </div>
         <!-- } -->
 
@@ -86,9 +70,9 @@
 
         <!-- {/* :TITLE CONTAINER */} -->
         <div class="mb-8 flex justify-center items-center">
-            <span class="h-1 w-14 rounded-3xl bg-gray-700" />
+            <span class="h-1 w-14 rounded-3xl bg-gray-700"></span>
             <h2 class="px-3 text-sm font-semibold uppercase">Our passionate team</h2>
-            <span class="h-1 w-14 rounded-3xl bg-gray-700" />
+            <span class="h-1 w-14 rounded-3xl bg-gray-700"></span>
         </div>
 
         <div class="mx-auto px-4 w-full max-w-5xl grid grid-cols-2 gap-y-4 sm:gap-y-10">
@@ -96,21 +80,12 @@
             <!-- {/* :PICTURES CONTAINER */} -->
             <div class="col-span-full lg:col-span-1 flex flex-col sm:flex-row justify-center items-center">
                 <!-- {/* ::Team members */} -->
-                <ul
-                    id="displayMembers" class="mb-4 sm:mb-0 px-4 flex sm:flex-col justify-center items-center space-x-3 sm:space-x-0 sm:space-y-3">
-                    <!-- {people.map((person, index) => (
-                    <li key={person.lastname} class={`w-12 h-12 rounded-full overflow-hidden filter ${index !==member
-                        ? "saturate-0 hover:brightness-125" : "saturate-100" }`}>
-                        <button class="w-full h-full" onClick={()=> setMember(index)}>
-                            <img src={person.picture} alt="" class="object-cover" />
-                        </button>
-                    </li>
-                    ))
-                    } -->
+                <ul id="displayMembers"
+                    class="mb-4 sm:mb-0 px-4 flex sm:flex-col justify-center items-center space-x-3 sm:space-x-0 sm:space-y-3">
                 </ul>
                 <!-- {/* ::Picture selected team member */} -->
                 <div class="rounded overflow-hidden">
-                    <img src={people[member].picture} alt="" class="w-full max-w-xs object-cover" />
+                    <img id="memberPicture" src="" alt="" class="w-full max-w-xs object-cover" />
                 </div>
             </div>
 
@@ -118,25 +93,25 @@
             <!-- {/* :DETAILS CONTAINER */} -->
             <div class="col-span-full lg:col-span-1 mx-auto lg:mx-0 max-w-lg flex flex-col justify-center space-y-4">
                 <!-- {/* ::Role */} -->
-                <span class="font-bold uppercase tracking-wider">role</span>
+                <span id="role" class="font-bold uppercase tracking-wider">role</span>
                 <!-- {/* ::Name */} -->
                 <h3 class="text-4xl sm:text-5xl font-bold space-y-2">
                     <span id="firstname" class="block">firstname</span>
                     <span id="lastname" class="block">lastname</span>
                 </h3>
                 <!-- {/* ::Description */} -->
-                <p class="py-2 text-base">description</p>
+                <p id="description" class="py-2 text-base">description</p>
                 <!-- {/* ::Socials */} -->
                 <div class="mb-4 inline-flex space-x-4">
                     <!-- {/* Facebook */} -->
-                    <a href={people[member].facebookURL} class="text-gray-600 hover:text-blue-600">
+                    <a id="facebook" href="" class="text-gray-600 hover:text-blue-600">
                         <svg class="w-6 h-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <path
                                 d="M16.403,9H14V7c0-1.032,0.084-1.682,1.563-1.682h0.868c0.552,0,1-0.448,1-1V3.064c0-0.523-0.401-0.97-0.923-1.005C15.904,2.018,15.299,1.999,14.693,2C11.98,2,10,3.657,10,6.699V9H8c-0.552,0-1,0.448-1,1v2c0,0.552,0.448,1,1,1l2-0.001V21c0,0.552,0.448,1,1,1h2c0.552,0,1-0.448,1-1v-8.003l2.174-0.001c0.508,0,0.935-0.381,0.993-0.886l0.229-1.996C17.465,9.521,17.001,9,16.403,9z" />
                         </svg>
                     </a>
                     <!-- {/* Twitter */} -->
-                    <a href={people[member].twitterURL} class="text-gray-600 hover:text-blue-400">
+                    <a id="twitter" href="" class="text-gray-600 hover:text-blue-400">
                         <svg class="w-6 h-6" fill="currentColor" role="img" xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24">
                             <path
@@ -144,14 +119,14 @@
                         </svg>
                     </a>
                     <!-- {/* Linkedin */} -->
-                    <a href={people[member].linkedinURL} class="text-gray-600 hover:text-blue-500">
+                    <a id="linkedin" href="" class="text-gray-600 hover:text-blue-500">
                         <svg class="w-6 h-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
                             <path
                                 d="M9,25H4V10h5V25z M6.501,8C5.118,8,4,6.879,4,5.499S5.12,3,6.501,3C7.879,3,9,4.121,9,5.499C9,6.879,7.879,8,6.501,8z M27,25h-4.807v-7.3c0-1.741-0.033-3.98-2.499-3.98c-2.503,0-2.888,1.896-2.888,3.854V25H12V9.989h4.614v2.051h0.065 c0.642-1.18,2.211-2.424,4.551-2.424c4.87,0,5.77,3.109,5.77,7.151C27,16.767,27,25,27,25z" />
                         </svg>
                     </a>
                     <!-- {/* Youtube */} -->
-                    <a href={people[member].youtubeURL} class="text-gray-600 hover:text-red-600">
+                    <a id="youtube" href="" class="text-gray-600 hover:text-red-600">
                         <svg class="w-6 h-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
                             <path
                                 d="M 44.898438 14.5 C 44.5 12.300781 42.601563 10.699219 40.398438 10.199219 C 37.101563 9.5 31 9 24.398438 9 C 17.800781 9 11.601563 9.5 8.300781 10.199219 C 6.101563 10.699219 4.199219 12.199219 3.800781 14.5 C 3.398438 17 3 20.5 3 25 C 3 29.5 3.398438 33 3.898438 35.5 C 4.300781 37.699219 6.199219 39.300781 8.398438 39.800781 C 11.898438 40.5 17.898438 41 24.5 41 C 31.101563 41 37.101563 40.5 40.601563 39.800781 C 42.800781 39.300781 44.699219 37.800781 45.101563 35.5 C 45.5 33 46 29.398438 46.101563 25 C 45.898438 20.5 45.398438 17 44.898438 14.5 Z M 19 32 L 19 18 L 31.199219 25 Z" />
@@ -167,24 +142,24 @@
 
     <br>
 
-    <label for="addUser">Add User:</label>
+    <!-- {/* :edit aboutus btn */} -->
+    <button type="button" class="relative inline-flex items-center px-5 py-2.5 rounded-full border border-transparent bg-blue-600 text-base text-white font-medium">
+        edit
+    </button>
+
+    <!-- <label for="addUser">Add User:</label>
     <input type="text" id="addUser" name="addUser"><br><br>
     <label for="removeUser">Remove User:</label>
-    <input type="text" id="removeUser" name="removeUser"><br><br>
-
-    <br>
-
-
-    <div id="memberContainer"></div>
+    <input type="text" id="removeUser" name="removeUser"><br><br> -->
 
     <script src="scripts/jquery.min.js"></script>
     <script src="scripts/popper.js"></script>
-    <script src="scripts/frontend.js"></script>
     <script src="/__/firebase/7.18.0/firebase-app.js"></script>
     <script src="/__/firebase/7.18.0/firebase-analytics.js"></script>
     <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
     <script src="/__/firebase/7.18.0/firebase-firestore.js"></script>
     <script src="/__/firebase/init.js"></script>
+    <script src="scripts/frontend.js"></script>
     <script src="scripts/main.js"></script>
 </body>
 

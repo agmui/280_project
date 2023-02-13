@@ -1,4 +1,3 @@
-
 var rhit = rhit || {};
 
 
@@ -64,7 +63,7 @@ rhit.InventoryController = class {
 		// document.querySelector("#return").onclick = () => {
 
 		// }
-      
+
 
 	}
 	toggleModal() {
@@ -87,7 +86,7 @@ rhit.InventoryController = class {
 		document.querySelector("#addItemModal").style.display = "block";
 	}
 
-	
+
 	addItem(itemName) {
 		this._ref.add({
 			[rhit.FB_ITEM_NAME]: itemName,
@@ -499,6 +498,7 @@ rhit.AboutUsController = class {
 	constructor() {
 		this._ref = firebase.firestore().collection(rhit.FB_USERS)
 
+		this.people = []
 		this.displayMembers()
 	}
 
@@ -510,7 +510,7 @@ rhit.AboutUsController = class {
 		return this._ref.where(rhit.FB_ABOUT_US_BOOL, "==", true) //.limit(50)
 			.get()
 			.then((querySnapshot) => {
-				console.log("This query is of length", querySnapshot.size);
+				// console.log("This query is of length", querySnapshot.size);
 				return querySnapshot
 
 
@@ -527,33 +527,79 @@ rhit.AboutUsController = class {
 
 	displayMembers() {
 
-		// TODO: get data from fields on html
-
 		this.queryMembers().then((querySnapshot) => {
-
-			//make new checkout container
-			const newList = htmlToElement('<div id="memberContainer"></div>')
-
-			//fill container with items in a loop
 			querySnapshot.forEach((doc) => {
-				newList.appendChild(htmlToElement(	`<div>
-														<div>
-															<h5>${doc.data().fullName}</h5>
-															<h6>${doc.data().bio}</h6>
-															<img src=${doc.data().imgUrl} alt=${doc.data().fullName}>
-														</div>
-													</div>`))
-				// doc.data() is never undefined for query doc snapshots
-				console.log(doc.id, " => ", doc.data());
+				this.people.push(doc.data())
 			});
-
-			//remove old quotelistcontainer
-			const oldList = document.querySelector("#memberContainer")
-			oldList.removeAttribute("id");
-			oldList.hidden = true
-			//put in the new quotelistcontainer
-			oldList.parentElement.appendChild(newList)
+			const demo = [
+				{
+					id: "1",
+					firstname: "Tonyo",
+					lastname: "Delapena",
+					role: "Boss",
+					picture: "https://fancytailwind.com/static/profile8-34d5f5980ca5030c155a2ffbb50b5802.jpg",
+					description: "Harum iusto exercitationem assumenda quas nostrum perspiciatis quos iste sit reprehenderit, libero quae aperiam sapiente delectus, porro tempore minus repellendus ratione distinctio!",
+					facebookURL: "#link",
+					twitterURL: "#link",
+					linkedinURL: "#link",
+					youtubeURL: "#link",
+					member: true
+				},
+				{
+					id: "2",
+					firstname: "asdf",
+					lastname: "Librals",
+					role: "Designer",
+					picture: "https://fancytailwind.com/static/profile14-e9ac6c7d68a78a1cbbf29458acacc95a.jpg",
+					description: "Harum iusto exercitationem assumenda quas nostrum perspiciatis quos iste sit reprehenderit, libero quae aperiam sapiente delectus, porro tempore minus repellendus ratione distinctio!",
+					facebookURL: "#link",
+					twitterURL: "#link",
+					linkedinURL: "#link",
+					youtubeURL: "#link",
+					member: false
+				},
+				{
+					id: "3",
+					firstname: "aaa",
+					lastname: "Librals",
+					role: "Designer",
+					picture: "https://fancytailwind.com/static/profile14-e9ac6c7d68a78a1cbbf29458acacc95a.jpg",
+					description: "Harum iusto exercitationem assumenda quas nostrum perspiciatis quos iste sit reprehenderit, libero quae aperiam sapiente delectus, porro tempore minus repellendus ratione distinctio!",
+					facebookURL: "#link",
+					twitterURL: "#link",
+					linkedinURL: "#link",
+					youtubeURL: "#link",
+					member: false
+				}
+			]
+		}).then(() => {
+			let profile = ""
+			this.people.map((person, index) => {
+				profile = //FIXME: hover:brightness not working
+					`<li key=${person.lastname + person.firstname} class="w-12 h-12 rounded-full overflow-hidden filter saturate-0 hover:brightness-125">
+						<button id="btn${person.lastname + person.firstname}" class="w-full h-full">
+							<img src=${person.imgUrl} alt="" class="object-cover" />
+						</button>
+					</li>`
+				document.getElementById("displayMembers").insertAdjacentHTML('beforeend', profile)
+				document.getElementById("btn" + person.lastname + person.firstname).onclick = () => { this.changeDescription(index) }
+			})
+			this.changeDescription(0);
 		})
+	}
+
+	changeDescription(index) {
+		let person = this.people[index]
+		// let person = demo[index]
+		document.getElementById("role").innerHTML = person.role
+		document.getElementById("memberPicture").src = person.imgUrl
+		document.getElementById("firstname").innerHTML = person.firstname
+		document.getElementById("lastname").innerHTML = person.lastname
+		document.getElementById("description").innerHTML = person.bio
+		document.getElementById("facebook").href = person.facebookURL
+		document.getElementById("twitter").href = person.twitterURL
+		document.getElementById("linkedin").href = person.linkedinURL
+		document.getElementById("youtube").href = person.youtubeURL
 	}
 
 }
@@ -583,15 +629,15 @@ rhit.LoginController = class {
 }
 rhit.SignupController = class {
 	constructor() {
-		document.querySelector("#submit").onclick = (event) => {
-			console.log(inputEmail.value, inputPass.value);
-			rhit.authManager.signupWithEmail()
-		}
-		document.querySelector("#roseFireBtn").onclick = (event) => {
-			rhit.authManager.signInWithRoseFire()
-		}
-		if (!rhit.authManager.fbUI)
-			rhit.authManager.startFirebaseUI()
+		// document.querySelector("#submit").onclick = (event) => {
+		// 	console.log(inputEmail.value, inputPass.value);
+		// 	rhit.authManager.signupWithEmail()
+		// }
+		// document.querySelector("#roseFireBtn").onclick = (event) => {
+		// 	rhit.authManager.signInWithRoseFire()
+		// }
+		// if (!rhit.authManager.fbUI)
+		// 	rhit.authManager.startFirebaseUI()
 	}
 }
 
@@ -600,7 +646,7 @@ rhit.UserController = class {
 		document.querySelector("#changeName").onclick = (event) => {
 			const inputName = document.querySelector("#input").value
 			rhit.userManager.updateName(inputName)//.then(() => {
-				// TODO: put like a indicator you updated the name or something
+			// TODO: put like a indicator you updated the name or something
 			// })
 		}
 		document.querySelector("#uploadPic").onclick = (event) => {
