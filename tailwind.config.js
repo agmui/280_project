@@ -2,7 +2,11 @@
 module.exports = {
   content: ["./public/*.html"],
   theme: {
-    extend: {},
+    extend: {
+      maxHeight: {
+        '550px': '550px',
+      },
+    },
   },
   plugins: [
     require('@tailwindcss/forms'),

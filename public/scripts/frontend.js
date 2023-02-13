@@ -4,7 +4,7 @@ function updateScroller() {
         var elementTop = element.getBoundingClientRect().top;
         var windowHeight = window.innerHeight;
         // console.log(`The element top: ${elementTop} The window height: ${windowHeight}`);
-        if ((elementTop-windowHeight) <= windowHeight - 350) {
+        if ((elementTop - windowHeight) <= windowHeight - 350) {
             element.classList.add("active");
         }
     });
@@ -45,61 +45,61 @@ window.addEventListener("scroll", function () {
     updateDownArrow()
 });
 
-updateMenu()
-setupDownArrow()
-updateScroller()
-let profile =""
-function showMembers(people) {
-    people.map((person, index) => {
-        profile = `<li key=${person.lastname} class="w-12 h-12 rounded-full overflow-hidden filter
-        ${index !== person.member ? "saturate-0 hover:brightness-125" : "saturate-100"}">
-            <button class="w-full h-full" onClick={() => setMember(index)}>
-                <img src=${person.picture} alt="" class="object-cover" />
-            </button>
-        </li>`
-        document.getElementById("firstname").innerHTML = person.firstname
-        document.getElementById("lastname").innerHTML = person.lastname
-        document.getElementById("displayMembers").insertAdjacentHTML('beforeend',profile)
-    })
+console.log('window.location.pathname :>> ', window.location.pathname);
+if (window.location.pathname == '/competition.html') {
+    updateMenu()
+    setupDownArrow()
+    updateScroller()
 }
-const people = [
-    {
-      firstname: "Tonyo",
-      lastname: "Delapena",
-      role: "Boss",
-      picture: "https://fancytailwind.com/static/profile8-34d5f5980ca5030c155a2ffbb50b5802.jpg",
-      description: "Harum iusto exercitationem assumenda quas nostrum perspiciatis quos iste sit reprehenderit, libero quae aperiam sapiente delectus, porro tempore minus repellendus ratione distinctio!",
-      facebookURL: "#link",
-      twitterURL: "#link",
-      linkedinURL: "#link",
-      youtubeURL: "#link",
-      member: true
-    },
-    {
-      firstname: "Laetitia",
-      lastname: "Librals",
-      role: "Designer",
-      picture: "https://fancytailwind.com/static/profile14-e9ac6c7d68a78a1cbbf29458acacc95a.jpg",
-      description: "Harum iusto exercitationem assumenda quas nostrum perspiciatis quos iste sit reprehenderit, libero quae aperiam sapiente delectus, porro tempore minus repellendus ratione distinctio!",
-      facebookURL: "#link",
-      twitterURL: "#link",
-      linkedinURL: "#link",
-      youtubeURL: "#link",
-      member: true
-    },
-    {
-      firstname: "Laetitia",
-      lastname: "Librals",
-      role: "Designer",
-      picture: "https://fancytailwind.com/static/profile14-e9ac6c7d68a78a1cbbf29458acacc95a.jpg",
-      description: "Harum iusto exercitationem assumenda quas nostrum perspiciatis quos iste sit reprehenderit, libero quae aperiam sapiente delectus, porro tempore minus repellendus ratione distinctio!",
-      facebookURL: "#link",
-      twitterURL: "#link",
-      linkedinURL: "#link",
-      youtubeURL: "#link",
-      member: true
+
+let isForm = {
+    login: true,
+    register: false,
+    forgotPW: false
+}
+const getPosition = () => {
+    return isForm.login ? "top-full"
+        : isForm.register ? "top-0"
+            : isForm.forgotPW ? "-top-full"
+                : null
+}
+function setIsForm(update) {
+    isForm = update
+    loginStuff()
+}
+
+function multiReplace(elm, cond) {
+    if (cond) {
+        elm.classList.remove('text-white')
+        elm.classList.add(...["bg-white", "bg-opacity-90", "text-gray-800"])
+    } else {
+        elm.classList.remove(...["bg-white", "bg-opacity-90", "text-gray-800"])
+        elm.classList.add('text-white')
     }
-]
-if (true){// TODO: check if it is on aboutUs page
-    showMembers(people)
 }
+function toggleWithBool(elm, cond) {
+    cond ? elm.classList.add('opacity-0') : elm.classList.remove('opacity-0')
+}
+
+function loginStuff() {
+
+    multiReplace(document.getElementById('loginBtn'), isForm.login)
+    multiReplace(document.getElementById('registrationBtn'), isForm.register)
+    multiReplace(document.getElementById('forgotPasswordBtn'), isForm.forgotPW)
+
+    var lastClass = $('#displayFormContainer').attr('class').split(' ').pop();
+    document.getElementById('displayFormContainer').classList.replace(lastClass, getPosition())
+
+    toggleWithBool(document.getElementById('loginForm'), !isForm.login)
+    toggleWithBool(document.getElementById('registerForm'), !isForm.register)
+    toggleWithBool(document.getElementById('forgotPasswordForm'), !isForm.forgotPW)
+}
+function initPage() {
+    document.getElementById("loginBtn").className += " " + (isForm.login ? "bg-white bg-opacity-90 text-gray-800" : "text-white")
+    document.getElementById("registrationBtn").className += " " + (isForm.register ? "bg-white bg-opacity-90 text-gray-800" : "text-white")
+    document.getElementById("forgotPasswordBtn").className += " " + (isForm.forgotPW ? "bg-white bg-opacity-90 text-gray-800" : "text-white")
+    toggleWithBool(document.getElementById('loginForm'), !isForm.login)
+    toggleWithBool(document.getElementById('registerForm'), !isForm.register)
+    toggleWithBool(document.getElementById('forgotPasswordForm'), !isForm.forgotPW)
+}
+initPage()

@@ -614,16 +614,16 @@ rhit.DonateController = class {
 }
 rhit.LoginController = class {
 	constructor() {
-		document.querySelector("#signupBtn").onclick = (event) => {
-			window.location.href = "/signup.html"
-		}
-		document.querySelector("#submit").onclick = (event) => {
-		}
-		document.querySelector("#roseFireBtn").onclick = (event) => {
-			rhit.authManager.signInWithRoseFire()
-		}
-		if (!rhit.authManager.fbUI)
-			rhit.authManager.startFirebaseUI()
+		// document.querySelector("#signupBtn").onclick = (event) => {
+		// 	window.location.href = "/signup.html"
+		// }
+		// document.querySelector("#submit").onclick = (event) => {
+		// }
+		// document.querySelector("#roseFireBtn").onclick = (event) => {
+		// 	rhit.authManager.signInWithRoseFire()
+		// }
+		// if (!rhit.authManager.fbUI)
+		// 	rhit.authManager.startFirebaseUI()
 	}
 
 }
