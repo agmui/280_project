@@ -102,4 +102,6 @@ function initPage() {
     toggleWithBool(document.getElementById('registerForm'), !isForm.register)
     toggleWithBool(document.getElementById('forgotPasswordForm'), !isForm.forgotPW)
 }
-initPage()
+
+if (window.location.pathname == '/login.html')
+    initPage()
