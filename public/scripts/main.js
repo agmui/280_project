@@ -72,7 +72,7 @@ rhit.InventoryController = class {
 		document.querySelector("#confirmDelete").onclick = () => {
 			this.closeModal("deleteItemModal")
 			uid = document.querySelector("#deleteItemModal").itemId
-			
+
 
 			this.fillList()
 		}
@@ -200,7 +200,7 @@ rhit.InventoryController = class {
 								newList.appendChild(htmlToElement(`
 								<hr class="my-4 border-gray-300" />`))
 								newList.appendChild(htmlToElement(`
-								<div id=${doc.id} class="flex items-center mt-4">
+								<div class="flex items-center mt-4">
 									<div class="w-1/4 text-lg text-gray-800">${data.name}</div>
 									<div class="w-1/4 text-lg text-gray-800">In Inventory</div>
 									<div class="w-1/4 text-lg text-gray-800">&nbsp;</div>
@@ -254,7 +254,8 @@ rhit.InventoryController = class {
 		var deleteButtons = document.querySelectorAll("#deleteButton")
 		deleteButtons.forEach(element => {
 			element.onclick = () => {
-
+				
+				document.querySelector("#deleteItemModal").itemId = element.uniqueid
 				this.openModal("deleteItemModal")
 
 				
