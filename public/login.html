@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css" />
     <!-- <link rel="stylesheet" href="styles/output.css"> -->
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.2/firebase-ui-auth.css" />
 </head>
 
 <body>
@@ -74,7 +75,7 @@
                 ease-in-out transform -translate-y-full top-full">
 
                 <!-- {/* ::Login Form */} -->
-                <div id="loginForm" onSubmit={handleSubmitSignIn} class="px-8 lg:px-20 w-full h-full flex flex-col items-center
+                <div id="loginForm" class="px-8 lg:px-20 w-full h-full flex flex-col items-center
                     justify-center bg-white bg-opacity-90 transition-all duration-150 ease-in transform">
                     <!-- {/* :::Login Title */} -->
                     <h2
@@ -84,7 +85,7 @@
                     <form action="" class="py-10 w-full">
                         <!-- {/* Login Email */} -->
                         <label htmlFor="email" class="relative">
-                            <input ref={signInEmailRef} id="email" type="email" name="email"
+                            <input id="loginEmail" type="email" name="email"
                                 class="form-input mb-5 py-0.5 w-full text-base text-gray-700 border-0 border-b border-gray-700 outline-none bg-transparent focus:ring-0 focus:border-green-600"
                                 placeholder="Email" required />
                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -96,7 +97,7 @@
                         </label>
                         <!-- {/* Login Password */} -->
                         <label htmlFor="password" class="relative">
-                            <input ref={signInPasswordRef} id="password" type="password" name="password"
+                            <input id="loginPassword" type="password" name="password"
                                 class="form-input mb-5 py-0.5 w-full text-base text-gray-700 border-0 border-b border-gray-700 outline-none bg-transparent focus:ring-0 focus:border-green-600"
                                 placeholder="Password" required />
                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -108,20 +109,35 @@
                         </label>
                         <!-- {/* Login Submit Button */} -->
                         <div class="mt-10 w-full">
-                            <button type=submit
+                            <button id="loginSubmitBtn" type=submit
                                 class="group-btn3b relative inline-flex justify-center items-center px-7 py-3.5 w-full rounded shadow-lg outline-none text-lg text-white font-medium overflow-hidden transition-all duration-100 ease-in transform hover:scale-110 hover:bg-transparent hover:shadow-none active:top-0.5 focus:outline-none">
-                                test
+                                login
                                 <!-- {/* button::after */} -->
                                 <span
-                                    class="-z-1 absolute top-0 left-0 w-full h-full shadow-inset bg-green-600 bg-opacity-70 transition-all duration-200 ease-in transform group-hover:scale-150 group-btn3b-hover:rotate-180"
+                                    class="-z-1 absolute top-0 left-0 w-full h-full shadow-inset bg-green-600 bg-opacity-70 transition-all duration-200 ease-in transform group-hover:scale-150 hover:rotate-180"
                                     aria-hidden="true" />
                             </button>
                         </div>
+                        <div class="mt-10 w-full">
+                            <button id="roseFireBtn" type=submit
+                                class="group-btn3b relative inline-flex justify-center items-center px-7 py-3.5 w-full rounded shadow-lg outline-none text-lg text-white font-medium overflow-hidden transition-all duration-100 ease-in transform hover:scale-110 hover:bg-transparent hover:shadow-none active:top-0.5 focus:outline-none">
+                                rosefire
+                                <!-- {/* button::after */} -->
+                                <span
+                                    class="-z-1 absolute top-0 left-0 w-full h-full shadow-inset custom-red-bg bg-opacity-70 transition-all duration-200 ease-in transform group-hover:scale-150 hover:rotate-180"
+                                    aria-hidden="true" />
+                            </button>
+                        </div>
+
+                        <div class="mt-10 w-full">
+                            <div id="firebaseui-auth-container"></div>
+                        </div>
+
                     </form>
                 </div>
 
                 <!-- {/* ::Register Form */} -->
-                <div id="registerForm" onSubmit={handleSubmitSignUp} class="px-8 lg:px-20 w-full h-full flex flex-col items-center
+                <div id="registerForm" class="px-8 lg:px-20 w-full h-full flex flex-col items-center
                     justify-center bg-white bg-opacity-90 transition-all duration-150 ease-in transform">
                     <!-- ${!isForm.register && "opacity-0" }"> -->
                     <!-- {/* :::Register Title */} -->
@@ -132,7 +148,9 @@
                     <form action="" class="py-10 w-full">
                         <!-- {/* Register Username */} -->
                         <label htmlFor="username" class="relative">
-                            <input ref={signUpUsernameRef} id="username" type="text" name="username"
+                            <input
+                            id="registerUsername"
+                             type="text" name="username"
                                 class="mb-5 py-0.5 w-full text-base text-gray-700 border-0 border-b border-gray-700 outline-none bg-transparent focus:border-blue-600 focus:ring-0"
                                 placeholder="Username" required />
                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +162,9 @@
                         </label>
                         <!-- {/* Register Email */} -->
                         <label htmlFor="email" class="relative">
-                            <input ref={signUpEmailRef} id="email" type="email" name="email"
+                            <input
+                            id="registerEmail"
+                             type="email" name="email"
                                 class="mb-5 py-0.5 w-full text-base text-gray-700 border-0 border-b border-gray-700 outline-none bg-transparent focus:border-blue-600 focus:ring-0"
                                 placeholder="Email" required />
                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -156,7 +176,8 @@
                         </label>
                         <!-- {/* Register Password */} -->
                         <label htmlFor="password" class="relative">
-                            <input ref={signUpPasswordRef} id="password" type="password" name="password"
+                            <input
+                             id="registerPass" type="password" name="password"
                                 class="mb-5 py-0.5 w-full text-base text-gray-700 border-0 border-b border-gray-700 outline-none bg-transparent focus:border-blue-600 focus:ring-0"
                                 placeholder="Password" required />
                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -168,7 +189,7 @@
                         </label>
                         <!-- {/* Register Confirm Password */} -->
                         <label htmlFor="password" class="relative">
-                            <input ref={signUpConfirmPasswordRef} id="password" type="password" name="password"
+                            <input id="registerConfirmPass" type="password" name="password"
                                 class="mb-5 py-0.5 w-full text-base text-gray-700 border-0 border-b border-gray-700 outline-none bg-transparent focus:border-blue-600 focus:ring-0"
                                 placeholder="Confirm Password" required />
                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -183,12 +204,29 @@
                         <div class="mt-10 w-full">
                             <!-- <Button3b type="submit" bgColor="bg-blue-600 bg-opacity-70">Register</Button3b> -->
 
-                            <button type=submit
+                            <button 
+                            id="registerSubmitBtn"
+                            type=submit
                                 class="group-btn3b relative inline-flex justify-center items-center px-7 py-3.5 w-full rounded shadow-lg outline-none text-lg text-white font-medium overflow-hidden transition-all duration-100 ease-in transform hover:scale-110 hover:bg-transparent hover:shadow-none active:top-0.5 focus:outline-none">
                                 Register
                                 <!-- {/* button::after */} -->
                                 <span
-                                    class="-z-1 absolute top-0 left-0 w-full h-full shadow-inset bg-blue-600 bg-opacity-70 transition-all duration-200 ease-in transform group-hover:scale-150 group-btn3b-hover:rotate-180"
+                                    class="-z-1 absolute top-0 left-0 w-full h-full shadow-inset bg-blue-600 bg-opacity-70 transition-all duration-200 ease-in transform group-hover:scale-150 hover:rotate-180"
+                                    aria-hidden="true" />
+                            </button>
+                        </div>
+
+                        <div class="relative inline-flex justify-center items-center px-7 py-3.5 w-full text-lg font-medium overflow-hidden">
+                            or
+                        </div>
+
+                        <div class="mt-10 w-full">
+                            <button id="roseFireBtn2" type=submit
+                                class="group-btn3b relative inline-flex justify-center items-center px-7 py-3.5 w-full rounded shadow-lg outline-none text-lg text-white font-medium overflow-hidden transition-all duration-100 ease-in transform hover:scale-110 hover:bg-transparent hover:shadow-none active:top-0.5 focus:outline-none">
+                                rosefire
+                                <!-- {/* button::after */} -->
+                                <span
+                                    class="-z-1 absolute top-0 left-0 w-full h-full shadow-inset custom-red-bg bg-opacity-70 transition-all duration-200 ease-in transform group-hover:scale-150 hover:rotate-180"
                                     aria-hidden="true" />
                             </button>
                         </div>
@@ -196,7 +234,7 @@
                 </div>
 
                 <!-- {/* ::Forgot password Form */} -->
-                <div id="forgotPasswordForm" onSubmit={handleResetPassword} class="px-8 lg:px-20 w-full h-full flex flex-col items-center
+                <div id="forgotPasswordForm" class="px-8 lg:px-20 w-full h-full flex flex-col items-center
                     justify-center bg-white bg-opacity-90 transition-all duration-150 ease-in transform">
                     <!-- {/* :::Reset Title */} -->
                     <h2

@@ -433,6 +433,8 @@ rhit.AuthManager = class {
 		});
 	}
 	signInWithRoseFire() {
+		document.getElementById("loginEmail").value = ""
+		document.getElementById("loginPassword").value = ""
 		Rosefire.signIn("f628f4ae-8716-4f00-b72f-eccc3daa297e", (err, rfUser) => {
 			if (err) {
 				console.log("Rosefire error!", err);
@@ -450,13 +452,35 @@ rhit.AuthManager = class {
 
 		});
 	}
-	signupWithEmail() {
-		firebase.auth().signInWithEmailAndPassword(email, password).catch((error) => {
+	
+	signInWithEmail(email, password){
+		firebase.auth().signInWithEmailAndPassword(email, password)
+		.then((userCredential) => {
+		//   var user = userCredential.user;
+			console.log("siged IN with email");
+		})
+		.catch((error) => {
+		  var errorCode = error.code;
+		  var errorMessage = error.message;
+		  console.log(error);
+		});
+	}
+
+	registerWithEmail(email, password) {
+		console.log('email, password :>> ', email, password);
+		firebase.auth().createUserWithEmailAndPassword(email, password)
+		.then((userCredential) => {
+			// let user = userCredential.user
+			console.log("signed UP with email");
+			
+		})
+		.catch((error) => {
 			let errorCode = error.errorCode
 			let errorMsg = error.message
 			console.log(error);
 		})
 	}
+
 	signOut() {
 		firebase.auth().signOut().catch((error) => {
 			console.log("Sign out error");
@@ -774,25 +798,31 @@ rhit.LoginController = class {
 		// }
 		// document.querySelector("#submit").onclick = (event) => {
 		// }
-		// document.querySelector("#roseFireBtn").onclick = (event) => {
-		// 	rhit.authManager.signInWithRoseFire()
-		// }
-		// if (!rhit.authManager.fbUI)
-		// 	rhit.authManager.startFirebaseUI()
-	}
 
-}
-rhit.SignupController = class {
-	constructor() {
-		// document.querySelector("#submit").onclick = (event) => {
-		// 	console.log(inputEmail.value, inputPass.value);
-		// 	rhit.authManager.signupWithEmail()
-		// }
-		// document.querySelector("#roseFireBtn").onclick = (event) => {
-		// 	rhit.authManager.signInWithRoseFire()
-		// }
-		// if (!rhit.authManager.fbUI)
-		// 	rhit.authManager.startFirebaseUI()
+		document.querySelector("#roseFireBtn").onclick = (event) => {
+			rhit.authManager.signInWithRoseFire()
+		}
+		document.querySelector("#roseFireBtn2").onclick = (event) => {
+			rhit.authManager.signInWithRoseFire()
+		}
+
+		if (!rhit.authManager.fbUI)
+			rhit.authManager.startFirebaseUI()
+
+		//FIXME:
+		document.querySelector("#loginSubmitBtn").onclick = (event) => {
+			let email = document.getElementById("loginEmail").value
+			let pass = document.getElementById("loginPassword").value
+			rhit.authManager.signInWithEmail(email, pass)
+		}
+
+		document.querySelector('#registerSubmitBtn').onclick = (event) => {
+			let username = document.getElementById('registerUsername').value
+			let email = document.getElementById('registerEmail').value
+			let password = document.getElementById('registerPass').value
+			let confirmPass = document.getElementById('registerConfirmPass').value
+			rhit.authManager.registerWithEmail(email, password)
+		}
 	}
 }
 
