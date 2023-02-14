@@ -85,7 +85,7 @@
 
 
         <div class="relative w-64">
-            <input type="text"
+            <input id="searchField" type="text"
                 class="bg-gray-300 rounded-full p-2 pl-10 text-gray-700 focus:outline-none focus:shadow-outline w-full"
                 placeholder="Search">
             <button id="searchButton" class="absolute right-0 top-0 mt-2 mr-4">
@@ -113,17 +113,30 @@
             </button>
         </div>
 
+        <!-- Add Item Modal -->
         <div id="addItemModal" class="fixed bottom-0 left-0 top-0 right-0 bg-gray-900 bg-opacity-75 z-50 overflow-auto"
             style="display: none;">
             <div class="p-6 m-auto center-modal bg-white rounded-lg max-w-lg shadow-lg">
                 <div class="flex justify-end">
-                    <button id="xButton" class="text-red-500 font-bold">
+
+                    <button id="xButton" type="button"
+                        class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                        data-modal-hide="popup-modal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                    <!-- <button id="xButton" class="text-red-500 font-bold">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                         </svg>
 
-                    </button>
+                    </button> -->
                 </div>
                 <p class="text-xl font-bold m-4">Add Item to Inventory</p>
                 <div class="space-y-6">
@@ -141,7 +154,46 @@
                 </div>
             </div>
         </div>
+
+        <!-- Delete Item Modal -->
+        <div itemId="" id="deleteItemModal"
+            class="fixed bottom-0 left-0 top-0 right-0 bg-gray-900 bg-opacity-75 z-50 overflow-auto"
+            style="display: none;">
+            <div class="p-6 m-auto center-modal bg-white rounded-lg max-w-lg shadow-lg">
+                <div class="relative bg-white rounded-lg dark:bg-gray-700">
+                    <button id="xButtonDelete" type="button"
+                        class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                        data-modal-hide="popup-modal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                    <div class="p-6 text-center">
+                        <svg aria-hidden="true" class="mx-auto mb-4 text-gray-400 w-14 h-14 dark:text-gray-200"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to
+                            delete ?</h3>
+                        <button id="confirmDelete" data-modal-hide="popup-modal" type="button"
+                            class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                            Yes, I'm sure
+                        </button>
+                        <button id="cancelDelete" data-modal-hide="popup-modal" type="button"
+                            class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No,
+                            cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
+
+
 
     <!-- Check In -->
     <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -164,102 +216,17 @@
       </svg> -->
 
 
-    <div id="checkoutContainer" class="mx-auto px-28 py-16 mt-1">
-        <!-- <div class="flex flex-col rounded-2xl">
-            <div class="flex bg-gray-300 p-4">
-                <div class="w-1/3 text-left font-bold">Name</div>
-                <div class="w-1/3 text-left font-bold">Date</div>
-                <div class="w-1/3 text-left font-bold">Username</div>
-            </div>
-            <div class="flex bg-gray-100 p-4">
-                <div class="w-1/3 text-left">Item 1</div>
-                <div class="w-1/3 text-left">Jan 1, 2022</div>
-                <div class="w-1/3 text-left">user1</div>
-            </div>
-            <div class="flex bg-gray-200 p-4">
-                <div class="w-1/3 text-left">Item 2</div>
-                <div class="w-1/3 text-left">Jan 2, 2022</div>
-                <div class="w-1/3 text-left">user2</div>
-            </div>
-            <div class="flex bg-gray-100 p-4">
-                <div class="w-1/3 text-left">Item 3</div>
-                <div class="w-1/3 text-left">Jan 3, 2022</div>
-                <div class="w-1/3 text-left">user3</div>
-            </div>
-        </div> -->
+    <div id="checkoutContainer" class="mx-auto px-28 py-16 mt-1 inventoryTable">
 
-        <div class="flex flex-col items-center py-10">
-            <div class="w-full max-w-3xl rounded-lg bg-white shadow-lg p-6">
+        <div class="flex flex-col items-center py-10 m-auto" style="width: 800px;">
+            <div id="invItemContainer" class="w-full max-w-3xl rounded-lg bg-white shadow-lg p-6">
                 <div class="flex items-center">
                     <div class="w-1/4 font-bold text-lg text-gray-600">Item Name</div>
                     <div class="w-1/4 font-bold text-lg text-gray-600">Checked Out Date</div>
                     <div class="w-1/4 font-bold text-lg text-gray-600">User Checked Out</div>
                 </div>
-                <hr class="my-4 border-gray-300" />
-                <div class="flex items-center mt-4">
-                    <!-- Checked Out Item -->
-                    <div class="w-1/4 text-lg text-gray-800">Rubber Band</div>
-                    <div class="w-1/4 text-lg text-gray-800">01/01/2022</div>
-                    <div class="w-1/4 text-lg text-gray-800">admin</div>
-                    <div class="w-1/8 flex justify-center">
-                        <button>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
-                            </svg>
-
-                        </button>
-                    </div>
-                    <div class="w-1/8 flex justify-center">
-                        <button>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                            </svg>
-                        </button>
-                        <button>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-                <hr class="my-4 border-gray-300" />
-                <div class="flex items-center mt-4">
-                    <div class="w-1/4 text-lg text-gray-800">Large Rubber Band</div>
-                    <div class="w-1/4 text-lg text-gray-800">In Inventory</div>
-                    <div class="w-1/4 text-lg text-gray-800">&nbsp;</div>
-                    <div class="w-1/8 flex justify-center">
-                        <button>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
-                            </svg>
-
-                        </button>
-                    </div>
-                    <div class="w-1/8 flex justify-center">
-                        <button>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                            </svg>
-                        </button>
-                        <button>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
+                
+                
             </div>
         </div>
 

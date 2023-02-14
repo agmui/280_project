@@ -36,54 +36,60 @@ function htmlToElement(html) {
 rhit.InventoryController = class {
 	constructor() {
 
-		this.shown = false;
-
 		this._ref = firebase.firestore().collection(rhit.FB_INVENTORY)
+
+		// add item Buttons
 		document.querySelector("#addItem").onclick = () => {
-			const input = document.querySelector("#itemNameTextField").value
+			const input = document.querySelector("#itemNameTextField").value.trim()
+			if (input == "") return;
 			this.addItem(input)
-			this.closeModal()
+			document.querySelector("#itemNameTextField").value = ""
+			this.closeAddModal("addItemModal")
 		}
+
+		// Add Item
 		document.querySelector("#openModalButton").onclick = () => {
-			this.openModal()
+			this.openAddModal("addItemModal")
 		}
 		document.querySelector("#xButton").onclick = () => {
-			this.closeModal()
+			document.querySelector("#itemNameTextField").value = ""
+			this.closeModal("addItemModal")
 		}
-		// document.querySelector("#delItem").onclick = () => {
 
-		// }
-		// document.querySelector("#editItem").onclick = () => {
-
-		// }
-		// document.querySelector("#checkOut").onclick = () => {
-		// 	// this.checkoutItem("lI0WUOuyVDCnbB9ya4aP", "Mui San")
-		// 	this.checkOutButtonClick()
-		// }
-		// document.querySelector("#return").onclick = () => {
-
-		// }
-
-
-	}
-	toggleModal() {
-		this.shown = !this.shown;
-		if (this.shown) {
-			this.openModal()
-		} else {
-			this.closeModal()
+		document.querySelector("#openModalButton").onclick = () => {
+			this.openModal("addItemModal")
 		}
+
+		// Delete Item
+		document.querySelector("#xButtonDelete").onclick = () => {
+			this.closeModal("deleteItemModal")
+		}
+
+		document.querySelector("#cancelDelete").onclick = () => {
+			this.closeModal("deleteItemModal")
+		}
+
+		document.querySelector("#confirmDelete").onclick = () => {
+			this.closeModal("deleteItemModal")
+			uid = document.querySelector("#deleteItemModal").itemId
+			
+
+			this.fillList()
+		}
+		
+
+		document.querySelector("#searchButton").onclick = () => {
+			this.fillList()
+		}
+
 	}
 
-	closeModal() {
-		this.shown = false;
-		document.querySelector("#addItemModal").style.display = "none";
-		document.querySelector("#itemNameTextField").value = ""
+	closeModal(idName) {
+		document.querySelector(idName).style.display = "none";
 	}
 
-	openModal() {
-		this.shown = true;
-		document.querySelector("#addItemModal").style.display = "block";
+	openModal(idName) {
+		document.querySelector(idName).style.display = "block";
 	}
 
 
@@ -103,6 +109,7 @@ rhit.InventoryController = class {
 	deleteItem(itemId) {
 		return this._ref.doc(itemId).delete()
 	}
+
 	queryItem(itemSubString) {
 		return this._ref.where(rhit.FB_ITEM_NAME, "==", itemSubString) //.limit(50)
 			.get()
@@ -122,6 +129,139 @@ rhit.InventoryController = class {
 			});
 	}
 
+	fillList() {
+		const searchName = document.querySelector("#searchField").value.trim();
+
+		this.queryItem(searchName).then((querySnapshot) => {
+
+
+
+			//make new checkout container
+			const newList = htmlToElement('<div id="invItemContainer" class="w-full max-w-3xl rounded-lg bg-white shadow-lg p-6"></div>')
+
+			newList.appendChild(htmlToElement(`
+			<div class="flex items-center">
+				<div class="w-1/4 font-bold text-lg text-gray-600">Item Name</div>
+				<div class="w-1/4 font-bold text-lg text-gray-600">Checked Out Date</div>
+				<div class="w-1/4 font-bold text-lg text-gray-600">User Checked Out</div>
+			</div>
+			<hr class="my-4 border-gray-300" />`))
+
+			//fill container with items in a loop
+			querySnapshot.forEach((doc) => {
+				let data = doc.data()
+				let username = ""
+				console.log('data :>> ', data);
+
+				if (data.userCheckedoutTo) {
+					// Currently checked in
+					data.userCheckedoutTo.get()
+						.then(res => {
+							console.log('res :>> ', res.data());
+							username = res.data().username
+							if (res.id != 'Xjm16rf8fKirYdok5PfD') {
+								// console.log('username :>> ', username);
+								newList.appendChild(htmlToElement(`
+								<hr class="my-4 border-gray-300" />`))
+								newList.appendChild(htmlToElement(`
+								<div class="flex items-center mt-4">
+									<!-- Checked Out Item -->
+									<div class="w-1/4 text-lg text-gray-800">${data.name}</div>
+									<div class="w-1/4 text-lg text-gray-800">${data.checkoutDate.toDate().toDateString()}</div>
+									<div class="w-1/4 text-lg text-gray-800">${username}</div>
+									<div class="w-1/8 flex justify-center">
+										<button uniqueid=${doc.id} id="checkInButton">
+											<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+												stroke="currentColor" class="w-6 h-6">
+												<path stroke-linecap="round" stroke-linejoin="round"
+													d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+											</svg>
+				
+										</button>
+									</div>
+									<div class="w-1/8 flex justify-center">
+										<button uniqueid=${doc.id} id="editButton">
+											<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+												stroke="currentColor" class="w-6 h-6">
+												<path stroke-linecap="round" stroke-linejoin="round"
+													d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+											</svg>
+										</button>
+										<button uniqueid=${doc.id} id="deleteButton">
+											<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+												stroke="currentColor" class="w-6 h-6">
+												<path stroke-linecap="round" stroke-linejoin="round"
+													d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+											</svg>
+										</button>
+									</div>
+								</div>`))
+							} else {
+								newList.appendChild(htmlToElement(`
+								<hr class="my-4 border-gray-300" />`))
+								newList.appendChild(htmlToElement(`
+								<div id=${doc.id} class="flex items-center mt-4">
+									<div class="w-1/4 text-lg text-gray-800">${data.name}</div>
+									<div class="w-1/4 text-lg text-gray-800">In Inventory</div>
+									<div class="w-1/4 text-lg text-gray-800">&nbsp;</div>
+									<div class="w-1/8 flex justify-center">
+										<button uniqueid=${doc.id} id="checkOutButton">
+											<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+												stroke="currentColor" class="w-6 h-6">
+												<path stroke-linecap="round" stroke-linejoin="round"
+													d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+											</svg>
+			
+										</button>
+									</div>
+									<div class="w-1/8 flex justify-center">
+										<button uniqueid=${doc.id} id="editButton">
+											<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+												stroke="currentColor" class="w-6 h-6">
+												<path stroke-linecap="round" stroke-linejoin="round"
+													d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+											</svg>
+										</button>
+										<button uniqueid=${doc.id} id="deleteButton">
+											<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+												stroke="currentColor" class="w-6 h-6">
+												<path stroke-linecap="round" stroke-linejoin="round"
+													d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+											</svg>
+										</button>
+									</div>
+								</div>`))
+
+							}
+						})
+						.catch(err => console.error(err));
+				}
+
+			});
+
+			//remove old quotelistcontainer
+			const oldList = document.querySelector("#invItemContainer")
+			oldList.removeAttribute("id");
+			oldList.hidden = true
+			//put in the new quotelistcontainer
+			oldList.parentElement.appendChild(newList)
+
+			this.setupListeners()
+		})
+	}
+
+	setupListeners() {
+		var deleteButtons = document.querySelectorAll("#deleteButton")
+		deleteButtons.forEach(element => {
+			element.onclick = () => {
+
+				this.openModal("deleteItemModal")
+
+				
+			}
+		});
+	}
+
 	// connect to button click
 	checkOutButtonClick() {
 
@@ -129,8 +269,6 @@ rhit.InventoryController = class {
 		const searchName = document.querySelector("#searchTerm").value;
 
 		this.queryItem(searchName).then((querySnapshot) => {
-
-
 
 			//make new checkout container
 			const newList = htmlToElement('<div id="checkoutContainer"></div>')
@@ -280,6 +418,7 @@ rhit.User = class {
 
 rhit.AuthManager = class {
 	constructor() {
+		this._ref = firebase.firestore().collection(rhit.FB_USERS)
 		this._user = null;
 		this._name = ""
 		this._photoUrl = ""
@@ -369,6 +508,21 @@ rhit.AuthManager = class {
 
 	get uid() {
 		return this._user.uid
+	}
+
+	getUserFromId(uid) {
+		const user = this._ref.where(firebase.firestore.FieldPath.documentId(), '==', uid).get().then((doc) => {
+			if (doc.exists) {
+				console.log("Document data:", doc.data());
+				return doc.data()[rhit.FB_USERNAME]
+			} else {
+				// doc.data() will be undefined in this case
+				console.log("No such document!");
+			}
+		}).catch((error) => {
+			console.log("Error getting document:", error);
+		});
+
 	}
 
 	get isSignedIn() {
