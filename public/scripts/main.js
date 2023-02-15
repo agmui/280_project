@@ -82,9 +82,13 @@ rhit.InventoryController = class {
 			const input = document.querySelector("#itemNameTextField").value.trim()
 			if (input == "") return;
 			this.addItem(input)
-			this.fillList()
 			document.querySelector("#itemNameTextField").value = ""
 			this.closeModal("#addItemModal")
+
+
+			const searchName = document.querySelector("#searchField").value.trim();
+			if (searchName == "") return;
+			this.fillList()
 		}
 
 		// Add Item
@@ -129,7 +133,41 @@ rhit.InventoryController = class {
 			this.fillList()
 		}
 
-		
+
+		// Return Item
+		document.querySelector("#xButtonReturn").onclick = () => {
+			this.closeModal("#returnItemModal")
+		}
+
+		document.querySelector("#cancelReturn").onclick = () => {
+			this.closeModal("#returnItemModal")
+		}
+
+		document.querySelector("#confirmReturn").onclick = () => {
+			this.closeModal("#returnItemModal")
+			var uid = document.querySelector("#returnItemModal").dataset.itemid
+			this.returnItem(uid)
+
+			this.fillList()
+		}
+
+		// Checkout Item
+		document.querySelector("#xButtonCheckout").onclick = () => {
+			this.closeModal("#checkoutItemModal")
+		}
+
+		document.querySelector("#cancelCheckout").onclick = () => {
+			this.closeModal("#checkoutItemModal")
+		}
+
+		document.querySelector("#confirmCheckout").onclick = () => {
+			this.closeModal("#checkoutItemModal")
+			var uid = document.querySelector("#checkoutItemModal").dataset.itemid
+			this.checkoutItem(uid)
+
+			this.fillList()
+		}
+
 		// Search
 		document.querySelector("#searchButton").onclick = () => {
 			this.fillList()
@@ -329,7 +367,7 @@ rhit.InventoryController = class {
 	}
 
 	setupListeners() {
-		var deleteButtons = document.querySelectorAll("#deleteButton")
+		const deleteButtons = document.querySelectorAll("#deleteButton")
 		deleteButtons.forEach(element => {
 			element.onclick = () => {
 				document.querySelector("#areYouSureDelete").innerHTML = `Are you sure you want to delete ${element.dataset.itemname}?`
@@ -340,7 +378,7 @@ rhit.InventoryController = class {
 			}
 		});
 
-		var editButtons = document.querySelectorAll("#editButton")
+		const editButtons = document.querySelectorAll("#editButton")
 		editButtons.forEach(element => {
 			element.onclick = () => {
 				document.querySelector("#editNameTextField").placeholder = `${element.dataset.itemname}`
@@ -348,46 +386,32 @@ rhit.InventoryController = class {
 				this.openModal("#editItemModal")
 			}
 		});
+
+		const returnButtons = document.querySelectorAll("#checkInButton")
+		returnButtons.forEach(element => {
+			element.onclick = () => {
+				document.querySelector("#areYouSureReturn").innerHTML = `Are you sure you want to return ${element.dataset.itemname}?`
+				document.querySelector("#returnItemModal").dataset.itemid = element.dataset.uniqueid
+				this.openModal("#returnItemModal")
+			}
+		});
+		
+		const checkoutButtons = document.querySelectorAll("#checkOutButton")
+		checkoutButtons.forEach(element => {
+			element.onclick = () => {
+				document.querySelector("#areYouSureCheckout").innerHTML = `Are you sure you want to checkout ${element.dataset.itemname}?`
+				document.querySelector("#checkoutItemModal").dataset.itemid = element.dataset.uniqueid
+				this.openModal("#checkoutItemModal")
+			}
+		});
 	}
 
-	// connect to button click
-	checkOutButtonClick() {
 
-		// TODO: get data from fields on html
-		const searchName = document.querySelector("#searchTerm").value;
-
-		this.queryItem(searchName).then((querySnapshot) => {
-
-			//make new checkout container
-			const newList = htmlToElement('<div id="checkoutContainer"></div>')
-
-			//fill container with items in a loop
-			querySnapshot.forEach((doc) => {
-				newList.appendChild(htmlToElement(`<div>
-														<div>
-															<h5>${doc.data().name}</h5>
-															<h6>${doc.data().userCheckedoutTo}</h6>
-															<h6">${doc.data().checkoutDate}</h6> 
-														</div>
-													</div>`))
-				// doc.data() is never undefined for query doc snapshots
-				console.log(doc.id, " => ", doc.data());
-			});
-
-			//remove old quotelistcontainer
-			const oldList = document.querySelector("#checkoutContainer")
-			oldList.removeAttribute("id");
-			oldList.hidden = true
-			//put in the new quotelistcontainer
-			oldList.parentElement.appendChild(newList)
-		})
-	}
-
-	checkoutItem(itemId, username) {
+	checkoutItem(itemId) {
 		const item = this._ref.doc(itemId)
 
 		item.update({
-			[rhit.FB_USER_CHECKED_OUT_TO]: username,
+			[rhit.FB_USER_CHECKED_OUT_TO]: rhit.authManager.getUser(),
 			[rhit.FB_CHECKOUT_DATE]: firebase.firestore.Timestamp.now(),
 		}).then(() => {
 			console.log("Document updated with ID: ", docRef.id)
@@ -399,7 +423,7 @@ rhit.InventoryController = class {
 	returnItem(itemId) {
 		const item = this._ref.doc(itemId)
 		item.update({
-			[rhit.FB_USER_CHECKED_OUT_TO]: "",
+			[rhit.FB_USER_CHECKED_OUT_TO]: rhit.authManager.getAdmin(),
 		}).then(() => {
 			console.log("Document updated with ID: ", docRef.id)
 		})
@@ -421,6 +445,10 @@ rhit.AuthManager = class {
 		return this._ref.doc("V7NqMe2BDOManY4kYQaZIkdhTTu1")
 	}
 
+	getUser() {
+		return this._ref.doc(this.uid)
+	}
+
 	beginListening(changeListener) {
 		firebase.auth().onAuthStateChanged((user) => {
 			if (user != null) {//checked if logged in
@@ -431,13 +459,13 @@ rhit.AuthManager = class {
 					} else {
 						console.log("New user");
 						this._ref.doc(user.uid).set({
-							username: (user.displayName)?user.displayName:this._username,
+							username: (user.displayName) ? user.displayName : this._username,
 							email: user.email,
 							aboutUs: false,
 							bio: "Never gona give you up",
 							firstname: "",
 							lastname: "",
-							imgUrl: (user.photoURL!=null)?user.photoURL:"",
+							imgUrl: (user.photoURL != null) ? user.photoURL : "",
 							role: ""
 						});
 					}
