@@ -95,6 +95,15 @@ function loginStuff() {
     toggleWithBool(document.getElementById('forgotPasswordForm'), !isForm.forgotPW)
 }
 function initPage() {
+    if (window.location.search == '?signin=true') {
+        isForm = { login: false, register: true, forgotPW: false }
+        var lastClass = $('#displayFormContainer').attr('class').split(' ').pop();
+        document.getElementById('displayFormContainer').classList.replace(lastClass, getPosition())
+    }else if (window.location.search == '?resetPW=true') {
+        isForm = { login: false, register: false, forgotPW: true }
+        var lastClass = $('#displayFormContainer').attr('class').split(' ').pop();
+        document.getElementById('displayFormContainer').classList.replace(lastClass, getPosition())
+    }
     document.getElementById("loginBtn").className += " " + (isForm.login ? "bg-white bg-opacity-90 text-gray-800" : "text-white")
     document.getElementById("registrationBtn").className += " " + (isForm.register ? "bg-white bg-opacity-90 text-gray-800" : "text-white")
     document.getElementById("forgotPasswordBtn").className += " " + (isForm.forgotPW ? "bg-white bg-opacity-90 text-gray-800" : "text-white")

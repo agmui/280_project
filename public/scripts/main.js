@@ -468,20 +468,40 @@ rhit.AuthManager = class {
 	constructor() {
 		this._ref = firebase.firestore().collection(rhit.FB_USERS)
 		this._user = null;
-		this._name = ""
-		this._photoUrl = ""
+		this._username = "rick"
 		this.fbUI = false
 	}
+
 	getAdmin() {
-		return this._ref.doc("Xjm16rf8fKirYdok5PfD")
+		return this._ref.doc("V7NqMe2BDOManY4kYQaZIkdhTTu1")
 	}
+
 	beginListening(changeListener) {
 		firebase.auth().onAuthStateChanged((user) => {
-			this._user = user
-			console.log('this._user :>> ', this._user);
+			if (user != null) {//checked if logged in
+				this._user = user
+				this._ref.doc(user.uid).get().then((doc) => {
+					if (doc.exists) {
+						console.log("user data:", doc.data());
+					} else {
+						console.log("New user");
+						this._ref.doc(user.uid).set({
+							username: (user.displayName)?user.displayName:this._username,
+							email: user.email,
+							aboutUs: false,
+							bio: "Never gona give you up",
+							firstname: "",
+							lastname: "",
+							imgUrl: (user.photoURL!=null)?user.photoURL:"",
+							role: ""
+						});
+					}
+				})
+			}
 			changeListener();
 		});
 	}
+
 	signInWithRoseFire() {
 		document.getElementById("loginEmail").value = ""
 		document.getElementById("loginPassword").value = ""
@@ -491,7 +511,7 @@ rhit.AuthManager = class {
 				return;
 			}
 			console.log("Rosefire success!", rfUser);
-			this._name = rfUser.name
+			this._username = rfUser.name
 			firebase.auth().signInWithCustomToken(rfUser.token).catch((error) => {
 				if (error.code === 'auth/invalid-custom-token') {
 					alert("The token you provided is not valid.");
@@ -507,7 +527,7 @@ rhit.AuthManager = class {
 		firebase.auth().signInWithEmailAndPassword(email, password)
 			.then((userCredential) => {
 				//   var user = userCredential.user;
-				console.log("siged IN with email");
+				console.log("signed IN with email");
 			})
 			.catch((error) => {
 				var errorCode = error.code;
@@ -733,7 +753,7 @@ rhit.IndexController = class {
 			document.querySelector("#signoutBtn").style.display = "none"
 		}
 		document.querySelector("#signupBtn").onclick = (event) => {
-			window.location.href = "/signup.html"
+			window.location.href = "/login.html?signin=true"
 		}
 		document.querySelector("#loginBtn").onclick = (event) => {
 			window.location.href = "/login.html"
@@ -902,7 +922,6 @@ rhit.LoginController = class {
 }
 
 rhit.UserController = class {
-	//TODO: check for unique username
 	//TODO: check if user is login before going to other pages
 	constructor() {
 		document.querySelector("#changeName").onclick = (event) => {
