@@ -36,6 +36,45 @@ function htmlToElement(html) {
 rhit.InventoryController = class {
 	constructor() {
 
+		// Get the input field
+		var input = document.getElementById("searchField");
+
+		// Execute a function when the user releases a key on the keyboard
+		input.addEventListener("keyup", function(event) {
+		// Number 13 is the "Enter" key on the keyboard
+		if (event.key === 'Enter') {
+			// Cancel the default action, if needed
+			event.preventDefault();
+			// Trigger the button element with a click
+			document.getElementById("searchButton").click();
+		}
+		});
+
+		// Select the node that will be observed for mutations
+		const targetNode = document.getElementById('containerParent');
+
+		// Options for the observer (which mutations to observe)
+		const config = { attributes: false, childList: true, subtree: true };
+
+		// Callback function to execute when mutations are observed
+		const callback = (mutationList, observer) => {
+			for (const mutation of mutationList) {
+				if (mutation.type === 'childList') {
+					console.log('A child node has been added or removed.');
+					this.setupListeners()
+				}
+			}
+		};
+
+		// Create an observer instance linked to the callback function
+		const observer = new MutationObserver(callback);
+
+		// Start observing the target node for configured mutations
+		observer.observe(targetNode, config);
+
+
+
+
 		this._ref = firebase.firestore().collection(rhit.FB_INVENTORY)
 
 		// add item Buttons
@@ -44,35 +83,32 @@ rhit.InventoryController = class {
 			if (input == "") return;
 			this.addItem(input)
 			document.querySelector("#itemNameTextField").value = ""
-			this.closeAddModal("addItemModal")
+			this.closeModal("#addItemModal")
 		}
 
 		// Add Item
 		document.querySelector("#openModalButton").onclick = () => {
-			this.openAddModal("addItemModal")
+			this.openModal("#addItemModal")
 		}
 		document.querySelector("#xButton").onclick = () => {
 			document.querySelector("#itemNameTextField").value = ""
-			this.closeModal("addItemModal")
+			this.closeModal("#addItemModal")
 		}
 
-		document.querySelector("#openModalButton").onclick = () => {
-			this.openModal("addItemModal")
-		}
 
 		// Delete Item
 		document.querySelector("#xButtonDelete").onclick = () => {
-			this.closeModal("deleteItemModal")
+			this.closeModal("#deleteItemModal")
 		}
 
 		document.querySelector("#cancelDelete").onclick = () => {
-			this.closeModal("deleteItemModal")
+			this.closeModal("#deleteItemModal")
 		}
 
 		document.querySelector("#confirmDelete").onclick = () => {
-			this.closeModal("deleteItemModal")
-			uid = document.querySelector("#deleteItemModal").itemId
-
+			this.closeModal("#deleteItemModal")
+			var uid = document.querySelector("#deleteItemModal").dataset.itemid
+			this.deleteItem(uid)
 
 			this.fillList()
 		}
@@ -94,9 +130,10 @@ rhit.InventoryController = class {
 
 
 	addItem(itemName) {
+
 		this._ref.add({
 			[rhit.FB_ITEM_NAME]: itemName,
-			[rhit.FB_USER_CHECKED_OUT_TO]: "",
+			[rhit.FB_USER_CHECKED_OUT_TO]: rhit.authManager.getAdmin(),
 			[rhit.FB_CHECKOUT_DATE]: firebase.firestore.Timestamp.now(),
 		})
 			.then(function (docRef) {
@@ -129,115 +166,124 @@ rhit.InventoryController = class {
 			});
 	}
 
-	fillList() {
-		const searchName = document.querySelector("#searchField").value.trim();
-
-		this.queryItem(searchName).then((querySnapshot) => {
-
-
-
-			//make new checkout container
-			const newList = htmlToElement('<div id="invItemContainer" class="w-full max-w-3xl rounded-lg bg-white shadow-lg p-6"></div>')
-
+	contentFill(newList, searchName) {
+		return this.queryItem(searchName).then((querySnapshot) => {
 			newList.appendChild(htmlToElement(`
-			<div class="flex items-center">
-				<div class="w-1/4 font-bold text-lg text-gray-600">Item Name</div>
-				<div class="w-1/4 font-bold text-lg text-gray-600">Checked Out Date</div>
-				<div class="w-1/4 font-bold text-lg text-gray-600">User Checked Out</div>
-			</div>
-			<hr class="my-4 border-gray-300" />`))
+				<div class="flex items-center">
+					<div class="w-1/4 font-bold text-lg text-gray-600">Item Name</div>
+					<div class="w-1/4 font-bold text-lg text-gray-600">Checked Out Date</div>
+					<div class="w-1/4 font-bold text-lg text-gray-600">User Checked Out</div>
+				</div>
+				<hr class="my-4 border-gray-300" />`))
 
 			//fill container with items in a loop
 			querySnapshot.forEach((doc) => {
 				let data = doc.data()
+				let amIRenter = false;
+
 				let username = ""
-				console.log('data :>> ', data);
 
 				if (data.userCheckedoutTo) {
 					// Currently checked in
 					data.userCheckedoutTo.get()
 						.then(res => {
-							console.log('res :>> ', res.data());
 							username = res.data().username
+							console.log('rhit.authManager.uid == res.id :>> ', rhit.authManager.uid == res.id);
+							amIRenter = (rhit.authManager.uid == res.id)
+							let style = "none"
+							if (amIRenter) style = "block";
 							if (res.id != 'Xjm16rf8fKirYdok5PfD') {
 								// console.log('username :>> ', username);
 								newList.appendChild(htmlToElement(`
-								<hr class="my-4 border-gray-300" />`))
+									<hr class="my-4 border-gray-300" />`))
 								newList.appendChild(htmlToElement(`
-								<div class="flex items-center mt-4">
-									<!-- Checked Out Item -->
-									<div class="w-1/4 text-lg text-gray-800">${data.name}</div>
-									<div class="w-1/4 text-lg text-gray-800">${data.checkoutDate.toDate().toDateString()}</div>
-									<div class="w-1/4 text-lg text-gray-800">${username}</div>
-									<div class="w-1/8 flex justify-center">
-										<button uniqueid=${doc.id} id="checkInButton">
-											<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-												stroke="currentColor" class="w-6 h-6">
-												<path stroke-linecap="round" stroke-linejoin="round"
-													d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
-											</svg>
-				
-										</button>
-									</div>
-									<div class="w-1/8 flex justify-center">
-										<button uniqueid=${doc.id} id="editButton">
-											<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-												stroke="currentColor" class="w-6 h-6">
-												<path stroke-linecap="round" stroke-linejoin="round"
-													d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-											</svg>
-										</button>
-										<button uniqueid=${doc.id} id="deleteButton">
-											<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-												stroke="currentColor" class="w-6 h-6">
-												<path stroke-linecap="round" stroke-linejoin="round"
-													d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-											</svg>
-										</button>
-									</div>
-								</div>`))
+									<div class="flex items-center mt-4">
+										<!-- Checked Out Item -->
+										<div class="w-1/4 text-lg text-gray-800">${data.name}</div>
+										<div class="w-1/4 text-lg text-gray-800">${data.checkoutDate.toDate().toDateString()}</div>
+										<div class="w-1/4 text-lg text-gray-800">${username}</div>
+										<div class="w-1/8 flex justify-center">
+											<button data-uniqueid="${doc.id}" data-itemname="${data.name}" id="checkInButton" style="display: ${style};">
+												<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+													stroke="currentColor" class="w-6 h-6">
+													<path stroke-linecap="round" stroke-linejoin="round"
+														d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+												</svg>
+					
+											</button>
+										</div>
+										<div class="w-1/8 flex justify-center">
+											<button data-uniqueid="${doc.id}" data-itemname="${data.name}" id="editButton">
+												<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+													stroke="currentColor" class="w-6 h-6">
+													<path stroke-linecap="round" stroke-linejoin="round"
+														d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+												</svg>
+											</button>
+											<button data-uniqueid="${doc.id}" data-itemname="${data.name}" id="deleteButton">
+												<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+													stroke="currentColor" class="w-6 h-6">
+													<path stroke-linecap="round" stroke-linejoin="round"
+														d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+												</svg>
+											</button>
+										</div>
+									</div>`))
 							} else {
 								newList.appendChild(htmlToElement(`
-								<hr class="my-4 border-gray-300" />`))
+									<hr class="my-4 border-gray-300" />`))
 								newList.appendChild(htmlToElement(`
-								<div id=${doc.id} class="flex items-center mt-4">
-									<div class="w-1/4 text-lg text-gray-800">${data.name}</div>
-									<div class="w-1/4 text-lg text-gray-800">In Inventory</div>
-									<div class="w-1/4 text-lg text-gray-800">&nbsp;</div>
-									<div class="w-1/8 flex justify-center">
-										<button uniqueid=${doc.id} id="checkOutButton">
-											<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-												stroke="currentColor" class="w-6 h-6">
-												<path stroke-linecap="round" stroke-linejoin="round"
-													d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
-											</svg>
-			
-										</button>
-									</div>
-									<div class="w-1/8 flex justify-center">
-										<button uniqueid=${doc.id} id="editButton">
-											<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-												stroke="currentColor" class="w-6 h-6">
-												<path stroke-linecap="round" stroke-linejoin="round"
-													d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-											</svg>
-										</button>
-										<button uniqueid=${doc.id} id="deleteButton">
-											<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-												stroke="currentColor" class="w-6 h-6">
-												<path stroke-linecap="round" stroke-linejoin="round"
-													d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-											</svg>
-										</button>
-									</div>
-								</div>`))
+									<div class="flex items-center mt-4">
+										<div class="w-1/4 text-lg text-gray-800">${data.name}</div>
+										<div class="w-1/4 text-lg text-gray-800">In Inventory</div>
+										<div class="w-1/4 text-lg text-gray-800">&nbsp;</div>
+										<div class="w-1/8 flex justify-center">
+											<button data-uniqueid="${doc.id}" data-itemname="${data.name}" id="checkOutButton">
+												<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+													stroke="currentColor" class="w-6 h-6">
+													<path stroke-linecap="round" stroke-linejoin="round"
+														d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+												</svg>
+				
+											</button>
+										</div>
+										<div class="w-1/8 flex justify-center">
+											<button data-uniqueid="${doc.id}" data-itemname="${data.name}" id="editButton">
+												<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+													stroke="currentColor" class="w-6 h-6">
+													<path stroke-linecap="round" stroke-linejoin="round"
+														d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+												</svg>
+											</button>
+											<button data-uniqueid="${doc.id}" data-itemname="${data.name}" id="deleteButton">
+												<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+													stroke="currentColor" class="w-6 h-6">
+													<path stroke-linecap="round" stroke-linejoin="round"
+														d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+												</svg>
+											</button>
+										</div>
+									</div>`))
 
 							}
+
 						})
 						.catch(err => console.error(err));
 				}
 
-			});
+			})
+
+		})
+	}
+
+
+	fillList() {
+		const searchName = document.querySelector("#searchField").value.trim();
+
+		//make new checkout container
+		const newList = htmlToElement('<div id="invItemContainer" class="w-full max-w-3xl rounded-lg bg-white shadow-lg p-6"></div>')
+
+		this.contentFill(newList, searchName).then(() => {
 
 			//remove old quotelistcontainer
 			const oldList = document.querySelector("#invItemContainer")
@@ -247,6 +293,7 @@ rhit.InventoryController = class {
 			oldList.parentElement.appendChild(newList)
 
 			this.setupListeners()
+
 		})
 	}
 
@@ -254,8 +301,9 @@ rhit.InventoryController = class {
 		var deleteButtons = document.querySelectorAll("#deleteButton")
 		deleteButtons.forEach(element => {
 			element.onclick = () => {
-
-				this.openModal("deleteItemModal")
+				document.querySelector("#areYouSureDelete").innerHTML = `Are you sure you want to delete ${element.dataset.itemname}?`
+				document.querySelector("#deleteItemModal").dataset.itemid = element.dataset.uniqueid
+				this.openModal("#deleteItemModal")
 
 
 			}
@@ -423,6 +471,9 @@ rhit.AuthManager = class {
 		this._name = ""
 		this._photoUrl = ""
 		this.fbUI = false
+	}
+	getAdmin() {
+		return this._ref.doc("Xjm16rf8fKirYdok5PfD")
 	}
 	beginListening(changeListener) {
 		firebase.auth().onAuthStateChanged((user) => {
