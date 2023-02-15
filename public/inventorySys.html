@@ -128,7 +128,7 @@
                                 d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                                 clip-rule="evenodd"></path>
                         </svg>
-                        <span class="sr-only">Close modal</span>
+                        <span class="sr-only">Close</span>
                     </button>
                     <!-- <button id="xButton" class="text-red-500 font-bold">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -138,7 +138,7 @@
 
                     </button> -->
                 </div>
-                <p class="text-xl font-bold m-4">Add Item to Inventory</p>
+                <p class="text-xl font-bold m-4 mb-10">Add Item to Inventory</p>
                 <div class="space-y-6">
                     <div>
                         <label for="itemName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Item
@@ -150,6 +150,48 @@
                     <button id="addItem"
                         class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         Add Item
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Item Modal -->
+        <div data-itemid="" id="editItemModal" class="fixed bottom-0 left-0 top-0 right-0 bg-gray-900 bg-opacity-75 z-50 overflow-auto"
+            style="display: none;">
+            <div class="p-6 m-auto center-modal bg-white rounded-lg max-w-lg shadow-lg">
+                <div class="flex justify-end">
+
+                    <button id="xEditButton" type="button"
+                        class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                        data-modal-hide="popup-modal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <!-- <button id="xButton" class="text-red-500 font-bold">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+
+                    </button> -->
+                </div>
+                <p class="text-xl font-bold m-4 mb-10">Edit Item Name</p>
+                <div class="space-y-6">
+                    <div>
+                        <label for="itemEditName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Item
+                            Name</label>
+                        <input name="itemEditName" id="editNameTextField"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                            placeholder="Item Name" required>
+                    </div>
+                    <button id="editItem"
+                        class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        Edit Name
                     </button>
                 </div>
             </div>
@@ -216,7 +258,7 @@
       </svg> -->
 
 
-    <div id="checkoutContainer" class="mx-auto px-28 py-16 mt-1 inventoryTable">
+    <div id="checkoutContainer" class="mx-auto px-28 pt-8 pb-16 mt-1 inventoryTable">
 
         <div id="containerParent" class="flex flex-col items-center py-10 m-auto" style="width: 800px;">
             <div id="invItemContainer" class="w-full max-w-3xl rounded-lg bg-white shadow-lg p-6">

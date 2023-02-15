@@ -82,6 +82,7 @@ rhit.InventoryController = class {
 			const input = document.querySelector("#itemNameTextField").value.trim()
 			if (input == "") return;
 			this.addItem(input)
+			this.fillList()
 			document.querySelector("#itemNameTextField").value = ""
 			this.closeModal("#addItemModal")
 		}
@@ -113,7 +114,23 @@ rhit.InventoryController = class {
 			this.fillList()
 		}
 
+		// Edit Item
+		document.querySelector("#xEditButton").onclick = () => {
+			this.closeModal("#editItemModal")
+		}
 
+		document.querySelector("#editItem").onclick = () => {
+			const input = document.querySelector("#editNameTextField").value.trim()
+			if (input == "") return;
+			this.closeModal("#editItemModal")
+			const uid = document.querySelector("#editItemModal").dataset.itemid
+			this.editItem(uid, input)
+
+			this.fillList()
+		}
+
+		
+		// Search
 		document.querySelector("#searchButton").onclick = () => {
 			this.fillList()
 		}
@@ -143,6 +160,20 @@ rhit.InventoryController = class {
 				console.error("Error adding document: ", error)
 			})
 	}
+
+	editItem(itemId, newName) {
+		const userRef = this._ref.doc(itemId)
+		return userRef.update({
+			[rhit.FB_ITEM_NAME]: newName
+		})
+			.then(() => {
+				console.log("Document written with ID: ", docRef.id)
+			})
+			.catch(function (error) {
+				console.error("Error adding document: ", error)
+			})
+	}
+
 	deleteItem(itemId) {
 		return this._ref.doc(itemId).delete()
 	}
@@ -192,7 +223,7 @@ rhit.InventoryController = class {
 							amIRenter = (rhit.authManager.uid == res.id)
 							let style = "none"
 							if (amIRenter) style = "block";
-							if (res.id != 'Xjm16rf8fKirYdok5PfD') {
+							if (res.id != 'V7NqMe2BDOManY4kYQaZIkdhTTu1') {
 								// console.log('username :>> ', username);
 								newList.appendChild(htmlToElement(`
 									<hr class="my-4 border-gray-300" />`))
@@ -308,6 +339,15 @@ rhit.InventoryController = class {
 
 			}
 		});
+
+		var editButtons = document.querySelectorAll("#editButton")
+		editButtons.forEach(element => {
+			element.onclick = () => {
+				document.querySelector("#editNameTextField").placeholder = `${element.dataset.itemname}`
+				document.querySelector("#editItemModal").dataset.itemid = element.dataset.uniqueid
+				this.openModal("#editItemModal")
+			}
+		});
 	}
 
 	// connect to button click
@@ -366,101 +406,6 @@ rhit.InventoryController = class {
 			.catch(function (error) {
 				console.error("Error adding document: ", error)
 			})
-	}
-}
-
-rhit.Item = class {
-	constructor(itemName) {
-		this.itemName = itemName
-		this.date = "01/01/2023"
-		this.checkedOutTo = ""
-		this.id = ""
-	}
-
-	setName(newName) {
-		this.itemName = newName
-	}
-
-	setDate(newDate) {
-		this.date = newDate
-	}
-
-	setChecked(newCheckedOut) {
-		this.checkedOutTo = newCheckedOut
-	}
-
-	setId(newId) {
-		this.id = newId
-	}
-
-	get Name() {
-		return this.itemName
-	}
-
-	get Date() {
-		return this.date
-	}
-
-	get checkedoutTo() {
-		return this.checkedOutTo
-	}
-
-	get id() {
-		return this.id
-	}
-}
-rhit.User = class {
-	constructor(uid, username, aboutUs, bio, fullName, imgUrl) {
-		this.username = username
-		this.uid = uid
-		this.aboutUs = aboutUs
-		this.bio = bio
-		this.fullName = fullName
-		this.imgUrl = imgUrl
-	}
-
-	get uid() {
-		return this.uid
-	}
-
-	get username() {
-		return this.userName
-	}
-
-	get fullName() {
-		return this.fullName
-	}
-
-	get aboutUs() {
-		return this.aboutUs
-	}
-
-	get imgUrl() {
-		return this.imgUrl
-	}
-
-	setUid(id) {
-		this.uid = id
-	}
-
-	setUsername(newUser) {
-		this.username = newUser
-	}
-
-	setAboutUs(newAbout) {
-		this.aboutUs = newAbout
-	}
-
-	setBio(newBio) {
-		this.bio = newBio
-	}
-
-	setFullname(newName) {
-		this.fullName = newName
-	}
-
-	setImgUrl(url) {
-		this.imgUrl = url
 	}
 }
 
