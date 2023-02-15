@@ -72,11 +72,11 @@ rhit.InventoryController = class {
 		document.querySelector("#confirmDelete").onclick = () => {
 			this.closeModal("deleteItemModal")
 			uid = document.querySelector("#deleteItemModal").itemId
-			
+
 
 			this.fillList()
 		}
-		
+
 
 		document.querySelector("#searchButton").onclick = () => {
 			this.fillList()
@@ -257,7 +257,7 @@ rhit.InventoryController = class {
 
 				this.openModal("deleteItemModal")
 
-				
+
 			}
 		});
 	}
@@ -451,33 +451,70 @@ rhit.AuthManager = class {
 
 		});
 	}
-	
-	signInWithEmail(email, password){
-		firebase.auth().signInWithEmailAndPassword(email, password)
-		.then((userCredential) => {
-		//   var user = userCredential.user;
-			console.log("siged IN with email");
-		})
-		.catch((error) => {
-		  var errorCode = error.code;
-		  var errorMessage = error.message;
-		  console.log(error);
-		});
+
+	signInWithEmail(email, password) {
+		firebase.auth().createUserWithEmailAndPassword(email, password)
+			.then((userCredential) => {
+				// Signed in 
+				var user = userCredential.user;
+				// ...
+			})
+			.catch((error) => {
+				var errorCode = error.code;
+				var errorMessage = error.message;
+				// ..
+			});
+		// firebase.auth().signInWithEmailAndPassword(email, password)
+		// 	.then((userCredential) => {
+		// 		//   var user = userCredential.user;
+		// 		console.log("siged IN with email");
+		// 	})
+		// 	.catch((error) => {
+		// 		var errorCode = error.code;
+		// 		var errorMessage = error.message;
+		// 		console.log(error);
+		// 	});
+	}
+
+	sendEmailVerification() {
+		// [START auth_send_email_verification]
+		firebase.auth().currentUser.sendEmailVerification()
+			.then(() => {
+				// Email verification sent!
+				// ...
+			});
+		// [END auth_send_email_verification]
+	}
+
+	sendPasswordReset() {
+		const email = "sam@example.com";
+		// [START auth_send_password_reset]
+		firebase.auth().sendPasswordResetEmail(email)
+			.then(() => {
+				// Password reset email sent!
+				// ..
+			})
+			.catch((error) => {
+				var errorCode = error.code;
+				var errorMessage = error.message;
+				// ..
+			});
+		// [END auth_send_password_reset]
 	}
 
 	registerWithEmail(email, password) {
 		console.log('email, password :>> ', email, password);
 		firebase.auth().createUserWithEmailAndPassword(email, password)
-		.then((userCredential) => {
-			// let user = userCredential.user
-			console.log("signed UP with email");
-			
-		})
-		.catch((error) => {
-			let errorCode = error.errorCode
-			let errorMsg = error.message
-			console.log(error);
-		})
+			.then((userCredential) => {
+				// let user = userCredential.user
+				console.log("signed UP with email");
+
+			})
+			.catch((error) => {
+				let errorCode = error.errorCode
+				let errorMsg = error.message
+				console.log(error);
+			})
 	}
 
 	signOut() {
@@ -826,6 +863,8 @@ rhit.LoginController = class {
 }
 
 rhit.UserController = class {
+	//TODO: check for unique username
+	//TODO: check if user is login before going to other pages
 	constructor() {
 		document.querySelector("#changeName").onclick = (event) => {
 			const inputName = document.querySelector("#input").value
