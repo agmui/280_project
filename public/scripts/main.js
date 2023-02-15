@@ -40,14 +40,14 @@ rhit.InventoryController = class {
 		var input = document.getElementById("searchField");
 
 		// Execute a function when the user releases a key on the keyboard
-		input.addEventListener("keyup", function(event) {
-		// Number 13 is the "Enter" key on the keyboard
-		if (event.key === 'Enter') {
-			// Cancel the default action, if needed
-			event.preventDefault();
-			// Trigger the button element with a click
-			document.getElementById("searchButton").click();
-		}
+		input.addEventListener("keyup", function (event) {
+			// Number 13 is the "Enter" key on the keyboard
+			if (event.key === 'Enter') {
+				// Cancel the default action, if needed
+				event.preventDefault();
+				// Trigger the button element with a click
+				document.getElementById("searchButton").click();
+			}
 		});
 
 		// Select the node that will be observed for mutations
@@ -504,27 +504,16 @@ rhit.AuthManager = class {
 	}
 
 	signInWithEmail(email, password) {
-		firebase.auth().createUserWithEmailAndPassword(email, password)
+		firebase.auth().signInWithEmailAndPassword(email, password)
 			.then((userCredential) => {
-				// Signed in 
-				var user = userCredential.user;
-				// ...
+				//   var user = userCredential.user;
+				console.log("siged IN with email");
 			})
 			.catch((error) => {
 				var errorCode = error.code;
 				var errorMessage = error.message;
-				// ..
+				console.log(error);
 			});
-		// firebase.auth().signInWithEmailAndPassword(email, password)
-		// 	.then((userCredential) => {
-		// 		//   var user = userCredential.user;
-		// 		console.log("siged IN with email");
-		// 	})
-		// 	.catch((error) => {
-		// 		var errorCode = error.code;
-		// 		var errorMessage = error.message;
-		// 		console.log(error);
-		// 	});
 	}
 
 	sendEmailVerification() {
@@ -896,7 +885,6 @@ rhit.LoginController = class {
 		if (!rhit.authManager.fbUI)
 			rhit.authManager.startFirebaseUI()
 
-		//FIXME:
 		document.querySelector("#loginSubmitBtn").onclick = (event) => {
 			let email = document.getElementById("loginEmail").value
 			let pass = document.getElementById("loginPassword").value
