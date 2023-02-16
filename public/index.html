@@ -71,10 +71,26 @@
 
   </header>
 
-  <main>
+  <main class="h-screen w-full flex flex-col">
 
+    <section class="w-3/5 self-start container ml-8 p-4 bg-transparent mt-10">
+      <div class="w-full bg-body-color rounded-3xl p-12">
+        <h2 class="text-4xl font-bold mb-8">WHAT IS&nbsp;<span class="text-red-500">ROBOMASTERS</span>?</h2>
+        <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/ECr4zgK6cPA"
+          title="YouTube video player" frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen>
+        </iframe>
+        <p class="mt-8 text-white">Robomaster is a robotics cometition started by DJI that has millions of viewers
+          worldwide. Each
+          year, teams design and build robots which fire either 17mm (Paintball size) or 42mm (Golfball
+          size) projectiles at other robots in an arena. The ultimate objective of this being to destroy
+          the opposing teams base, by hitting it's force sensitive armor panels with your projectiles.</p>
+      </div>
 
-    <header>
+    </section>
+    <!-- 
+    <div>
       What is Robomaster?
       <iframe width="420" height="315" src="https://www.youtube.com/embed/ECr4zgK6cPA">
       </iframe>
@@ -82,9 +98,30 @@
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque unde sequi laborum expedita dolor! Neque, error
         laborum. Ut harum rerum a dolor molestias sequi fuga, temporibus aspernatur eum cumque eius.
       </section>
-    </header>
+    </div> -->
 
-    <blockquote>
+    <section class="w-3/5 self-end container mr-8 p-4 bg-transparent scroller">
+      <div class="w-full bg-body-color rounded-3xl p-12">
+        <h2 class="text-right text-4xl font-bold mb-8">MEET THE&nbsp;<span class="text-red-500">TEAM</span>.</h2>
+
+        <img src="../assets/20221009_174404.jpg" alt="Photo of team member.">
+        <p class="mt-8 text-right text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem
+          recusandae officiis vitae. Voluptatem
+          libero vel voluptates necessitatibus officia. Praesentium necessitatibus asperiores quo nihil excepturi nam
+          qui
+          numquam temporibus adipisci explicabo?</p>
+      </div>
+
+    </section>
+
+    <section class="w-1/3 self-start container ml-8 p-4 bg-transparent scroller">
+      <div class="w-full bg-body-color rounded-3xl p-12">
+        <img class="img2" src="../assets/IMG_6740.jpg" alt="Photo of team member.">
+      </div>
+
+    </section>
+
+    <!-- <blockquote>
       <p>meet the team</p>
       <img src="../assets/20221009_174404.jpg" alt="">
       <section class="meet-team">
@@ -93,26 +130,23 @@
         numquam temporibus adipisci explicabo?
       </section>
       <img class="img2" src="../assets/IMG_6740.jpg" alt="">
-    </blockquote>
-
-
-
-
-
-
-    <div id="mainPage" class="container page-container">
-      <button id="loginBtn">login</button>
-      <br>
-      <button id="signupBtn">signup</button>
-      <br>
-      <button id="editAccBtn">edit account</button>
-      <button id="signoutBtn">signout</button>
-
-      <br>
-      <label for="searchTerm">Search For:</label>
-      <input type="text" id="searchTerm" name="searchTerm"><br><br>
-    </div>
-  </main>
+    </blockquote> -->
+    
+    <section class="bg-top-bar-color py-6">
+      <div class="container mx-auto p-12 text-center text-white">
+          <h2 class="text-3xl mb-6 font-bold">Contact Us</h2>
+          <div class="m-2 text-sm">
+              rhitrobo@gmail.com
+          </div>
+          <div class="text-sm">Kremer Innovation Center</div>
+          <div class="text-sm">5500 Wabash Ave</div>
+          <div class="mb-8 text-sm">Terre Hatue, IN 47803</div>
+          <a href="contact.html" class="bg-white px-8 py-3 rounded-lg text-indigo-800 hover:bg-indigo-100">Learn
+              More</a>
+      </div>
+  </section>
+  </main> <!-- About -->
+ 
 
 
   <script src="scripts/frontend.js"></script>

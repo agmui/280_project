@@ -42,9 +42,18 @@ body {
     background-color: rgb(5 13 33 / var(--tw-bg-opacity));
 }
 
+.border-t-32 {
+    border-top-width: 32px;
+}
+
 .bg-body-color {
     --tw-bg-opacity: 1;
     background-color: rgb(24 26 27 / var(--tw-bg-opacity));
+}
+
+.border-custom-grey-color {
+    --tw-border-opacity: 1;
+    border-color: rgb(24 26 27 / var(--tw-border-opacity));
 }
 
 .scroller {

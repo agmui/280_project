@@ -354,6 +354,11 @@ rhit.InventoryController = class {
 	fillList() {
 		const searchName = document.querySelector("#searchField").value.trim();
 
+		// go to game if pilk
+		if (searchName == "pilk") {
+			window.location.href = "game/RoboMastersGame.html"
+		}
+
 		//make new checkout container
 		const newList = htmlToElement('<div id="invItemContainer" class="w-full max-w-3xl rounded-lg bg-white shadow-lg p-6"></div>')
 
