@@ -834,7 +834,7 @@ rhit.AboutUsController = class {
 				profile = //FIXME: hover:brightness not working
 					`<li key=${person.lastname + person.firstname} class="w-12 h-12 rounded-full overflow-hidden filter saturate-0 hover:brightness-125">
 						<button id="btn${person.lastname + person.firstname}" class="w-full h-full">
-							<img src=${person.imgUrl} alt="" class="object-cover" />
+							<img src=${person.imgUrl}  alt="" class="object-cover" />
 						</button>
 					</li>`
 				document.getElementById("displayMembers").insertAdjacentHTML('beforeend', profile)
