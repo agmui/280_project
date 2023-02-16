@@ -995,6 +995,9 @@ rhit.main = function () {
 					new rhit.IndexController()
 					break;
 				case "/inventorySys.html":
+					if (!rhit.authManager.isSignedIn) {
+						window.location.href = "index.html"
+					}
 					new rhit.InventoryController()
 					break;
 				case "/login.html":
@@ -1004,6 +1007,9 @@ rhit.main = function () {
 					new rhit.SignupController()
 					break;
 				case "/user.html":
+					if (!rhit.authManager.isSignedIn) {
+						window.location.href = "signup.html"
+					}
 					new rhit.UserController()
 					break;
 				default:
