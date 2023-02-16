@@ -14,8 +14,10 @@ rhit.FB_USER_CHECKED_OUT_TO = "userCheckedoutTo"
 rhit.FB_ABOUT_US_BOOL = "aboutUs"
 rhit.FB_USERNAME = "username"
 rhit.FB_BIO = "bio"
-rhit.FB_FULL_NAME = "fullName"
+rhit.FB_FIRST_NAME = "firstname"
+rhit.FB_LAST_NAME = "lastname"
 rhit.FB_IMAGE_URL = "imgUrl"
+rhit.FB_ROLE = "role"
 
 rhit.FB_KEY_NAME = "username";
 rhit.FB_KEY_PHOTO_URL = "imgUrl";
@@ -35,6 +37,9 @@ function htmlToElement(html) {
 
 rhit.InventoryController = class {
 	constructor() {
+		if (!rhit.authManager.isSignedIn) {
+			window.location.href = "index.html"
+		}
 
 		// Get the input field
 		var input = document.getElementById("searchField");
@@ -551,9 +556,7 @@ rhit.AuthManager = class {
 	}
 
 	signOut() {
-		firebase.auth().signOut().catch((error) => {
-			console.log("Sign out error");
-		});
+		return firebase.auth().signOut()
 	}
 
 	startFirebaseUI() {
@@ -681,7 +684,9 @@ rhit.UserManager = class {
 		return !!this._unsubscribe
 	}
 	updatePhotoUrl(photoUrl) {
-		const userRef = this._collectionRef.doc(rhit.fbAuthManager.uid)
+
+
+		const userRef = this._collectionRef.doc(rhit.authManager.uid)
 		userRef.update({
 			[rhit.FB_KEY_PHOTO_URL]: photoUrl,
 		})
@@ -693,18 +698,16 @@ rhit.UserManager = class {
 			});
 	}
 
-	updateName(name) {
+	updateAll(img, user, fname, lname, bio, role) {
 		const userRef = this._collectionRef.doc(rhit.authManager.uid)
-		// FIXME:
 		return userRef.update({
-			[rhit.FB_KEY_NAME]: name,
+			[rhit.FB_IMAGE_URL]: img,
+			[rhit.FB_USERNAME]: user,
+			[rhit.FB_FIRST_NAME]: fname,
+			[rhit.FB_LAST_NAME]: lname,
+			[rhit.FB_BIO]: bio,
+			[rhit.FB_ROLE]: role,
 		})
-			.then(() => {
-				console.log("Document successfully updated!")
-			})
-			.catch(function (error) {
-				console.error("Error adding document: ", error);
-			});
 	}
 	get name() { return this._document.get(rhit.FB_KEY_NAME); }
 	get photoUrl() { return this._document.get(rhit.FB_KEY_PHOTO_URL); }
@@ -895,19 +898,23 @@ rhit.LoginController = class {
 }
 
 rhit.UserController = class {
-	//TODO: check if user is login before going to other pages
 	constructor() {
-		document.querySelector("#changeName").onclick = (event) => {
-			const inputName = document.querySelector("#input").value
-			rhit.userManager.updateName(inputName)//.then(() => {
-			// TODO: put like a indicator you updated the name or something
-			// })
+
+		if (!rhit.authManager.isSignedIn) {
+			window.location.href = "signup.html"
 		}
-		document.querySelector("#uploadPic").onclick = (event) => {
-			console.log("you presse upload photo");
-			document.querySelector("#inputFile").click()
+
+		document.querySelector("#signOutButton").onclick = () => {
+			rhit.authManager.signOut().then((params) => {
+				window.location.href  = "index.html"
+			})
+			.catch((error) => {
+				console.log("Sign out error");
+			});
 		}
-		document.querySelector("#inputFile").addEventListener("change", (event) => {
+
+		document.querySelector("#profile-image").addEventListener("change", (event) => {
+			this.resetSaveButtonText()
 			console.log("you selected a file");
 			const file = event.target.files[0]
 			console.log(`Recived file named ${file.name}`);
@@ -915,14 +922,98 @@ rhit.UserController = class {
 			storageRef.put(file).then((uploadTaskSnapshot) => {
 				console.log("the file has been uploaded!");
 				storageRef.getDownloadURL().then((downloadURL) => {
+					this.updatePageProfilePic(downloadURL);
 					rhit.userManager.updatePhotoUrl(downloadURL);
 				})
 			})
 			console.log("uploading the file");
 		})
 
+		document.querySelector("#saveButton").onclick = () => {
+			this.savePage()
+		}
+
+		const reset = this.resetSaveButtonText
+
+		document.querySelector("#role").addEventListener("focus", function () {
+			reset()
+		});
+		document.querySelector("#bio").addEventListener("focus", function () {
+			reset()
+		});
+		document.querySelector("#lastName").addEventListener("focus", function () {
+			reset()
+		});
+		document.querySelector("#firstName").addEventListener("focus", function () {
+			reset()
+		});
+		document.querySelector("#username").addEventListener("focus", function () {
+			reset()
+		});
+
+		this.populatePage()
+
 	}
 
+	populatePage() {
+		rhit.authManager.getUser().get().then((doc) => {
+			const photoURL = doc.data()[rhit.FB_IMAGE_URL]
+			const username = doc.data()[rhit.FB_USERNAME]
+			const fName = doc.data()[rhit.FB_FIRST_NAME]
+			const lName = doc.data()[rhit.FB_LAST_NAME]
+			const bio = doc.data()[rhit.FB_BIO]
+			const role = doc.data()[rhit.FB_ROLE]
+
+			this.updatePageProfilePic(photoURL)
+			this.updateUserNameField(username)
+			this.updatefNameField(fName)
+			this.updatelNameField(lName)
+			this.updateBioField(bio)
+			this.updateRole(role)
+		})
+	}
+
+	savePage() {
+		const photoURL = document.querySelector("#profilePicElement").src
+		const username = document.querySelector("#username").value.trim()
+		const fName = document.querySelector("#firstName").value.trim()
+		const lName = document.querySelector("#lastName").value.trim()
+		const bio = document.querySelector("#bio").value.trim()
+		const role = document.querySelector("#role").value.trim()
+
+
+		rhit.userManager.updateAll(photoURL, username, fName, lName, bio, role).then(() => {
+			document.querySelector("#saveButton").innerHTML = "Saved"
+		})
+	}
+
+	resetSaveButtonText() {
+		document.querySelector("#saveButton").innerHTML = "Save"
+	}
+
+	updatePageProfilePic(downloadURL) {
+		document.querySelector("#profilePicElement").src = downloadURL
+	}
+
+	updateUserNameField(nameString) {
+		document.querySelector("#username").value = nameString
+	}
+
+	updatefNameField(nameString) {
+		document.querySelector("#firstName").value = nameString
+	}
+
+	updatelNameField(nameString) {
+		document.querySelector("#lastName").value = nameString
+	}
+
+	updateBioField(nameString) {
+		document.querySelector("#bio").value = nameString
+	}
+
+	updateRole(nameString) {
+		document.querySelector("#role").value = nameString
+	}
 }
 
 rhit.main = function () {
@@ -995,9 +1086,6 @@ rhit.main = function () {
 					new rhit.IndexController()
 					break;
 				case "/inventorySys.html":
-					if (!rhit.authManager.isSignedIn) {
-						window.location.href = "index.html"
-					}
 					new rhit.InventoryController()
 					break;
 				case "/login.html":
@@ -1007,9 +1095,6 @@ rhit.main = function () {
 					new rhit.SignupController()
 					break;
 				case "/user.html":
-					if (!rhit.authManager.isSignedIn) {
-						window.location.href = "signup.html"
-					}
 					new rhit.UserController()
 					break;
 				default:

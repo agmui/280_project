@@ -81,21 +81,85 @@
 
 
     <!-- Body -->
-    <section class="container mx-auto p-8 mt-10">
-        <input type="text" id="input">
-        <button id="changeName">change username</button>
-        <p>change pf pic:</p>
+    <section class="container mx-auto p-4 mt-10">
 
-        <p>[insert name]</p>
-        <p>[insert username]</p>
-        <button id="uploadPic">upload pic</button>
-        <br>
-        <input id="inputFile" type="file" hidden>
-        <img class="p-10 bg-black border rounded max-w-sm"
-            src="https://149367133.v2.pressablecdn.com/wp-content/uploads/2021/02/rick-astley-never-gonna-give-you-up-4k.jpg"
-            alt="https://149367133.v2.pressablecdn.com/wp-content/uploads/2021/02/rick-astley-never-gonna-give-you-up-4k.jpg">
+        <div class="mx-auto max-w-2xl mt-4">
+            <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-bold mb-2" for="profile-image">
+                        Profile Image
+                    </label>
+                    <div class="flex items-center">
+                        <div class="w-16 h-16 mr-4 rounded-full overflow-hidden">
+                            <img id="profilePicElement" class="object-cover w-full h-full" src="https://via.placeholder.com/150"
+                                alt="Profile Image">
+                        </div>
+                        <div>
+                            <input class="hidden" type="file" id="profile-image" name="profile-image">
+                            <label id="uploadImageButton"
+                                class="cursor-pointer bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+                                for="profile-image">
+                                Upload new image
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-bold mb-2" for="username">
+                        Username
+                    </label>
+                    <input
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="username" name="username" type="text" value="">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-bold mb-2" for="first-name">
+                        First Name
+                    </label>
+                    <input
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="firstName" name="first-name" type="text" value="">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-bold mb-2" for="last-name">
+                        Last Name
+                    </label>
+                    <input
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="lastName" name="last-name" type="text" value="">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-bold mb-2" for="bio">
+                        Bio
+                    </label>
+                    <textarea
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="bio" name="bio" rows="5">
+                    </textarea>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-bold mb-2" for="role">
+                        Role
+                    </label>
+                    <input
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="role" name="role" type="text" value="User">
+                </div>
+                <div class="flex items-center justify-center">
+                    <div
+                        id="saveButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Save
+                    </div>
+                </div>
+            </form>
+        </div>
 
 
+        <div class="flex justify-center p-8 items-center">
+            <button id="signOutButton" type="button"
+                class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Sign Out</button>
+        </div>
 
     </section>
 
@@ -107,6 +171,7 @@
     <script src="/__/firebase/7.18.0/firebase-analytics.js"></script>
     <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
     <script src="/__/firebase/7.18.0/firebase-firestore.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-storage.js"></script>
     <script src="/__/firebase/init.js"></script>
     <script src="scripts/main.js"></script>
 </body>
