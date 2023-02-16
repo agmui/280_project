@@ -1,13 +1,13 @@
-
-// guide: https://www.youtube.com/watch?v=Q7AOvWpIVHU
-//NOTE: makesure in css have the "main" elm have `position: absolute` 
-// import './styles/funny.css'
-
-// import * as THREE from 'three'
+/*
+team pic/some rly nice pic
+what is robomasters
+team overview
+socals
+*/
 import * as THREE from 'https://unpkg.com/three@0.120.1/build/three.module.js'
-
-// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'//lets us move around the sceen
-// import { OrbitControls } from 'https://unpkg.com/three@0.120.1/jsm/controls/OrbitControls'
+import { STLLoader } from 'https://unpkg.com/three@0.120.1/examples/jsm/loaders/STLLoader'
+import { GLTFLoader } from 'https://unpkg.com/three@0.120.1/examples/jsm/loaders/GLTFLoader'
+import { OrbitControls } from 'https://unpkg.com/three@0.120.1/examples/jsm/controls/OrbitControls'
 
 //==================== setup ==================== 
 // setup needs 3 things: scene, cam, renderer
@@ -23,99 +23,123 @@ const renderer = new THREE.WebGLRenderer({ // choosing which elm to use
 
 renderer.setPixelRatio(window.devicePixelRatio) //set renderer pixel ratio
 renderer.setSize(window.innerWidth, window.innerHeight) // make it full screen
-// camera.position.setZ(30)//move cam along the Z axies
 
-// renderer.render(scene, camera)// renders the scene
 
-//==================== creating object example ====================
-//objects needs: geometry, material, Mesh
-const geometry = new THREE.TorusGeometry(10, 3, 16, 100) // make geometry
-const material = new THREE.MeshStandardMaterial({ color: 0xFF6347 })// make material
-const torus = new THREE.Mesh(geometry, material)
-
-scene.add(torus)
-
-const pointLight = new THREE.PointLight(0xffffff) // adds light
-pointLight.position.set(20, 20, 20) // move light to 5,5,5
 
 const ambientLight = new THREE.AmbientLight(0xffffff) // floods sceen with light
-scene.add(pointLight, ambientLight)
+scene.add(ambientLight)
 
-const lightHelper = new THREE.PointLightHelper(pointLight) // gives wirefram to light
+// const lightHelper = new THREE.PointLightHelper(pointLight) // gives wirefram to light
 const gridHelper = new THREE.GridHelper(200, 50) // adds grid to sceen
-scene.add(lightHelper, gridHelper)
+scene.add(gridHelper)
 
 // const controls = new OrbitControls(camera, renderer.domElement)
 
-// createing 200 random stars
-function addStar() {
-  const geometry = new THREE.SphereGeometry(0.25, 24, 24)
-  const material = new THREE.MeshStandardMaterial({ color: 0xffffff })
-  const star = new THREE.Mesh(geometry, material)
-  const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100))
+scene.background = new THREE.TextureLoader().load('../assets/space.jpg')// loads img
 
-  star.position.set(x, y, z)
-  scene.add(star)
-}
-Array(200).fill().forEach(addStar)
+function lerp(a, b, t) { return a + (b - a) * t }
+function ease(t) { return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t }
 
-// set background
-const spaceTexture = new THREE.TextureLoader().load('assets/space.jpg')// loads img
-scene.background = spaceTexture
-
-// texter mapping
-const jeffTexture = new THREE.TextureLoader().load('assets/jeff.png')
-
-const jeff = new THREE.Mesh(
-  new THREE.BoxGeometry(3, 3, 3),
-  new THREE.MeshBasicMaterial({ map: jeffTexture })
+/*
+const material = new THREE.MeshPhysicalMaterial({
+  color: 0xb2ffc8,
+  metalness: 0.25,
+  roughness: 0.1,
+  opacity: 1.0,
+  transparent: true,
+  transmission: 0.99,
+  clearcoat: 1.0,
+  clearcoatRoughness: 0.25
+})
+const loader = new STLLoader()
+loader.load(
+  '../assets/STD-GML-Rotation_Pulley.STL',
+    function (geometry) {
+    const mesh = new THREE.Mesh(geometry, material)
+    scene.add(mesh)
+    mesh.position.set(0,0,0)
+  },
+  (xhr) => {
+    console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
+  },
+  (error) => {
+    console.log(error)
+  }
 )
-scene.add(jeff)
-
-//moon 
-const moonTexture = new THREE.TextureLoader().load('assets/moon.jpg')
-const normalTexture = new THREE.TextureLoader().load('assets/normal.jpg')
-const moon = new THREE.Mesh(
-  new THREE.SphereGeometry(3, 32, 32),
-  new THREE.MeshStandardMaterial({
-    map: moonTexture,
-    normalMap: normalTexture
-  })
+*/
+const loader = new GLTFLoader()
+let robot = null;
+loader.load(
+  '../assets/CarBlue.glb',
+  function (gltf) {
+    gltf.scene.scale.set(50, 50, 50)
+    gltf.scene.rotation.x += 0.01
+    robot = gltf.scene
+    // gltf.scene.traverse(function (child) {
+    //     if ((child as THREE.Mesh).isMesh) {
+    //         const m = (child as THREE.Mesh)
+    //         m.receiveShadow = true
+    //         m.castShadow = true
+    //     }
+    //     if (((child as THREE.Light)).isLight) {
+    //         const l = (child as THREE.Light)
+    //         l.castShadow = true
+    //         l.shadow.bias = -.003
+    //         l.shadow.mapSize.width = 2048
+    //         l.shadow.mapSize.height = 2048
+    //     }
+    // })
+    scene.add(gltf.scene)
+  },
+  (xhr) => {
+    // console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
+  },
+  (error) => {
+    console.log(error)
+  }
 )
-scene.add(moon)
+//m stands for max hight
+let points = [
+  { m: 0, x: 0, y: 10, z: 30 },
+  { m: 500, x: 0, y: 20, z: 30 },
+  { m: 1000, x: 20, y: 10, z: 30 },
+  { m: 1500, x: 20, y: 10, z: -20 },
+  { m: 3500, x: -50, y: 10, z: -10 }
+]
 
-moon.position.z = 30//same thing
-moon.position.setX(-10)
-
+camera.position.set(points[0].x, points[0].y, points[0].z)
 //====================move cam on scroll==================== 
+let i = 1
 function moveCamera() {
   //gets distance from top of pg when scrolling
-  const t = document.body.getBoundingClientRect().top //NOTE: always negitive
-  moon.rotation.x += 0.05
-  moon.rotation.y += 0.075
-  moon.rotation.z += 0.05
+  let t = document.body.getBoundingClientRect().top //NOTE: always negitive
+  let curPoint = points[i]
+  let pastPoint = points[i - 1]
+  t = (t + pastPoint.m) / (curPoint.m - pastPoint.m)// t has to stay between 0 and 1
+  // console.log('t :>> ', t);
 
-  jeff.rotation.y += 0.01
-  jeff.rotation.z += 0.01
+  if (t < -1) {
+    i++
+  } else if (t > 0) {
+    i--
+  }
+  // console.log("t after:", t);
 
-  camera.position.z = t * -0.01
-  camera.position.x = t * -0.0002
-  camera.position.y = t * -0.0002
+  camera.position.x = lerp(pastPoint.x, curPoint.x, ease(-t))
+  camera.position.y = lerp(pastPoint.y, curPoint.y, ease(-t))
+  camera.position.z = lerp(pastPoint.z, curPoint.z, ease(-t))
+  camera.lookAt(0,10,0)
 }
 
 // runs func everytime user scrolls
 document.body.onscroll = moveCamera
-
 //====================  main control loop (game loop) ====================
 function animate() {
   requestAnimationFrame(animate) // tells browser to perform an animation
 
-  torus.rotation.x += 0.01 // rotate on x every frame
-  torus.rotation.y += 0.005 // rotate on x every frame
-  torus.rotation.z += 0.01 // rotate on x every frame
+  if (robot) robot.rotation.y += 0.01
 
   // controls.update()//lets us move around in the browser
-
   renderer.render(scene, camera) // updates UI
 }
 animate()

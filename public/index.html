@@ -8,33 +8,111 @@
   <link rel="stylesheet" href="styles/bootstrap-material-design.min.css">
   <link rel="stylesheet" href="styles/main.css">
   <title>RHIT Robomaster</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css" />
+  <link rel="stylesheet" href="styles/funny.css">
 </head>
 
 <body>
-  <nav class="navbar navbar-dark fixed-top">
-    <a class="navbar-brand" href="#">RHIT Robomaster</a>
-    <a class="navbar-brand" href="/competition.html">comp</a>
-    <a class="navbar-brand" href="/aboutUs.html">aboutUs</a>
-    <a class="navbar-brand" href="/donate.html">donate</a>
-    <a class="navbar-brand" href="/contact.html">contact</a>
-    <a class="navbar-brand" href="/inventorySys.html">inventory</a>
-    <a class="navbar-brand" href="/user.html">user page</a>
-  </nav>
-  <div id="mainPage" class="container page-container">
-    <!-- <a href="/login.html">login</a> -->
-    <button id="loginBtn">login</button>
-    <br>
-    <!-- <a href="/signup.html">signup</a> -->
-    <button id="signupBtn">signup</button>
-    <br>
-    <button id="editAccBtn">edit account</button>
-    <button id="signoutBtn">signout</button>
+  <canvas id="bg"></canvas>
+  <header class="w-full bg-top-bar-color text-gray-100 body-font shadow-sm">
 
-    <br>
-    <label for="searchTerm">Search For:</label>
-    <input type="text" id="searchTerm" name="searchTerm"><br><br>
+    <!-- {/* :DESKTOP MENU */} -->
+    <div class="container mx-auto flex justify-between items-center py-5 px-5">
+      <!-- {/* Site logo and Name */} -->
+      <a href="index.html" class="flex flex-shrink-0 title-font font-medium items-center text-gray-900 md:mb-0">
 
-  </div>
+
+        <img src="./images/06_Alt3.png" alt="" class="w-12 h-12 text-white p-2" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+        <span class="ml-3 text-xl text-white hover:text-red-500 font-semibold antialiased">RHIT
+          Thornbots</span>
+      </a>
+      <!-- {/* Navbar */} -->
+      <nav class="hidden md:ml-auto md:flex flex-wrap items-center justify-center text-base tracking-wide">
+        <a href="index.html" class=" mr-8 text-white hover:text-red-500">HOME</a>
+        <a href="competition.html" class="mr-8 text-white hover:text-red-500">COMPETITION</a>
+        <a href="aboutUs.html" class="mr-8 text-white hover:text-red-500">ABOUT US</a>
+        <a href="donate.html" class="mr-8 text-white hover:text-red-500">SUPPORT US</a>
+        <a href="contact.html" class="mr-8 text-white hover:text-red-500">CONTACT</a>
+        <a href="inventorySys.html" id="inventoryOpenButton" style="display: none;"
+          class="mr-8 text-white hover:text-red-500">INVENTORY</a>
+        <a href="login.html" id="loginOpenButton" class="mr-8 text-red-500 hover:text-white">LOGIN</a>
+        <a href="user.html" id="userOpenButton" style="display: none;"
+          class="mr-8 text-red-500 hover:text-white">ACCOUNT</a>
+      </nav>
+      <!-- {/* Burger icon standard */} -->
+      <button id='burgerIconButton'
+        class="md:hidden rounded-md active:outline-none focus:outline-none focus:ring-4 focus:ring-inset"
+        onclick="updateMenu()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 rounded-md text-gray-300" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- {/* :MOBILE MENU */}
+    { isOpen && -->
+    <div id="mobileMenu"
+      class="w-full flex flex-col py-4 px-3 md:hidden bg-body-color text-base uppercase text-center font-semibold">
+      <a href="index.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">HOME</a>
+      <a href="competition.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">COMPETITION</a>
+      <a href="aboutUs.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">ABOUT US</a>
+      <a href="donate.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">SUPPORT US</a>
+      <a href="contact.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">CONTACT</a>
+      <a href="inventorySys.html" id="inventoryOpenButton" style="display: none;"
+        class="block px-3 py-2 rounded-md text-white hover:text-red-500">INVENTORY</a>
+      <a href="login.html" id="loginOpenButton"
+        class="block px-3 py-2 rounded-md text-red-500 hover:text-white">LOGIN</a>
+      <a href="user.html" id="userOpenButton" style="display: none;"
+        class="block px-3 py-2 rounded-md text-red-500 hover:text-white">ACCOUNT</a>
+    </div>
+    <!-- } -->
+
+  </header>
+
+  <main>
+
+
+    <header>
+      What is Robomaster?
+      <iframe width="420" height="315" src="https://www.youtube.com/embed/ECr4zgK6cPA">
+      </iframe>
+      <section>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque unde sequi laborum expedita dolor! Neque, error
+        laborum. Ut harum rerum a dolor molestias sequi fuga, temporibus aspernatur eum cumque eius.
+      </section>
+    </header>
+
+    <blockquote>
+      <p>meet the team</p>
+      <img src="../assets/20221009_174404.jpg" alt="">
+      <section class="meet-team">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem recusandae officiis vitae. Voluptatem
+        libero vel voluptates necessitatibus officia. Praesentium necessitatibus asperiores quo nihil excepturi nam qui
+        numquam temporibus adipisci explicabo?
+      </section>
+      <img class="img2" src="../assets/IMG_6740.jpg" alt="">
+    </blockquote>
+
+
+
+
+
+
+    <div id="mainPage" class="container page-container">
+      <button id="loginBtn">login</button>
+      <br>
+      <button id="signupBtn">signup</button>
+      <br>
+      <button id="editAccBtn">edit account</button>
+      <button id="signoutBtn">signout</button>
+
+      <br>
+      <label for="searchTerm">Search For:</label>
+      <input type="text" id="searchTerm" name="searchTerm"><br><br>
+    </div>
+  </main>
 
 
   <script src="scripts/frontend.js"></script>
@@ -44,6 +122,7 @@
   <script src="/__/firebase/7.18.0/firebase-firestore.js"></script>
   <script src="/__/firebase/init.js"></script>
   <script src="scripts/main.js"></script>
+  <script type="module" src="scripts/funny.js"></script>
 </body>
 
 </html>
