@@ -395,7 +395,7 @@ rhit.InventoryController = class {
 				this.openModal("#returnItemModal")
 			}
 		});
-		
+
 		const checkoutButtons = document.querySelectorAll("#checkOutButton")
 		checkoutButtons.forEach(element => {
 			element.onclick = () => {
@@ -946,6 +946,23 @@ rhit.main = function () {
 	const pname = window.location.pathname
 	rhit.authManager.beginListening(() => {
 		console.log("is signed in = ", rhit.authManager.isSignedIn);
+
+		if (rhit.authManager.isSignedIn) {
+			const invButtons = document.querySelectorAll("#inventoryOpenButton")
+			invButtons.forEach(element => {
+				element.style.display = "block";
+			});
+
+			const loginButtons = document.querySelectorAll("#loginOpenButton")
+			loginButtons.forEach(element => {
+				element.style.display = "none";
+			});
+
+			const userButtons = document.querySelectorAll("#userOpenButton")
+			userButtons.forEach(element => {
+				element.style.display = "block";
+			});
+		}
 
 		// Check if new user is needed
 		rhit.createUserObjectIfNeeded().then((isUserNew) => {

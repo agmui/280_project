@@ -45,8 +45,11 @@
                 <a href="aboutUs.html" class="mr-8 text-white hover:text-red-500">ABOUT US</a>
                 <a href="donate.html" class="mr-8 text-white hover:text-red-500">SUPPORT US</a>
                 <a href="contact.html" class="mr-8 text-white hover:text-red-500">CONTACT</a>
-                <a href="inventorySys.html" class="mr-8 text-white hover:text-red-500">INVENTORY</a>
-                <a href="login.html" class="mr-8 text-red-500 hover:text-white">LOGIN</a>
+                <a href="inventorySys.html" id="inventoryOpenButton" style="display: none;"
+                    class="mr-8 text-white hover:text-red-500">INVENTORY</a>
+                <a href="login.html" id="loginOpenButton" class="mr-8 text-red-500 hover:text-white">LOGIN</a>
+                <a href="user.html" id="userOpenButton" style="display: none;"
+                    class="mr-8 text-red-500 hover:text-white">ACCOUNT</a>
             </nav>
             <!-- {/* Burger icon standard */} -->
             <button id='burgerIconButton'
@@ -60,7 +63,7 @@
         </div>
 
         <!-- {/* :MOBILE MENU */}
-        { isOpen && -->
+    { isOpen && -->
         <div id="mobileMenu"
             class="w-full flex flex-col py-4 px-3 md:hidden bg-body-color text-base uppercase text-center font-semibold">
             <a href="index.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">HOME</a>
@@ -68,8 +71,12 @@
             <a href="aboutUs.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">ABOUT US</a>
             <a href="donate.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">SUPPORT US</a>
             <a href="contact.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">CONTACT</a>
-            <a href="inventorySys.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">INVENTORY</a>
-            <a href="login.html" class="block px-3 py-2 rounded-md text-red-500 hover:text-white">LOGIN</a>
+            <a href="inventorySys.html" id="inventoryOpenButton" style="display: none;"
+                class="block px-3 py-2 rounded-md text-white hover:text-red-500">INVENTORY</a>
+            <a href="login.html" id="loginOpenButton"
+                class="block px-3 py-2 rounded-md text-red-500 hover:text-white">LOGIN</a>
+            <a href="user.html" id="userOpenButton" style="display: none;"
+                class="block px-3 py-2 rounded-md text-red-500 hover:text-white">ACCOUNT</a>
         </div>
         <!-- } -->
 
@@ -134,7 +141,8 @@
                     <div class="text-white text-sm pt-8 text-center">The Sentry slides along a rail, optionally shooting
                         projectiles, and providing an extra pool of health and immunity to the base. To see how this was
                         beneficial in the 2022 competition,
-                        <a class="text-red-400 hover:text-white" href="https://youtu.be/WmjDYQ9FWvA">watch our match against VT</a> with
+                        <a class="text-red-400 hover:text-white" href="https://youtu.be/WmjDYQ9FWvA">watch our match
+                            against VT</a> with
                         Purdue and UT Austin.
                     </div>
                 </div>
@@ -166,11 +174,18 @@
             <div class="text-sm">Kremer Innovation Center</div>
             <div class="text-sm">5500 Wabash Ave</div>
             <div class="mb-8 text-sm">Terre Hatue, IN 47803</div>
-            <a href="contact.html" class="bg-white px-8 py-3 rounded-lg text-indigo-800 hover:bg-indigo-100">Learn More</a>
+            <a href="contact.html" class="bg-white px-8 py-3 rounded-lg text-indigo-800 hover:bg-indigo-100">Learn
+                More</a>
         </div>
     </section>
 
+
     <script src="scripts/frontend.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-analytics.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-firestore.js"></script>
+    <script src="/__/firebase/init.js"></script>
     <script src="scripts/main.js"></script>
 </body>
 

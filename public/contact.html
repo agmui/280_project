@@ -35,8 +35,11 @@
                 <a href="aboutUs.html" class="mr-8 text-white hover:text-red-500">ABOUT US</a>
                 <a href="donate.html" class="mr-8 text-white hover:text-red-500">SUPPORT US</a>
                 <a href="contact.html" class="mr-8 text-white hover:text-red-500">CONTACT</a>
-                <a href="inventorySys.html" class="mr-8 text-white hover:text-red-500">INVENTORY</a>
-                <a href="login.html" class="mr-8 text-red-500 hover:text-white">LOGIN</a>
+                <a href="inventorySys.html" id="inventoryOpenButton" style="display: none;"
+                    class="mr-8 text-white hover:text-red-500">INVENTORY</a>
+                <a href="login.html" id="loginOpenButton" class="mr-8 text-red-500 hover:text-white">LOGIN</a>
+                <a href="user.html" id="userOpenButton" style="display: none;"
+                    class="mr-8 text-red-500 hover:text-white">ACCOUNT</a>
             </nav>
             <!-- {/* Burger icon standard */} -->
             <button id='burgerIconButton'
@@ -58,8 +61,12 @@
             <a href="aboutUs.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">ABOUT US</a>
             <a href="donate.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">SUPPORT US</a>
             <a href="contact.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">CONTACT</a>
-            <a href="inventorySys.html" class="block px-3 py-2 rounded-md text-white hover:text-red-500">INVENTORY</a>
-            <a href="login.html" class="block px-3 py-2 rounded-md text-red-500 hover:text-white">LOGIN</a>
+            <a href="inventorySys.html" id="inventoryOpenButton" style="display: none;"
+                class="block px-3 py-2 rounded-md text-white hover:text-red-500">INVENTORY</a>
+            <a href="login.html" id="loginOpenButton"
+                class="block px-3 py-2 rounded-md text-red-500 hover:text-white">LOGIN</a>
+            <a href="user.html" id="userOpenButton" style="display: none;"
+                class="block px-3 py-2 rounded-md text-red-500 hover:text-white">ACCOUNT</a>
         </div>
         <!-- } -->
 
@@ -102,17 +109,17 @@
                 <button onclick=" window.open('https://twitter.com/rhit_rm','_blank')"
                     class="custom-red-bg hover:custom-dark-red-bg rounded-full p-5 flex items-center justify-center">
                     <img class="w-8 h-8 img-white-filter" viewBox="0 0 24 24" src="images/twitter-logo.svg" alt="">
-                    
+
                 </button>
                 <button onclick=" window.open('https://youtube.com/@rhitrobomasters6542','_blank')"
                     class="custom-red-bg hover:custom-dark-red-bg rounded-full p-5 flex items-center justify-center">
                     <img class="w-8 h-8 img-white-filter" viewBox="0 0 24 24" src="images/youtube.png" alt="">
-                    
+
                 </button>
                 <button onclick=" window.open('https://www.instagram.com/rhit_robomasters/','_blank')"
                     class="custom-red-bg hover:custom-dark-red-bg rounded-full p-5 flex items-center justify-center">
                     <img class="w-8 h-8 img-white-filter" viewBox="0 0 24 24" src="images/instagram.svg" alt="">
-                    
+
                 </button>
 
 
@@ -121,7 +128,13 @@
 
     </section>
 
+
     <script src="scripts/frontend.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-analytics.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-firestore.js"></script>
+    <script src="/__/firebase/init.js"></script>
     <script src="scripts/main.js"></script>
 </body>
 
