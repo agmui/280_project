@@ -111,6 +111,8 @@ camera.position.set(points[0].x, points[0].y, points[0].z)
 //====================move cam on scroll==================== 
 let i = 1
 function moveCamera() {
+  if(i<1) i = 1
+  else if (i <= 5) i = 4
   //gets distance from top of pg when scrolling
   let t = document.body.getBoundingClientRect().top //NOTE: always negitive
   let curPoint = points[i]

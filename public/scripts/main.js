@@ -722,45 +722,20 @@ rhit.UserManager = class {
 
 rhit.IndexController = class {
 	constructor() {
-		if (rhit.authManager.isSignedIn) {
-			document.querySelector("#signupBtn").style.display = "none"
-			document.querySelector("#loginBtn").style.display = "none"
-			document.querySelector("#editAccBtn").style.display = "block"
-			document.querySelector("#signoutBtn").style.display = "block"
-		} else if (!rhit.authManager.isSignedIn) {
-			document.querySelector("#signupBtn").style.display = "block"
-			document.querySelector("#loginBtn").style.display = "block"
-			document.querySelector("#editAccBtn").style.display = "none"
-			document.querySelector("#signoutBtn").style.display = "none"
-		}
-		document.querySelector("#signupBtn").onclick = (event) => {
-			window.location.href = "/login.html?signin=true"
-		}
-		document.querySelector("#loginBtn").onclick = (event) => {
-			window.location.href = "/login.html"
-		}
-		document.querySelector("#editAccBtn").onclick = (event) => {
-			window.location.href = "/user.html"
-		}
-		document.querySelector("#signoutBtn").onclick = (event) => {
-			rhit.authManager.signOut()
-			// window.location.href = "/index.html"
-		}
 	}
-
 }
 rhit.AboutUsController = class {
 
 	constructor() {
 		this._ref = firebase.firestore().collection(rhit.FB_USERS)
-
+		if (rhit.authManager.isSignedIn&&rhit.authManager.uid=='V7NqMe2BDOManY4kYQaZIkdhTTu1'){
+			document.getElementById('editPage').style.display = 'block'
+			document.getElementById('editPage').onclick = () => { this.editMembers() }
+		}
 		this.people = []
+		this.totalMembers = []
 		this.displayMembers()
 	}
-
-	// removeAboutUs(memberUsername) {
-
-	// }
 
 	queryMembers() {
 		return this._ref.where(rhit.FB_ABOUT_US_BOOL, "==", true) //.limit(50)
@@ -858,6 +833,53 @@ rhit.AboutUsController = class {
 		document.getElementById("youtube").href = person.youtubeURL
 	}
 
+	editMembers() {
+		// console.log('this._ref :>> ', this._ref.bind(this));
+		let modal = document.getElementById('editModal')
+		let list = document.getElementById('userList')
+		modal.style.display = 'block'
+		document.getElementById('saveList').onclick = () => {
+			modal.style.display = 'none'
+			let out = list.querySelectorAll("input")
+			// console.log('this.totalMembers :>> ', this.totalMembers);
+			for (let i = 0; i < out.length; i++) {
+				this.totalMembers[i].aboutUs = out[i].checked
+				console.log('this.totalMembers[i] :>> ', this.totalMembers[i]);
+				this._ref.doc(this.totalMembers[i].id).set(
+					this.totalMembers[i]
+				)
+			}
+		}
+		document.getElementById('closeList').onclick = () => {
+			modal.style.display = 'none'
+		};
+		if (!list.childElementCount) {
+			this._ref.get()
+				.then((querySnapshot) => {
+					// console.log("This query is of length", querySnapshot.size);
+					// return querySnapshot
+
+					querySnapshot.forEach((doc) => {
+						// console.log('doc.data() :>> ', doc.data());
+						// console.log('doc.id :>> ', doc.id);
+						let data = doc.data()
+						data.id = doc.id
+						this.totalMembers.push(data)
+						let elm = `<li class="flex justify-between items-center py-2">
+						<span class="mr-2">${doc.data().username}</span>
+						<label class="inline-flex items-center">
+							<input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" ${(doc.data().aboutUs) ? "checked" : ""}>
+						</label>
+					</li>`
+						list.appendChild(htmlToElement(elm))
+					});
+				})
+				.catch((error) => {
+					console.log("Error getting documents: ", error);
+				});
+		}
+	}
+
 }
 rhit.CompController = class {
 
@@ -911,11 +933,11 @@ rhit.UserController = class {
 
 		document.querySelector("#signOutButton").onclick = () => {
 			rhit.authManager.signOut().then((params) => {
-				window.location.href  = "index.html"
+				window.location.href = "index.html"
 			})
-			.catch((error) => {
-				console.log("Sign out error");
-			});
+				.catch((error) => {
+					console.log("Sign out error");
+				});
 		}
 
 		document.querySelector("#profile-image").addEventListener("change", (event) => {
