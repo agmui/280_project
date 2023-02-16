@@ -529,19 +529,12 @@ rhit.AuthManager = class {
 		// [END auth_send_email_verification]
 	}
 
-	sendPasswordReset() {
-		const email = "sam@example.com";
+	sendPasswordReset(email) {
+		// const email = "sam@example.com";
 		// [START auth_send_password_reset]
-		firebase.auth().sendPasswordResetEmail(email)
-			.then(() => {
-				// Password reset email sent!
-				// ..
-			})
-			.catch((error) => {
-				var errorCode = error.code;
-				var errorMessage = error.message;
-				// ..
-			});
+		return firebase.auth().sendPasswordResetEmail(email)
+
+
 		// [END auth_send_password_reset]
 	}
 
@@ -876,6 +869,7 @@ rhit.LoginController = class {
 		// document.querySelector("#submit").onclick = (event) => {
 		// }
 
+
 		document.querySelector("#roseFireBtn").onclick = (event) => {
 			rhit.authManager.signInWithRoseFire()
 		}
@@ -899,6 +893,25 @@ rhit.LoginController = class {
 			let confirmPass = document.getElementById('registerConfirmPass').value
 			rhit.authManager.registerWithEmail(email, password)
 		}
+
+		document.querySelector("#resetPassword").onclick = (event) => {
+			console.log("clicked");
+			const email = document.querySelector("#emailReset").value.trim()
+			rhit.authManager.sendPasswordReset(email).then(() => {
+				// Password reset email sent!
+				document.querySelector("#emailReset").value = ""
+				document.querySelector("#resetPassText").innerHTML = "Sent!"
+			}).catch((error) => {
+				const errorCode = error.code;
+				const errorMessage = error.message;
+
+				// ..
+			});
+		}
+
+		document.querySelector("#emailReset").addEventListener("focus", () => {
+			document.querySelector("#resetPassText").innerHTML = "Reset"
+		});
 	}
 }
 
@@ -911,11 +924,11 @@ rhit.UserController = class {
 
 		document.querySelector("#signOutButton").onclick = () => {
 			rhit.authManager.signOut().then((params) => {
-				window.location.href  = "index.html"
+				window.location.href = "index.html"
 			})
-			.catch((error) => {
-				console.log("Sign out error");
-			});
+				.catch((error) => {
+					console.log("Sign out error");
+				});
 		}
 
 		document.querySelector("#profile-image").addEventListener("change", (event) => {
