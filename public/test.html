@@ -27,304 +27,66 @@
     </style>
 </head>
 
+
+
+
 <body class="bg-gray-300">
-    <div class="fixed bottom-0 right-0 mb-10 mr-10 z-50" x-data="{show: true}">
-        <button class="bg-white text-black rounded-full p-3 hover:bg-gray-300"
-          x-bind:class="{'hidden': !show}" 
-          x-on:click="window.scroll({top: 0, left: 0, behavior: 'smooth'})" 
-          x-show="show"
-        >
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10.707 7.05L10 6.343 4.343 12 10 17.657l.707-.707L5.657 12z"/>
-          </svg>
-        </button>
-        <script>
-          window.addEventListener('scroll', () => {
-            const scrollY = window.scrollY;
-            const show = scrollY < 100;
-            this.set({show});
-          });
-        </script>
-      </div>
-    <div>
-        <div class="container mx-auto px-6 py-10">
-            <div class="flex flex-wrap -mx-2">
-                <div class="w-1/3 px-2">
-                    <div class="bg-white p-6 rounded-lg shadow-xl">
-                        <h2 class="text-lg font-medium text-gray-900">
-                            Section 1
-                        </h2>
-                        <p class="mt-4 text-gray-600">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                            velit justo, faucibus vel risus vel, consectetur congue neque.
-                        </p>
+    <!-- Modal -->
+    <div class="modal fixed w-full h-full top-0 left-0 flex items-center justify-center" style="display:block;">
+        <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+
+        <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+
+            <!-- Add margin if you want to see some of the overlay behind the modal-->
+            <div class="modal-content py-4 text-left px-6">
+                <!--Title-->
+                <div class="flex justify-between items-center pb-3">
+                    <p class="text-2xl font-bold">User List</p>
+                    <div class="modal-close cursor-pointer z-50">
+                        <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                            viewBox="0 0 18 18">
+                            <path
+                                d="M18 1.41L16.59 0 9 7.59 1.41 0 0 1.41 7.59 9 0 16.59 1.41 18 9 10.41 16.59 18 18 16.59 10.41 9z" />
+                        </svg>
                     </div>
                 </div>
-                <div class="w-1/3 px-2">
-                    <div class="bg-white p-6 rounded-lg shadow-xl">
-                        <h2 class="text-lg font-medium text-gray-900">
-                            Section 2
-                        </h2>
-                        <p class="mt-4 text-gray-600">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                            velit justo, faucibus vel risus vel, consectetur congue neque.
-                        </p>
-                    </div>
+
+                <!--Body-->
+                <div class="mb-4">
+                    <ul class="list-disc pl-5">
+                        <li class="flex justify-between items-center py-2">
+                            <span class="mr-2">User A</span>
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" checked>
+                            </label>
+                        </li>
+                        <li class="flex justify-between items-center py-2">
+                            <span class="mr-2">User B</span>
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600">
+                            </label>
+                        </li>
+                        <li class="flex justify-between items-center py-2">
+                            <span class="mr-2">User C</span>
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" checked>
+                            </label>
+                        </li>
+                    </ul>
                 </div>
-                <div class="w-1/3 px-2">
-                    <div class="bg-white p-6 rounded-lg shadow-xl">
-                        <h2 class="text-lg font-medium text-gray-900">
-                            Section 3
-                        </h2>
-                        <p class="mt-4 text-gray-600">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                            velit justo, faucibus vel risus vel, consectetur congue neque.
-                        </p>
-                    </div>
+
+                <!--Footer-->
+                <div class="flex justify-end pt-2">
+                    <button
+                        class="px-4 bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2">Save</button>
+                    <button
+                        class="modal-close px-4 bg-indigo-500 p-3 rounded-lg text-white hover:bg-indigo-400">Close</button>
                 </div>
+
             </div>
         </div>
     </div>
 
-    <div>
-        <div class="container mx-auto px-6 py-10">
-            <div class="flex flex-wrap -mx-2">
-                <div class="w-1/3 px-2">
-                    <div class="bg-white p-6 rounded-lg shadow-xl">
-                        <h2 class="text-lg font-medium text-gray-900">
-                            Section 1
-                        </h2>
-                        <p class="mt-4 text-gray-600">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                            velit justo, faucibus vel risus vel, consectetur congue neque.
-                        </p>
-                    </div>
-                </div>
-                <div class="w-1/3 px-2">
-                    <div class="bg-white p-6 rounded-lg shadow-xl">
-                        <h2 class="text-lg font-medium text-gray-900">
-                            Section 2
-                        </h2>
-                        <p class="mt-4 text-gray-600">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                            velit justo, faucibus vel risus vel, consectetur congue neque.
-                        </p>
-                    </div>
-                </div>
-                <div class="w-1/3 px-2">
-                    <div class="bg-white p-6 rounded-lg shadow-xl">
-                        <h2 class="text-lg font-medium text-gray-900">
-                            Section 3
-                        </h2>
-                        <p class="mt-4 text-gray-600">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                            velit justo, faucibus vel risus vel, consectetur congue neque.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div>
-        <div class="container mx-auto px-6 py-10">
-            <div class="flex flex-wrap -mx-2">
-                <div class="w-1/3 px-2">
-                    <div class="bg-white p-6 rounded-lg shadow-xl">
-                        <h2 class="text-lg font-medium text-gray-900">
-                            Section 1
-                        </h2>
-                        <p class="mt-4 text-gray-600">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                            velit justo, faucibus vel risus vel, consectetur congue neque.
-                        </p>
-                    </div>
-                </div>
-                <div class="w-1/3 px-2">
-                    <div class="bg-white p-6 rounded-lg shadow-xl">
-                        <h2 class="text-lg font-medium text-gray-900">
-                            Section 2
-                        </h2>
-                        <p class="mt-4 text-gray-600">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                            velit justo, faucibus vel risus vel, consectetur congue neque.
-                        </p>
-                    </div>
-                </div>
-                <div class="w-1/3 px-2">
-                    <div class="bg-white p-6 rounded-lg shadow-xl">
-                        <h2 class="text-lg font-medium text-gray-900">
-                            Section 3
-                        </h2>
-                        <p class="mt-4 text-gray-600">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                            velit justo, faucibus vel risus vel, consectetur congue neque.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div>
-        <div class="container mx-auto px-6 py-10">
-            <div class="flex flex-wrap -mx-2">
-                <div class="w-1/3 px-2">
-                    <div class="bg-white p-6 rounded-lg shadow-xl">
-                        <h2 class="text-lg font-medium text-gray-900">
-                            Section 1
-                        </h2>
-                        <p class="mt-4 text-gray-600">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                            velit justo, faucibus vel risus vel, consectetur congue neque.
-                        </p>
-                    </div>
-                </div>
-                <div class="w-1/3 px-2">
-                    <div class="bg-white p-6 rounded-lg shadow-xl">
-                        <h2 class="text-lg font-medium text-gray-900">
-                            Section 2
-                        </h2>
-                        <p class="mt-4 text-gray-600">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                            velit justo, faucibus vel risus vel, consectetur congue neque.
-                        </p>
-                    </div>
-                </div>
-                <div class="w-1/3 px-2">
-                    <div class="bg-white p-6 rounded-lg shadow-xl">
-                        <h2 class="text-lg font-medium text-gray-900">
-                            Section 3
-                        </h2>
-                        <p class="mt-4 text-gray-600">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                            velit justo, faucibus vel risus vel, consectetur congue neque.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div>
-        <div class="container mx-auto px-6 py-10">
-            <div class="flex flex-wrap -mx-2">
-                <div class="w-1/3 px-2">
-                    <div class="bg-white p-6 rounded-lg shadow-xl">
-                        <h2 class="text-lg font-medium text-gray-900">
-                            Section 1
-                        </h2>
-                        <p class="mt-4 text-gray-600">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                            velit justo, faucibus vel risus vel, consectetur congue neque.
-                        </p>
-                    </div>
-                </div>
-                <div class="w-1/3 px-2">
-                    <div class="bg-white p-6 rounded-lg shadow-xl">
-                        <h2 class="text-lg font-medium text-gray-900">
-                            Section 2
-                        </h2>
-                        <p class="mt-4 text-gray-600">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                            velit justo, faucibus vel risus vel, consectetur congue neque.
-                        </p>
-                    </div>
-                </div>
-                <div class="w-1/3 px-2">
-                    <div class="bg-white p-6 rounded-lg shadow-xl">
-                        <h2 class="text-lg font-medium text-gray-900">
-                            Section 3
-                        </h2>
-                        <p class="mt-4 text-gray-600">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                            velit justo, faucibus vel risus vel, consectetur congue neque.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div>
-        <div class="container mx-auto px-6 py-10">
-            <div class="flex flex-wrap -mx-2">
-                <div class="w-1/3 px-2">
-                    <div class="bg-white p-6 rounded-lg shadow-xl">
-                        <h2 class="text-lg font-medium text-gray-900">
-                            Section 1
-                        </h2>
-                        <p class="mt-4 text-gray-600">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                            velit justo, faucibus vel risus vel, consectetur congue neque.
-                        </p>
-                    </div>
-                </div>
-                <div class="w-1/3 px-2">
-                    <div class="bg-white p-6 rounded-lg shadow-xl">
-                        <h2 class="text-lg font-medium text-gray-900">
-                            Section 2
-                        </h2>
-                        <p class="mt-4 text-gray-600">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                            velit justo, faucibus vel risus vel, consectetur congue neque.
-                        </p>
-                    </div>
-                </div>
-                <div class="w-1/3 px-2">
-                    <div class="bg-white p-6 rounded-lg shadow-xl">
-                        <h2 class="text-lg font-medium text-gray-900">
-                            Section 3
-                        </h2>
-                        <p class="mt-4 text-gray-600">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                            velit justo, faucibus vel risus vel, consectetur congue neque.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div>
-        <div class="container mx-auto px-6 py-10">
-            <div class="flex flex-wrap -mx-2">
-                <div class="w-1/3 px-2">
-                    <div class="bg-white p-6 rounded-lg shadow-xl">
-                        <h2 class="text-lg font-medium text-gray-900">
-                            Section 1
-                        </h2>
-                        <p class="mt-4 text-gray-600">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                            velit justo, faucibus vel risus vel, consectetur congue neque.
-                        </p>
-                    </div>
-                </div>
-                <div class="w-1/3 px-2">
-                    <div class="bg-white p-6 rounded-lg shadow-xl">
-                        <h2 class="text-lg font-medium text-gray-900">
-                            Section 2
-                        </h2>
-                        <p class="mt-4 text-gray-600">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                            velit justo, faucibus vel risus vel, consectetur congue neque.
-                        </p>
-                    </div>
-                </div>
-                <div class="w-1/3 px-2">
-                    <div class="bg-white p-6 rounded-lg shadow-xl">
-                        <h2 class="text-lg font-medium text-gray-900">
-                            Section 3
-                        </h2>
-                        <p class="mt-4 text-gray-600">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                            velit justo, faucibus vel risus vel, consectetur congue neque.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <script>
         window.addEventListener("scroll", function () {
             let hiddenElements = document.querySelectorAll(".hidden");

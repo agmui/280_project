@@ -26,7 +26,20 @@ body {
     margin-top: 75px;
 }
 
+.login-bg-image {
+    background: linear-gradient(rgba(4, 15, 40, .7), rgba(4, 15, 40, .7)), url(../images/theCompetition.png) center center no-repeat;
+}
 
+.border-gray-custom {
+    --tw-border-opacity: 1;
+    border-color: rgb(24 26 27 / var(--tw-border-opacity));
+}
+
+
+.login-bg-image-side {
+    z-index: 20;
+    background: linear-gradient(rgba(34, 34, 34, 0.7), rgba(34, 34, 34, 0.7)), url(../images/robot3.png) center center no-repeat;
+}
 .competition-bg-image {
     height: 250px;
     background: linear-gradient(rgba(4, 15, 40, .7), rgba(4, 15, 40, .7)), url(../images/theCompetition.png) center center no-repeat;
@@ -123,6 +136,10 @@ body {
 .inventoryTable {
     overflow-x: auto;
     margin: auto;
+}
+
+.max-h-500px {
+    max-height: 600px;
 }
 
 /* random spinning login pg btn thing */
