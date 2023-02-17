@@ -200,7 +200,7 @@ rhit.InventoryController = class {
 				////console.log("Document written with ID: ", docRef.id)
 			})
 			.catch(function (error) {
-				////console.error("Error adding document: ", error)
+				console.error("Error adding document: ", error)
 			})
 	}
 
@@ -213,7 +213,7 @@ rhit.InventoryController = class {
 				////console.log("Document written with ID: ", docRef.id)
 			})
 			.catch(function (error) {
-				////console.error("Error adding document: ", error)
+				console.error("Error adding document: ", error)
 			})
 	}
 
@@ -236,7 +236,7 @@ rhit.InventoryController = class {
 				// });
 			})
 			.catch((error) => {
-				////console.log("Error getting documents: ", error);
+				console.log("Error getting documents: ", error);
 			});
 	}
 
@@ -342,7 +342,7 @@ rhit.InventoryController = class {
 							}
 
 						})
-						.catch(err => ////console.error(err));
+						.catch(err => console.error(err));
 				}
 
 			})
@@ -427,7 +427,7 @@ rhit.InventoryController = class {
 			////console.log("Document updated with ID: ", docRef.id)
 		})
 			.catch(function (error) {
-				////console.error("Error adding document: ", error)
+				console.error("Error adding document: ", error)
 			})
 	}
 	returnItem(itemId) {
@@ -438,7 +438,7 @@ rhit.InventoryController = class {
 			////console.log("Document updated with ID: ", docRef.id)
 		})
 			.catch(function (error) {
-				////console.error("Error adding document: ", error)
+				console.error("Error adding document: ", error)
 			})
 	}
 }
@@ -491,7 +491,7 @@ rhit.AuthManager = class {
 		document.getElementById("loginPassword").value = ""
 		Rosefire.signIn("f628f4ae-8716-4f00-b72f-eccc3daa297e", (err, rfUser) => {
 			if (err) {
-				////console.log("Rosefire error!", err);
+				console.log("Rosefire error!", err);
 				return;
 			}
 			////console.log("Rosefire success!", rfUser);
@@ -516,7 +516,7 @@ rhit.AuthManager = class {
 				if (error.code === 'auth/invalid-custom-token') {
 					alert("The token you provided is not valid.");
 				} else {
-					////console.log("signInWithCustomToken error", error.code, error.message);
+					console.log("signInWithCustomToken error", error.code, error.message);
 				}
 			});
 
@@ -532,7 +532,7 @@ rhit.AuthManager = class {
 			.catch((error) => {
 				var errorCode = error.code;
 				var errorMessage = error.message;
-				////console.log(error);
+				console.log(error);
 			});
 	}
 
@@ -566,7 +566,7 @@ rhit.AuthManager = class {
 			.catch((error) => {
 				let errorCode = error.errorCode
 				let errorMsg = error.message
-				////console.log(error);
+				console.log(error);
 			})
 	}
 
@@ -608,7 +608,7 @@ rhit.AuthManager = class {
 				////console.log("No such document!");
 			}
 		}).catch((error) => {
-			////console.log("Error getting document:", error);
+			console.log("Error getting document:", error);
 		});
 
 	}
@@ -673,11 +673,11 @@ rhit.UserManager = class {
 						return true;
 					})
 					.catch((error) => {
-						////console.error("Error writing document: ", error);
+						console.error("Error writing document: ", error);
 					});
 			}
 		}).catch((error) => {
-			////console.log("error getting doc:", error);
+			console.log("error getting doc:", error);
 		})
 
 	}
@@ -709,7 +709,7 @@ rhit.UserManager = class {
 				////console.log("Document successfully updated!")
 			})
 			.catch(function (error) {
-				////console.error("Error adding document: ", error);
+				console.error("Error adding document: ", error);
 			});
 	}
 
@@ -762,7 +762,7 @@ rhit.AboutUsController = class {
 				// });
 			})
 			.catch((error) => {
-				////console.log("Error getting documents: ", error);
+				console.log("Error getting documents: ", error);
 			});
 	}
 
@@ -888,7 +888,7 @@ rhit.AboutUsController = class {
 					});
 				})
 				.catch((error) => {
-					////console.log("Error getting documents: ", error);
+					console.log("Error getting documents: ", error);
 				});
 		}
 	}
@@ -964,7 +964,7 @@ rhit.UserController = class {
 				window.location.href = "index.html"
 			})
 				.catch((error) => {
-					////console.log("Sign out error");
+					console.log("Sign out error");
 				});
 		}
 
@@ -1150,7 +1150,7 @@ rhit.main = function () {
 					new rhit.UserController()
 					break;
 				default:
-					////console.error("idk wut page")
+					console.error("idk wut page")
 			}
 		})
 
