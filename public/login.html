@@ -138,7 +138,7 @@
                     <h2 class="py-4 text-center text-4xl text-white bg-clip-text  font-bold">
                         Login</h2>
                     <!-- {/* :::Login Form */} -->
-                    <form class="py-10 w-full">
+                    <div class="py-10 w-full">
                         <!-- {/* Login Email */} -->
                         <label htmlFor="email" class="relative">
                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -193,7 +193,7 @@
                             <div id="firebaseui-auth-container"></div>
                         </div>
 
-                    </form>
+                    </div>
                 </div>
 
                 <!-- {/* ::Register Form */} -->
@@ -204,9 +204,9 @@
                     <h2 class="py-4 text-center text-4xl text-transparent bg-clip-text text-white font-bold">
                         Register Here</h2>
                     <!-- {/* :::Register Form */} -->
-                    <form action="" class="py-10 w-full">
+                    <div action="" class="py-10 w-full">
                         <!-- {/* Register Username */} -->
-                        <label htmlFor="username" class="relative">
+                        <label htmlFor="username" style="display: none;" class="relative">
                             <svg xmlns="http://www.w3.org/2000/svg"
                                 class="absolute bottom-0 right-0 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
@@ -284,7 +284,7 @@
                                 <div class="z-10 font-bold text-white">Rosefire Registration</div>
                             </button>
                         </div>
-                    </form>
+                    </div>
                 </div>
 
                 <!-- {/* ::Forgot password Form */} -->
@@ -303,7 +303,7 @@
                                 existing account.</a></p> -->
                     </div>
                     <!-- {/* :::Reset Form */} -->
-                    <form action="" class="py-8 w-full">
+                    <div action="" class="py-8 w-full">
                         <!-- {/* Email */} -->
                         <label htmlFor="email" class="relative">
                             <input ref={emailForgotPWRef} id="emailReset" type="email" name="email"
@@ -330,7 +330,7 @@
                                 <div id="resetPassText" class="z-10 font-bold text-white">Reset</div>
                             </button>
                         </div>
-                    </form>
+                    </div>
                 </div>
 
             </div>

@@ -560,7 +560,7 @@ rhit.AuthManager = class {
 		firebase.auth().createUserWithEmailAndPassword(email, password)
 			.then((userCredential) => {
 				// let user = userCredential.user
-				////console.log("signed UP with email");
+				// console.log(user);
 
 			})
 			.catch((error) => {
@@ -928,6 +928,9 @@ rhit.LoginController = class {
 			let email = document.getElementById('registerEmail').value
 			let password = document.getElementById('registerPass').value
 			let confirmPass = document.getElementById('registerConfirmPass').value
+
+			if (confirmPass != password) return;
+
 			rhit.authManager.registerWithEmail(email, password)
 		}
 
