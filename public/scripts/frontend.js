@@ -47,7 +47,6 @@ window.addEventListener("scroll", function () {
 
 //console.log('window.location.pathname :>> ', window.location.pathname);
 if (window.location.pathname == '/competition.html') {
-    updateMenu()
     setupDownArrow()
     updateScroller()
 }
@@ -112,5 +111,6 @@ function initPage() {
     toggleWithBool(document.getElementById('forgotPasswordForm'), !isForm.forgotPW)
 }
 
+updateMenu()
 if (window.location.pathname == '/login.html')
     initPage()
