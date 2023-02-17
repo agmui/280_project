@@ -3,7 +3,7 @@ function updateScroller() {
     scrollerElements.forEach(element => {
         var elementTop = element.getBoundingClientRect().top;
         var windowHeight = window.innerHeight;
-        // console.log(`The element top: ${elementTop} The window height: ${windowHeight}`);
+        // //console.log(`The element top: ${elementTop} The window height: ${windowHeight}`);
         if ((elementTop - windowHeight) <= windowHeight - 350) {
             element.classList.add("active");
         }
@@ -45,7 +45,7 @@ window.addEventListener("scroll", function () {
     updateDownArrow()
 });
 
-console.log('window.location.pathname :>> ', window.location.pathname);
+//console.log('window.location.pathname :>> ', window.location.pathname);
 if (window.location.pathname == '/competition.html') {
     updateMenu()
     setupDownArrow()

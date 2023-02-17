@@ -65,7 +65,7 @@ rhit.InventoryController = class {
 		const callback = (mutationList, observer) => {
 			for (const mutation of mutationList) {
 				if (mutation.type === 'childList') {
-					console.log('A child node has been added or removed.');
+					////console.log('A child node has been added or removed.');
 					this.setupListeners()
 				}
 			}
@@ -197,10 +197,10 @@ rhit.InventoryController = class {
 			[rhit.FB_CHECKOUT_DATE]: firebase.firestore.Timestamp.now(),
 		})
 			.then(function (docRef) {
-				console.log("Document written with ID: ", docRef.id)
+				////console.log("Document written with ID: ", docRef.id)
 			})
 			.catch(function (error) {
-				console.error("Error adding document: ", error)
+				////console.error("Error adding document: ", error)
 			})
 	}
 
@@ -210,10 +210,10 @@ rhit.InventoryController = class {
 			[rhit.FB_ITEM_NAME]: newName
 		})
 			.then(() => {
-				console.log("Document written with ID: ", docRef.id)
+				////console.log("Document written with ID: ", docRef.id)
 			})
 			.catch(function (error) {
-				console.error("Error adding document: ", error)
+				////console.error("Error adding document: ", error)
 			})
 	}
 
@@ -225,18 +225,18 @@ rhit.InventoryController = class {
 		return this._ref.where(rhit.FB_ITEM_NAME, "==", itemSubString) //.limit(50)
 			.get()
 			.then((querySnapshot) => {
-				console.log("This query is of length", querySnapshot.size);
+				////console.log("This query is of length", querySnapshot.size);
 				return querySnapshot
 
 
 				// querySnapshot.forEach((doc) => {
 
 				// 	// doc.data() is never undefined for query doc snapshots
-				// 	console.log(doc.id, " => ", doc.data());
+				// 	////console.log(doc.id, " => ", doc.data());
 				// });
 			})
 			.catch((error) => {
-				console.log("Error getting documents: ", error);
+				////console.log("Error getting documents: ", error);
 			});
 	}
 
@@ -262,12 +262,12 @@ rhit.InventoryController = class {
 					data.userCheckedoutTo.get()
 						.then(res => {
 							username = res.data().username
-							console.log('rhit.authManager.uid == res.id :>> ', rhit.authManager.uid == res.id);
+							////console.log('rhit.authManager.uid == res.id :>> ', rhit.authManager.uid == res.id);
 							amIRenter = (rhit.authManager.uid == res.id)
 							let style = "none"
 							if (amIRenter) style = "block";
 							if (res.id != 'V7NqMe2BDOManY4kYQaZIkdhTTu1') {
-								// console.log('username :>> ', username);
+								// ////console.log('username :>> ', username);
 								newList.appendChild(htmlToElement(`
 									<hr class="my-4 border-gray-300" />`))
 								newList.appendChild(htmlToElement(`
@@ -342,7 +342,7 @@ rhit.InventoryController = class {
 							}
 
 						})
-						.catch(err => console.error(err));
+						.catch(err => ////console.error(err));
 				}
 
 			})
@@ -424,10 +424,10 @@ rhit.InventoryController = class {
 			[rhit.FB_USER_CHECKED_OUT_TO]: rhit.authManager.getUser(),
 			[rhit.FB_CHECKOUT_DATE]: firebase.firestore.Timestamp.now(),
 		}).then(() => {
-			console.log("Document updated with ID: ", docRef.id)
+			////console.log("Document updated with ID: ", docRef.id)
 		})
 			.catch(function (error) {
-				console.error("Error adding document: ", error)
+				////console.error("Error adding document: ", error)
 			})
 	}
 	returnItem(itemId) {
@@ -435,10 +435,10 @@ rhit.InventoryController = class {
 		item.update({
 			[rhit.FB_USER_CHECKED_OUT_TO]: rhit.authManager.getAdmin(),
 		}).then(() => {
-			console.log("Document updated with ID: ", docRef.id)
+			////console.log("Document updated with ID: ", docRef.id)
 		})
 			.catch(function (error) {
-				console.error("Error adding document: ", error)
+				////console.error("Error adding document: ", error)
 			})
 	}
 }
@@ -465,10 +465,10 @@ rhit.AuthManager = class {
 				this._user = user
 				this._ref.doc(user.uid).get().then((doc) => {
 					if (doc.exists) {
-						console.log("user data:", doc.data());
+						////console.log("user data:", doc.data());
 					} else {
-						console.log('user :>> ', user);
-						console.log("New user:", this._username);
+						////console.log('user :>> ', user);
+						////console.log("New user:", this._username);
 						this._ref.doc(user.uid).set({
 							username: (user.displayName) ? user.displayName : this._username,
 							email: user.email,
@@ -491,14 +491,14 @@ rhit.AuthManager = class {
 		document.getElementById("loginPassword").value = ""
 		Rosefire.signIn("f628f4ae-8716-4f00-b72f-eccc3daa297e", (err, rfUser) => {
 			if (err) {
-				console.log("Rosefire error!", err);
+				////console.log("Rosefire error!", err);
 				return;
 			}
-			console.log("Rosefire success!", rfUser);
+			////console.log("Rosefire success!", rfUser);
 			// this._username = rfUser.name
 			this._ref.doc(rfUser.username).get().then((doc) => {
 				if (doc.exists) {
-					console.log("user data:", doc.data());
+					////console.log("user data:", doc.data());
 				} else {
 					this._ref.doc(rfUser.username).set({
 						username: rfUser.username,
@@ -516,7 +516,7 @@ rhit.AuthManager = class {
 				if (error.code === 'auth/invalid-custom-token') {
 					alert("The token you provided is not valid.");
 				} else {
-					console.log("signInWithCustomToken error", error.code, error.message);
+					////console.log("signInWithCustomToken error", error.code, error.message);
 				}
 			});
 
@@ -527,12 +527,12 @@ rhit.AuthManager = class {
 		firebase.auth().signInWithEmailAndPassword(email, password)
 			.then((userCredential) => {
 				//   var user = userCredential.user;
-				console.log("signed IN with email");
+				////console.log("signed IN with email");
 			})
 			.catch((error) => {
 				var errorCode = error.code;
 				var errorMessage = error.message;
-				console.log(error);
+				////console.log(error);
 			});
 	}
 
@@ -556,17 +556,17 @@ rhit.AuthManager = class {
 	}
 
 	registerWithEmail(email, password) {
-		console.log('email, password :>> ', email, password);
+		////console.log('email, password :>> ', email, password);
 		firebase.auth().createUserWithEmailAndPassword(email, password)
 			.then((userCredential) => {
 				// let user = userCredential.user
-				console.log("signed UP with email");
+				////console.log("signed UP with email");
 
 			})
 			.catch((error) => {
 				let errorCode = error.errorCode
 				let errorMsg = error.message
-				console.log(error);
+				////console.log(error);
 			})
 	}
 
@@ -601,14 +601,14 @@ rhit.AuthManager = class {
 	getUserFromId(uid) {
 		const user = this._ref.where(firebase.firestore.FieldPath.documentId(), '==', uid).get().then((doc) => {
 			if (doc.exists) {
-				console.log("Document data:", doc.data());
+				////console.log("Document data:", doc.data());
 				return doc.data()[rhit.FB_USERNAME]
 			} else {
 				// doc.data() will be undefined in this case
-				console.log("No such document!");
+				////console.log("No such document!");
 			}
 		}).catch((error) => {
-			console.log("Error getting document:", error);
+			////console.log("Error getting document:", error);
 		});
 
 	}
@@ -625,17 +625,17 @@ rhit.createUserObjectIfNeeded = function () {
 
 		//Check if a User might be new
 		if (!rhit.authManager.isSignedIn) {
-			console.log("No user. So no User check Needed");
+			////console.log("No user. So no User check Needed");
 			resolve(false)
 			return;
 		}
 		if (!document.querySelector("#loginPage")) {
-			console.log("Not on  login page. So no User check needed");
+			////console.log("Not on  login page. So no User check needed");
 			resolve(false)
 			return;
 		}
 		//Call addNewUser Maybe
-		console.log("Checking user");
+		////console.log("Checking user");
 		rhit.fbUserManager.addNewUserMaybe(
 			rhit.fbAuthManager.uid,
 			rhit.fbAuthManager.name,
@@ -652,32 +652,32 @@ rhit.UserManager = class {
 		this._collectionRef = firebase.firestore().collection("Users");
 		this._document = null;
 		this._unsubscribe = null;
-		console.log("created user manager");
+		////console.log("created user manager");
 	}
 	addNewUserMaybe(uid, name, photoUrl) {
 		const userRef = this._collectionRef.doc(uid)
 		return userRef.get().then((doc) => {
 			if (doc.exists) {
-				console.log("doc data:", doc.data());
+				////console.log("doc data:", doc.data());
 				//Do nothing
 				return false;
 			} else {
-				console.log("creating this user");
+				////console.log("creating this user");
 				// Add a new document in collection "cities"
 				return userRef.set({
 					[rhit.FB_KEY_NAME]: name,
 					[rhit.FB_KEY_PHOTO_URL]: photoUrl,
 				})
 					.then(() => {
-						console.log("Document successfully written!");
+						////console.log("Document successfully written!");
 						return true;
 					})
 					.catch((error) => {
-						console.error("Error writing document: ", error);
+						////console.error("Error writing document: ", error);
 					});
 			}
 		}).catch((error) => {
-			console.log("error getting doc:", error);
+			////console.log("error getting doc:", error);
 		})
 
 	}
@@ -685,11 +685,11 @@ rhit.UserManager = class {
 		const userRef = this._collectionRef.doc(uid)
 		this._unsubscribe = userRef.onSnapshot((doc) => {
 			if (doc.exists) {
-				console.log("Dcoumeht data:", doc.data());
+				////console.log("Dcoumeht data:", doc.data());
 				this._document = doc
 				changeListener()
 			} else {
-				console.log("No User!");
+				////console.log("No User!");
 			}
 		})
 
@@ -706,10 +706,10 @@ rhit.UserManager = class {
 			[rhit.FB_KEY_PHOTO_URL]: photoUrl,
 		})
 			.then(() => {
-				console.log("Document successfully updated!")
+				////console.log("Document successfully updated!")
 			})
 			.catch(function (error) {
-				console.error("Error adding document: ", error);
+				////console.error("Error adding document: ", error);
 			});
 	}
 
@@ -751,18 +751,18 @@ rhit.AboutUsController = class {
 		return this._ref.where(rhit.FB_ABOUT_US_BOOL, "==", true) //.limit(50)
 			.get()
 			.then((querySnapshot) => {
-				// console.log("This query is of length", querySnapshot.size);
+				// ////console.log("This query is of length", querySnapshot.size);
 				return querySnapshot
 
 
 				// querySnapshot.forEach((doc) => {
 
 				// 	// doc.data() is never undefined for query doc snapshots
-				// 	console.log(doc.id, " => ", doc.data());
+				// 	////console.log(doc.id, " => ", doc.data());
 				// });
 			})
 			.catch((error) => {
-				console.log("Error getting documents: ", error);
+				////console.log("Error getting documents: ", error);
 			});
 	}
 
@@ -845,17 +845,17 @@ rhit.AboutUsController = class {
 	}
 
 	editMembers() {
-		// console.log('this._ref :>> ', this._ref.bind(this));
+		// ////console.log('this._ref :>> ', this._ref.bind(this));
 		let modal = document.getElementById('editModal')
 		let list = document.getElementById('userList')
 		modal.style.display = 'block'
 		document.getElementById('saveList').onclick = () => {
 			modal.style.display = 'none'
 			let out = list.querySelectorAll("input")
-			// console.log('this.totalMembers :>> ', this.totalMembers);
+			// ////console.log('this.totalMembers :>> ', this.totalMembers);
 			for (let i = 0; i < out.length; i++) {
 				this.totalMembers[i].aboutUs = out[i].checked
-				console.log('this.totalMembers[i] :>> ', this.totalMembers[i]);
+				////console.log('this.totalMembers[i] :>> ', this.totalMembers[i]);
 				this._ref.doc(this.totalMembers[i].id).set(
 					this.totalMembers[i]
 				)
@@ -867,12 +867,12 @@ rhit.AboutUsController = class {
 		if (!list.childElementCount) {
 			this._ref.get()
 				.then((querySnapshot) => {
-					// console.log("This query is of length", querySnapshot.size);
+					// ////console.log("This query is of length", querySnapshot.size);
 					// return querySnapshot
 
 					querySnapshot.forEach((doc) => {
-						// console.log('doc.data() :>> ', doc.data());
-						// console.log('doc.id :>> ', doc.id);
+						// ////console.log('doc.data() :>> ', doc.data());
+						// ////console.log('doc.id :>> ', doc.id);
 						let data = doc.data()
 						data.id = doc.id
 						this.totalMembers.push(data)
@@ -888,7 +888,7 @@ rhit.AboutUsController = class {
 					});
 				})
 				.catch((error) => {
-					console.log("Error getting documents: ", error);
+					////console.log("Error getting documents: ", error);
 				});
 		}
 	}
@@ -932,7 +932,7 @@ rhit.LoginController = class {
 		}
 
 		document.querySelector("#resetPassword").onclick = (event) => {
-			console.log("clicked");
+			////console.log("clicked");
 			const email = document.querySelector("#emailReset").value.trim()
 			rhit.authManager.sendPasswordReset(email).then(() => {
 				// Password reset email sent!
@@ -964,24 +964,24 @@ rhit.UserController = class {
 				window.location.href = "index.html"
 			})
 				.catch((error) => {
-					console.log("Sign out error");
+					////console.log("Sign out error");
 				});
 		}
 
 		document.querySelector("#profile-image").addEventListener("change", (event) => {
 			this.resetSaveButtonText()
-			console.log("you selected a file");
+			////console.log("you selected a file");
 			const file = event.target.files[0]
-			console.log(`Recived file named ${file.name}`);
+			////console.log(`Recived file named ${file.name}`);
 			const storageRef = firebase.storage().ref().child(rhit.authManager.uid)
 			storageRef.put(file).then((uploadTaskSnapshot) => {
-				console.log("the file has been uploaded!");
+				////console.log("the file has been uploaded!");
 				storageRef.getDownloadURL().then((downloadURL) => {
 					this.updatePageProfilePic(downloadURL);
 					rhit.userManager.updatePhotoUrl(downloadURL);
 				})
 			})
-			console.log("uploading the file");
+			////console.log("uploading the file");
 		})
 
 		document.querySelector("#saveButton").onclick = () => {
@@ -1072,14 +1072,14 @@ rhit.UserController = class {
 }
 
 rhit.main = function () {
-	console.log("Ready");
+	////console.log("Ready");
 
 	// TODO:
 	// firebase.auth().onAuthStateChanged((user) => {
 	// 	if (user) {
 	// 		let displayName = user.displayName
 	// 		// document.querySelector("#signoutBtn").onclick = (event) => {
-	// 		// 	console.log("signout");
+	// 		// 	////console.log("signout");
 	// 		// }
 	// 	} else {
 
@@ -1091,7 +1091,7 @@ rhit.main = function () {
 
 	const pname = window.location.pathname
 	rhit.authManager.beginListening(() => {
-		console.log("is signed in = ", rhit.authManager.isSignedIn);
+		////console.log("is signed in = ", rhit.authManager.isSignedIn);
 
 		if (rhit.authManager.isSignedIn) {
 			const invButtons = document.querySelectorAll("#inventoryOpenButton")
@@ -1112,13 +1112,13 @@ rhit.main = function () {
 
 		// Check if new user is needed
 		rhit.createUserObjectIfNeeded().then((isUserNew) => {
-			console.log('isUserNew :>> ', isUserNew);
+			////console.log('isUserNew :>> ', isUserNew);
 			if (isUserNew) {
 				window.location.href = "/profile.html"
 				return;
 			}
 			// check for redirects
-			console.log("in login.html", pname == "/login.html", "signed in:", rhit.authManager.isSignedIn);
+			////console.log("in login.html", pname == "/login.html", "signed in:", rhit.authManager.isSignedIn);
 			if ((pname == "/login.html") && rhit.authManager.isSignedIn) {
 				window.location.href = "/index.html"
 			}
@@ -1150,7 +1150,7 @@ rhit.main = function () {
 					new rhit.UserController()
 					break;
 				default:
-					console.error("idk wut page")
+					////console.error("idk wut page")
 			}
 		})
 
