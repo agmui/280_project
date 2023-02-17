@@ -40,10 +40,12 @@ body {
     z-index: 20;
     background: linear-gradient(rgba(34, 34, 34, 0.7), rgba(34, 34, 34, 0.7)), url(../images/robot3.png) center center no-repeat;
 }
+
 .competition-bg-image {
     height: 250px;
     background: linear-gradient(rgba(4, 15, 40, .7), rgba(4, 15, 40, .7)), url(../images/theCompetition.png) center center no-repeat;
 }
+
 .about-us-bg-image {
     height: 250px;
     background: linear-gradient(rgba(4, 15, 40, .7), rgba(4, 15, 40, .7)), url(../images/2022-team.jpg) center center no-repeat;
@@ -140,6 +142,21 @@ body {
 
 .max-h-500px {
     max-height: 600px;
+}
+
+.videoWrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    /* 16:9 */
+    height: 0;
+}
+
+.videoWrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80%;
+    height: 80%;
 }
 
 /* random spinning login pg btn thing */
