@@ -467,7 +467,8 @@ rhit.AuthManager = class {
 					if (doc.exists) {
 						console.log("user data:", doc.data());
 					} else {
-						console.log("New user");
+						console.log('user :>> ', user);
+						console.log("New user:", this._username);
 						this._ref.doc(user.uid).set({
 							username: (user.displayName) ? user.displayName : this._username,
 							email: user.email,
@@ -494,7 +495,23 @@ rhit.AuthManager = class {
 				return;
 			}
 			console.log("Rosefire success!", rfUser);
-			this._username = rfUser.name
+			// this._username = rfUser.name
+			this._ref.doc(rfUser.username).get().then((doc) => {
+				if (doc.exists) {
+					console.log("user data:", doc.data());
+				} else {
+					this._ref.doc(rfUser.username).set({
+						username: rfUser.username,
+						email: null,
+						aboutUs: false,
+						bio: "Never gona give you up",
+						firstname: rfUser.name,
+						lastname: "",
+						imgUrl: "https://firebasestorage.googleapis.com/v0/b/robomasters-website.appspot.com/o/Ln0v50LP_400x400.jpg?alt=media&token=0e8a8c64-c400-4b67-ab3c-5e42255457c6",
+						role: "chad"
+					});
+				}
+			})
 			firebase.auth().signInWithCustomToken(rfUser.token).catch((error) => {
 				if (error.code === 'auth/invalid-custom-token') {
 					alert("The token you provided is not valid.");
@@ -721,7 +738,7 @@ rhit.AboutUsController = class {
 
 	constructor() {
 		this._ref = firebase.firestore().collection(rhit.FB_USERS)
-		if (rhit.authManager.isSignedIn&&rhit.authManager.uid=='V7NqMe2BDOManY4kYQaZIkdhTTu1'){
+		if (rhit.authManager.isSignedIn && rhit.authManager.uid == 'V7NqMe2BDOManY4kYQaZIkdhTTu1') {
 			document.getElementById('editPage').style.display = 'block'
 			document.getElementById('editPage').onclick = () => { this.editMembers() }
 		}
@@ -799,14 +816,15 @@ rhit.AboutUsController = class {
 		}).then(() => {
 			let profile = ""
 			this.people.map((person, index) => {
+				let displayName = (person.lastname && person.firstname) ? person.lastname + person.firstname : person.username
 				profile = //FIXME: hover:brightness not working
-					`<li key=${person.lastname + person.firstname} class="w-12 h-12 rounded-full overflow-hidden filter saturate-0 hover:brightness-125">
-						<button id="btn${person.lastname + person.firstname}" class="w-full h-full">
+					`<li key=${displayName} class="w-12 h-12 rounded-full overflow-hidden filter saturate-0 hover:brightness-125">
+						<button id="btn${displayName}" class="w-full h-full">
 							<img src=${person.imgUrl}  alt="" class="object-cover" />
 						</button>
 					</li>`
 				document.getElementById("displayMembers").insertAdjacentHTML('beforeend', profile)
-				document.getElementById("btn" + person.lastname + person.firstname).onclick = () => { this.changeDescription(index) }
+				document.getElementById("btn" + displayName).onclick = () => { this.changeDescription(index) }
 			})
 			this.changeDescription(0);
 		})
@@ -858,8 +876,10 @@ rhit.AboutUsController = class {
 						let data = doc.data()
 						data.id = doc.id
 						this.totalMembers.push(data)
+
+						let displayName = (doc.data().lastname && doc.data().firstname) ? doc.data().firstname + ' ' + doc.data().lastname : doc.data().username
 						let elm = `<li class="flex justify-between items-center py-2">
-						<span class="mr-2">${doc.data().username}</span>
+						<span class="mr-2">${displayName}</span>
 						<label class="inline-flex items-center">
 							<input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" ${(doc.data().aboutUs) ? "checked" : ""}>
 						</label>
@@ -885,11 +905,6 @@ rhit.DonateController = class {
 }
 rhit.LoginController = class {
 	constructor() {
-		// document.querySelector("#signupBtn").onclick = (event) => {
-		// 	window.location.href = "/signup.html"
-		// }
-		// document.querySelector("#submit").onclick = (event) => {
-		// }
 
 
 		document.querySelector("#roseFireBtn").onclick = (event) => {
@@ -941,7 +956,7 @@ rhit.UserController = class {
 	constructor() {
 
 		if (!rhit.authManager.isSignedIn) {
-			window.location.href = "signup.html"
+			window.location.href = "login.html"
 		}
 
 		document.querySelector("#signOutButton").onclick = () => {
@@ -1060,16 +1075,16 @@ rhit.main = function () {
 	console.log("Ready");
 
 	// TODO:
-	firebase.auth().onAuthStateChanged((user) => {
-		if (user) {
-			let displayName = user.displayName
-			// document.querySelector("#signoutBtn").onclick = (event) => {
-			// 	console.log("signout");
-			// }
-		} else {
+	// firebase.auth().onAuthStateChanged((user) => {
+	// 	if (user) {
+	// 		let displayName = user.displayName
+	// 		// document.querySelector("#signoutBtn").onclick = (event) => {
+	// 		// 	console.log("signout");
+	// 		// }
+	// 	} else {
 
-		}
-	})
+	// 	}
+	// })
 
 	rhit.authManager = new this.AuthManager()
 	rhit.userManager = new this.UserManager()
@@ -1104,7 +1119,7 @@ rhit.main = function () {
 			}
 			// check for redirects
 			console.log("in login.html", pname == "/login.html", "signed in:", rhit.authManager.isSignedIn);
-			if ((pname == "/login.html" || pname == "/signup.html") && rhit.authManager.isSignedIn) {
+			if ((pname == "/login.html") && rhit.authManager.isSignedIn) {
 				window.location.href = "/index.html"
 			}
 			// init pages
@@ -1130,9 +1145,6 @@ rhit.main = function () {
 					break;
 				case "/login.html":
 					new rhit.LoginController()
-					break;
-				case "/signup.html":
-					new rhit.SignupController()
 					break;
 				case "/user.html":
 					new rhit.UserController()
