@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./public/*.html"],
+  content: ["./*/*.{html,js}", "./*/*/*.{html,js}", "./*.{html,js}"],
   theme: {
     namedGroups: ["btn3b"],
     extend: {

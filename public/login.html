@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RHIT Robomasters</title>
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css" />
-    <!-- <link rel="stylesheet" href="styles/output.css"> -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css" /> -->
+    <link rel="stylesheet" href="styles/output.css">
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.2/firebase-ui-auth.css" />
 </head>
 
@@ -138,7 +138,7 @@
                     <h2 class="py-4 text-center text-4xl text-white bg-clip-text  font-bold">
                         Login</h2>
                     <!-- {/* :::Login Form */} -->
-                    <div class="py-10 w-full">
+                    <form class="py-10 w-full">
                         <!-- {/* Login Email */} -->
                         <label htmlFor="email" class="relative">
                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -149,14 +149,14 @@
                             </svg>
                             <input id="loginEmail" type="email" name="email"
                                 class="form-input mb-5 py-0.5 w-full text-base text-white border-0 border-b border-gray-700 outline-none bg-transparent focus:ring-0 focus:border-green-600"
-                                placeholder="Email" required />
+                                placeholder="Email" autocomplete="email" required />
 
                         </label>
                         <!-- {/* Login Password */} -->
                         <label htmlFor="password" class="relative">
                             <input id="loginPassword" type="password" name="password"
                                 class="form-input mb-5 py-0.5 w-full text-base text-white border-0 border-b border-gray-700 outline-none bg-transparent focus:ring-0 focus:border-green-600"
-                                placeholder="Password" required />
+                                placeholder="Password" autocomplete="current-password" required />
                             <svg xmlns="http://www.w3.org/2000/svg"
                                 class="absolute bottom-0 right-0 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
@@ -193,7 +193,7 @@
                             <div id="firebaseui-auth-container"></div>
                         </div>
 
-                    </div>
+                    </form>
                 </div>
 
                 <!-- {/* ::Register Form */} -->
@@ -227,7 +227,7 @@
                             </svg>
                             <input id="registerEmail" type="email" name="email"
                                 class="mb-5 py-0.5 w-full text-base text-white border-0 border-b border-gray-700 outline-none bg-transparent focus:border-blue-600 focus:ring-0"
-                                placeholder="Email" required />
+                                placeholder="Email" autocomplete="email" required />
                         </label>
                         <!-- {/* Register Password */} -->
                         <label htmlFor="password" class="relative">
@@ -239,7 +239,7 @@
                             </svg>
                             <input id="registerPass" type="password" name="password"
                                 class="mb-5 py-0.5 w-full text-base text-white border-0 border-b border-gray-700 outline-none bg-transparent focus:border-blue-600 focus:ring-0"
-                                placeholder="Password" required />
+                                placeholder="Password" autocomplete="current-password" required />
                         </label>
                         <!-- {/* Register Confirm Password */} -->
                         <label htmlFor="password" class="relative">
@@ -252,7 +252,7 @@
                             </svg>
                             <input id="registerConfirmPass" type="password" name="password"
                                 class="mb-5 py-0.5 w-full text-base text-white border-0 border-b border-gray-700 outline-none bg-transparent focus:border-blue-600 focus:ring-0"
-                                placeholder="Confirm Password" required />
+                                placeholder="Confirm Password" autocomplete="current-password" required />
                         </label>
                         <!-- {/* Login Submit Button */} -->
                         <div class="mt-10 w-full">
@@ -303,7 +303,7 @@
                                 existing account.</a></p> -->
                     </div>
                     <!-- {/* :::Reset Form */} -->
-                    <div action="" class="py-8 w-full">
+                    <form action="" class="py-8 w-full">
                         <!-- {/* Email */} -->
                         <label htmlFor="email" class="relative">
                             <input ref={emailForgotPWRef} id="emailReset" type="email" name="email"
@@ -330,7 +330,7 @@
                                 <div id="resetPassText" class="z-10 font-bold text-white">Reset</div>
                             </button>
                         </div>
-                    </div>
+                    </form>
                 </div>
 
             </div>
